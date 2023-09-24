@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantar'])->name('projects.surat-pengantar');
     Route::get('/projects/surat-jawaban/{id}', [ProjectsController::class, 'suratJawaban'])->name('projects.surat-jawaban');
     Route::get('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdn'])->name('projects.verify-tkdn');
+    Route::get('/projects/detail/{id}', [ProjectsController::class, 'detail'])->name('projects.detail');
     
     Route::post('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdnSubmit'])->name('projects.verify-tkdn-submit');
     Route::post('/projects/tkdn/{id}', [ProjectsController::class, 'tkdnSubmit'])->name('projects.tkdn-submit');

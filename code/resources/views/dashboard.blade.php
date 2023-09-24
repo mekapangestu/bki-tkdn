@@ -103,7 +103,8 @@
                                                         <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
                                                     @elseif($item->stage == 1)
                                                         <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
-                                                    @endif
+                                                        @endif
+                                                        <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
 
                                                 </ul>
                                             </div>

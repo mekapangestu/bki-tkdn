@@ -8,6 +8,7 @@ use App\Models\Asesors;
 use App\Models\Projects;
 use Illuminate\Http\Request;
 use App\Models\DocumentReceipt;
+use App\Models\Orders;
 use App\Models\ProjectAdditional;
 use App\Models\Tkdn;
 use Illuminate\Support\Facades\File;
@@ -493,5 +494,44 @@ class ProjectsController extends Controller
         $documentReceipt->save();
 
         return back()->with('success', 'Data Saved Successfully');
+    }
+
+    public function detail($id){
+        $project = Projects::with('orders')->find($id);
+
+        $data = $this->jsonToDebug($project->orders->siinas_data);
+
+        return view('projects.detail', compact('data'));
+    }
+
+    public function jsonToDebug($jsonText = '')
+    {
+        $arr = json_decode($jsonText, true);
+        $html = "";
+        if ($arr && is_array($arr)) {
+            $html .= $this->_arrayToHtmlTableRecursive($arr);
+        }
+        return $html;
+    }
+
+    private function _arrayToHtmlTableRecursive($arr)
+    {
+        $str = "<table class='table'><tbody>";
+        foreach ($arr as $key => $val) {
+            $str .= "<tr>";
+            $str .= "<td>$key</td>";
+            $str .= "<td>";
+            if (is_array($val)) {
+                if (!empty($val)) {
+                    $str .= self::_arrayToHtmlTableRecursive($val);
+                }
+            } else {
+                $str .= "<strong>$val</strong>";
+            }
+            $str .= "</td></tr>";
+        }
+        $str .= "</tbody></table>";
+
+        return $str;
     }
 }

@@ -17,6 +17,11 @@ class Projects extends Model
         return $this->hasMany(Upload::class, 'request_id', 'id');
     }
 
+    public function orders()
+    {
+        return $this->hasOne(Orders::class, 'no_berkas', 'no_berkas')->orderByDesc('created_at');
+    }
+
     public function data()
     {
         return $this->hasOne(Asesors::class, 'project_id', 'id');
