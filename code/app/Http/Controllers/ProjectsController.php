@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Asesors;
-use App\Models\ProjectAdditional;
 use App\Models\User;
+use App\Traits\Util;
+use App\Models\Asesors;
 use App\Models\Projects;
 use Illuminate\Http\Request;
-use App\Traits\Util;
+use App\Models\DocumentReceipt;
+use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 
 class ProjectsController extends Controller
 {
@@ -158,10 +160,35 @@ class ProjectsController extends Controller
 
     public function submit(Request $request, $id, $status)
     {
-        $asesor = Projects::find($id);
-        $asesor->status = $status;
+        $project = Projects::with('files')->find($id);
+        $project->status = $status;
 
-        $asesor->save();
+        $project->save();
+        
+        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php', [
+            "tahap" => 2,
+            "verifikator" => "BKI",
+            "no_berkas" => $project->no_berkas,
+            "status" => $status,
+            "alasan_tolak" => '',
+            "url_sptjm" => '',
+            "tgl_bast" => '',
+        ]);
+        
+        $documentReceipt = new DocumentReceipt();
+        $documentReceipt->project_id = $project->id;
+        if (is_array($response)) {
+            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+        } else if ($response) {
+            $documentReceipt->siinas_response = (string)$response;
+        }
+
+        if ($response) {
+            $documentReceipt->siinas_post_at = now();
+        }
+
+        $documentReceipt->save();
 
         return back()->with('success', 'Data Saved Successfully');
     }
