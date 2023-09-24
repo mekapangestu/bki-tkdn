@@ -18,8 +18,10 @@ class CreateAsesorsTable extends Migration
             $table->foreignId('project_id')->nullable()->references('id')->on('projects');
             $table->foreignId('asesor')->nullable()->references('id')->on('users');
             $table->string('asesor_status')->nullable();
+            $table->string('asesor_note')->nullable();
             $table->foreignId('qc')->nullable()->references('id')->on('users');
             $table->string('qc_status')->nullable();
+            $table->string('qc_note')->nullable();
             $table->timestamps();
         });
     }

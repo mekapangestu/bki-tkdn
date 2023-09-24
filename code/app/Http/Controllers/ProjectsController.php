@@ -136,11 +136,11 @@ class ProjectsController extends Controller
     public function verifySubmit(Request $request, $id)
     {
         $asesor = Asesors::find($id);
-        $asesor->asesor_status = $request->action == 'true' ? 1:0 ;
-        $asesor->qc = $request->qc;
+        $asesor->asesor_status = $request->action;
+        $asesor->asesor_note = $request->note;
 
         $asesor->save();
-
+        
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
             File::makeDirectory($folderPath, 0777, true, true);
@@ -149,6 +149,19 @@ class ProjectsController extends Controller
         if (isset($request->bast)) {
             $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'project');
         }
+        if (isset($request->sptjm)) {
+            $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
+        }
+
+        return back()->with('success', 'Data Saved Successfully');
+    }
+
+    public function submit(Request $request, $id, $status)
+    {
+        $asesor = Projects::find($id);
+        $asesor->status = $status;
+
+        $asesor->save();
 
         return back()->with('success', 'Data Saved Successfully');
     }

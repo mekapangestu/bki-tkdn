@@ -64,6 +64,8 @@
                                         <th class="border-bottom-0 filter">Kode Produk</th>
                                         <th class="border-bottom-0 filter">Nama CP</th>
                                         <th class="border-bottom-0 filter">Jabatan CP</th>
+                                        <th class="border-bottom-0 filter">Status Asesor</th>
+                                        <th class="border-bottom-0 filter">Catatan Asesor</th>
                                         <th class="border-bottom-0 filter">Status</th>
                                         <th class="border-bottom-0" style="width: 25px">Action</th>
                                     </tr>
@@ -76,20 +78,25 @@
                                         <td>{{ $item->kd_produk }}</td>
                                         <td>{{ $item->nama_cp }}</td>
                                         <td>{{ $item->jabatan_cp }}</td>
-                                        <td>Diterima, Belum Selesai</td>
+                                        <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td>
+                                        <td>{{ $item->data?->asesor_note ?? '-' }}</td>
+                                        <td>{{ $item->statuses?->name ?? '-' }}</td>
                                         <td>
                                             @role('superadmin|administrator')
                                             <div class="dropdown">
                                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="fe fe-more-horizontal fs-14"></span>
                                                 </button>
-
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
-                                                    {{-- <li><a href="" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
-                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Diterima, Belum Selesai</a></li>
-                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Selesai</a></li>
-                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li> --}}
+                                                    @if ($item->data &&  $item->status == null)
+                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 1]) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Terima</a></li>
+                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
+                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
+                                                        <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
+                                                    @elseif($item->data == null)
+                                                        <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
+                                                    @endif
+
                                                 </ul>
                                             </div>
                                             @endrole

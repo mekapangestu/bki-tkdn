@@ -24,8 +24,8 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Projects::all();
-
+        $data = Projects::with('data.statusAsesor', 'statuses')->get();
+        
         return view('dashboard', compact('data'));
     }
 

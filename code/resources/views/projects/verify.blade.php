@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.verify-submit', $data->id) }}">
+                            <form method="POST" action="{{ route('projects.verify-submit', $data->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
                                 <div class="row">
@@ -146,13 +146,23 @@
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">FILE</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file" accept="application/pdf">
+                                            <label for="" class="form-label">SPTJM</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" name="action" value="true" class="btn btn-primary mt-4 mb-0">Terima</button>
-                                <button type="submit" name="action" value="false" class="btn btn-danger mt-4 mb-0">Tolak</button>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Alasan</label>
+                                            <textarea class="form-control" name="note"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
+                                <button type="submit" name="action" value="2" class="btn btn-success mt-4 mb-0">Terima Tidak Lengkap</button>
+                                <button type="submit" name="action" value="3" class="btn btn-danger mt-4 mb-0">Tolak</button>
+                                <button type="submit" name="action" value="4" class="btn btn-warning mt-4 mb-0">Freeze/Pending</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>

@@ -25,6 +25,7 @@ class CreateProjectsTable extends Migration
             $table->string('no_hp_cp')->nullable();
             $table->string('alamat_kantor')->nullable();
             $table->string('alamat_pabrik')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
