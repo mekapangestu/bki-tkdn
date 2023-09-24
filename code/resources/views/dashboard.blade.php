@@ -88,7 +88,9 @@
                                                     <span class="fe fe-more-horizontal fs-14"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    @if ($item->data)
+                                                    @if ($item->data?->asesor_status == 5)
+                                                        <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li>
+                                                    @elseif ($item->data)
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 1]) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Terima</a></li>
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
@@ -116,10 +118,15 @@
                                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="fe fe-more-horizontal fs-14"></span>
                                                 </button>
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.verify', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
-                                                </ul>
+                                                @if ($item->data->asesor_status == 1)
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                        <li><a href="{{route('projects.verify2', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
+                                                    </ul>
+                                                @else
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                        <li><a href="{{route('projects.verify', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
+                                                    </ul>
+                                                @endif
                                             </div>
                                             @endrole
                                         </td>

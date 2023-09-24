@@ -135,6 +135,20 @@ class ProjectsController extends Controller
         return view('projects.verify', compact('data'));
     }
 
+    public function verify2($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.verify2', compact('data'));
+    }
+
+    public function draf($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.draf', compact('data'));
+    }
+
     public function verifySubmit(Request $request, $id)
     {
         $asesor = Asesors::find($id);
@@ -153,6 +167,28 @@ class ProjectsController extends Controller
         }
         if (isset($request->sptjm)) {
             $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
+        }
+
+        return back()->with('success', 'Data Saved Successfully');
+    }
+
+    public function verify2Submit(Request $request, $id)
+    {
+        $asesor = Asesors::find($id);
+        $asesor->asesor_status = 5;
+
+        $asesor->save();
+
+        $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+        if (!File::isDirectory($folderPath)) {
+            File::makeDirectory($folderPath, 0777, true, true);
+        }
+
+        if (isset($request->hasil_verifikasi)) {
+            $this->singleUpload(1, $request->file('hasil_verifikasi'), $id, 'Draft Laporan Hasil Verifikasi', 'project');
+        }
+        if (isset($request->nilai_tkdn)) {
+            $this->singleUpload(1, $request->file('nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
         }
 
         return back()->with('success', 'Data Saved Successfully');
@@ -179,6 +215,36 @@ class ProjectsController extends Controller
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
         $documentReceipt->stage = 2;
+        if (is_array($response)) {
+            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+        } else if ($response) {
+            $documentReceipt->siinas_response = (string)$response;
+        }
+
+        if ($response) {
+            $documentReceipt->siinas_post_at = now();
+        }
+
+        $documentReceipt->save();
+
+        return back()->with('success', 'Data Saved Successfully');
+    }
+
+    public function drafSubmit(Request $request, $id, $status)
+    {
+        $project = Projects::with('data', 'files')->find($id);
+        
+        $path = $project->files?->where('label', 'SPTJM')?->first()->path ?? '';
+        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php', [
+            "tahap" => 2,
+            "verifikator" => "BKI",
+            "no_berkas" => $project->no_berkas,
+        ]);
+
+        $documentReceipt = new DocumentReceipt();
+        $documentReceipt->project_id = $project->id;
+        $documentReceipt->stage = 3;
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;

@@ -43,9 +43,14 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('projects', ProjectsController::class);
     Route::get('/projects/verify/{id}', [ProjectsController::class, 'verify'])->name('projects.verify');
+    Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
     Route::post('/projects/verify/{id}', [ProjectsController::class, 'verifySubmit'])->name('projects.verify-submit');
+    Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
+    Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
 
     Route::get('/projects/verify/{id}/{status}', [ProjectsController::class, 'submit'])->name('projects.submit');
+
+    Route::get('/projects/draf/{id}', [ProjectsController::class, 'draf'])->name('projects.draf');
 
     Route::resource('user', UserController::class)->middleware('role:superadmin');
 
