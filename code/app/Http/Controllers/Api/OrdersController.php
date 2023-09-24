@@ -136,17 +136,19 @@ class OrdersController extends Controller
 
     public function permohonan(Request $request)
     {
+        $return = [];
         switch ($request->tahap) {
-            case '3': $this->tahap3; break;
-            case '5': $this->tahap5; break;
-            case '7': $this->tahap7; break;
-            case '8': $this->tahap8; break;
-            case '9': $this->tahap9; break;
-            case '11': $this->tahap11; break;
-            case '12': $this->tahap12; break;
-            
+            case '3': $return = $this->tahap3($request); break;
+            case '5': $return = $this->tahap5($request); break;
+            case '7': $return = $this->tahap7($request); break;
+            case '8': $return = $this->tahap8($request); break;
+            case '9': $return = $this->tahap9($request); break;
+            case '11': $return = $this->tahap11($request); break;
+            case '12': $return = $this->tahap12($request); break;
             default: break;
         }
+
+        return $return;
     }
 
     public function tahap3(Request $request)
