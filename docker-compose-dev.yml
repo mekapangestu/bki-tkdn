@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  php-fpm:
+    build: install/php-fpm
+    image: bki
+    container_name: kso-eni-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./code:/var/www/html/
+      - ./install/php-fpm/local.ini:/usr/local/etc/php/conf.d/local.ini
+    links:
+      - db:ksoenidb
+
+  db:
+    image: postgres:14
+    container_name: kso-eni-db
+    restart: unless-stopped
+    ports:
+      - "5414:5432"
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_USER: root
+      POSTGRES_DB: kso_eni
+    volumes:
+      - db:/data/postgres
+      - ./database:/database
+
+  nginx:
+    build: install/nginx
+    container_name: kso-eni-nginx
+    restart: unless-stopped
+    ports:
+      - 8133:7070
+    links:
+      - php-fpm
+    volumes:
+      - ./code:/var/www/html/
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet:  10.140.0.1/16
+
+volumes:
+  db:

@@ -1,0 +1,13 @@
+/code/node_modules
+/code/public/hot
+/code/public/storage
+/code/storage/*.key
+/code/vendor
+/install/docker-compose
+/code/.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
