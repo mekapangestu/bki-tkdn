@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
+                            <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0 filter">NIB</th>
