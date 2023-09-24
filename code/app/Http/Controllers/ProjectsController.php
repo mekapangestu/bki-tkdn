@@ -165,7 +165,7 @@ class ProjectsController extends Controller
 
         $project->save();
         
-        $path = $project->files?->where('label', 'SPTJM')?->first()->path;
+        $path = $project->files?->where('label', 'SPTJM')?->first()->path ?? '';
         $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php', [
             "tahap" => 2,
             "verifikator" => "BKI",
