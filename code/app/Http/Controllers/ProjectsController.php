@@ -138,7 +138,7 @@ class ProjectsController extends Controller
 
     public function verify2($id)
     {
-        $data = Projects::with('files')->find($id);
+        $data = Projects::with('files', 'tkdn')->find($id);
 
         return view('projects.verify2', compact('data'));
     }
@@ -203,9 +203,13 @@ class ProjectsController extends Controller
 
     public function verify2Submit(Request $request, $id)
     {
-        // $asesor = Asesors::find($id);
+        $tkdn = new Tkdn();
+        $tkdn->project_id = $id;
+        $tkdn->nilai_tkdn = $request->nilai_tkdn;
+        $tkdn->nilai_tkdn_jasa = $request->nilai_tkdn_jasa;
+        $tkdn->nilai_tkdn_gabungan = $request->nilai_tkdn_gabungan;
 
-        // $asesor->save();
+        $tkdn->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
@@ -215,8 +219,8 @@ class ProjectsController extends Controller
         if (isset($request->hasil_verifikasi)) {
             $this->singleUpload(1, $request->file('hasil_verifikasi'), $id, 'Draft Laporan Hasil Verifikasi', 'project');
         }
-        if (isset($request->nilai_tkdn)) {
-            $this->singleUpload(1, $request->file('nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
+        if (isset($request->form_nilai_tkdn)) {
+            $this->singleUpload(1, $request->file('form_nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
         }
 
         return back()->with('success', 'Data Saved Successfully');
@@ -293,13 +297,13 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        $tkdn = new Tkdn();
-        $tkdn->project_id = $id;
-        $tkdn->nilai_tkdn = $request->nilai_tkdn;
-        $tkdn->nilai_tkdn_jasa = $request->nilai_tkdn_jasa;
-        $tkdn->nilai_tkdn_gabungan = $request->nilai_tkdn_gabungan;
+        // $tkdn = new Tkdn();
+        // $tkdn->project_id = $id;
+        // $tkdn->nilai_tkdn = $request->nilai_tkdn;
+        // $tkdn->nilai_tkdn_jasa = $request->nilai_tkdn_jasa;
+        // $tkdn->nilai_tkdn_gabungan = $request->nilai_tkdn_gabungan;
 
-        $tkdn->save();
+        // $tkdn->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
@@ -399,7 +403,7 @@ class ProjectsController extends Controller
 
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
-        $documentReceipt->stage = 3;
+        $documentReceipt->stage = 6;
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;

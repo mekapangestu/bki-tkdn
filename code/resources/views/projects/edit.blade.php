@@ -56,6 +56,40 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
+                            <div class="card custom-card">
+                                <div class="card-header border-bottom">
+                                    <h3 class="card-title">Uploaded Document</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" style="width: 25px">No</th>
+                                                    <th class="border-bottom-0">File Name</th>
+                                                    <th class="border-bottom-0">Created At</th>
+                                                    <th class="border-bottom-0">Updated At</th>
+                                                    <th class="border-bottom-0" style="width: 50px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data->files as $file)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $file->label }}</td>
+                                                        <td>{{ $file->created_at }}</td>
+                                                        <td>{{ $file->updated_at }}</td>
+                                                        <td>
+                                                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                            {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <form method="POST" action="{{ route('projects.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>

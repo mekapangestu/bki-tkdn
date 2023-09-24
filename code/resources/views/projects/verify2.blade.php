@@ -134,7 +134,30 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Nilai TKDN</label>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_jasa}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_gabungan}}">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
@@ -147,7 +170,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="nilai_tkdn" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>

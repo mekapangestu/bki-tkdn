@@ -139,7 +139,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_jasa}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_gabungan}}" disabled>
                                         </div>
                                     </div>
                                 </div>
