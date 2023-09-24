@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('projects', ProjectsController::class);
     Route::get('/projects/verify/{id}', [ProjectsController::class, 'verify'])->name('projects.verify');
+    Route::post('/projects/verify/{id}', [ProjectsController::class, 'verifySubmit'])->name('projects.verify-submit');
 
     Route::resource('user', UserController::class)->middleware('role:superadmin');
 

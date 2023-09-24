@@ -90,7 +90,7 @@ class UsersTableSeeder extends Seeder
             array(
                 'name' => 'QC Officer',
                 'contact' => '123',
-                'role_id' => 5,
+                'role_id' => 6,
                 'email' => 'qc@mail.com',
                 'email_verified_at' => NULL,
                 'password' => Hash::make('password'),

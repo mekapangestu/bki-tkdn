@@ -16,6 +16,7 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->references('id')->on('users');
+            $table->string('no_berkas')->nullable();
             $table->string('nib')->nullable();
             $table->string('npwp')->nullable();
             $table->string('kd_produk')->nullable();

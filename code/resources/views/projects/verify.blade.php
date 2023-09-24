@@ -56,9 +56,8 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.update', $data->id) }}">
+                            <form method="POST" action="{{ route('projects.verify-submit', $data->id) }}">
                                 @csrf
-                                @method('PUT')
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
@@ -121,7 +120,7 @@
                                                     @foreach ($data->files as $file)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $file->name }}</td>
+                                                            <td>{{ $file->label }}</td>
                                                             <td>{{ $file->created_at }}</td>
                                                             <td>{{ $file->updated_at }}</td>
                                                             <td>
@@ -152,7 +151,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button> <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
+                                <button type="submit" name="action" value="true" class="btn btn-primary mt-4 mb-0">Terima</button>
+                                <button type="submit" name="action" value="false" class="btn btn-danger mt-4 mb-0">Tolak</button>
+                                <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>
                     </div>
