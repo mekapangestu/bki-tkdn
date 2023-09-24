@@ -55,6 +55,7 @@ class OrdersController extends Controller
                         "no_hp_cp" => $request->get('no_hp_cp'),
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
+                        "stage" => 1,
                     ]);
                 } else {
                     $user = new User();
@@ -127,6 +128,204 @@ class OrdersController extends Controller
                 "status" => 0,
                 "data" => "tidak ada",
                 "tahap" => "1",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap3(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 3;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "3",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "3",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "3",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap5(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 5;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "5",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "5",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "5",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap7(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 7;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "7",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "7",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "7",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap8(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 8;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "8",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "8",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "8",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap9(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 9;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "9",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "9",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "9",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap11(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 11;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "11",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "11",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "11",
                 "message" => "error: " . $throwable->getMessage(),
                 "url" => null,
             ]);

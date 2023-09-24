@@ -22,6 +22,11 @@ class Projects extends Model
         return $this->hasOne(Asesors::class, 'project_id', 'id');
     }
 
+    public function tkdn()
+    {
+        return $this->hasOne(Tkdn::class, 'project_id', 'id');
+    }
+
     public function statuses()
     {
         return $this->belongsTo(Statuses::class, 'status', 'id');

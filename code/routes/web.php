@@ -47,10 +47,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/projects/verify/{id}', [ProjectsController::class, 'verifySubmit'])->name('projects.verify-submit');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
-
+    
     Route::get('/projects/verify/{id}/{status}', [ProjectsController::class, 'submit'])->name('projects.submit');
-
+    
     Route::get('/projects/draf/{id}', [ProjectsController::class, 'draf'])->name('projects.draf');
+    Route::get('/projects/tkdn/{id}', [ProjectsController::class, 'tkdn'])->name('projects.tkdn');
+    Route::get('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantar'])->name('projects.surat-pengantar');
+    Route::get('/projects/surat-jawaban/{id}', [ProjectsController::class, 'suratJawaban'])->name('projects.surat-jawaban');
+
+    Route::post('/projects/tkdn/{id}', [ProjectsController::class, 'tkdnSubmit'])->name('projects.tkdn-submit');
+    Route::post('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantarSubmit'])->name('projects.surat-pengantar-submit');
+    Route::post('/projects/surat-jawaban/{id}', [ProjectsController::class, 'suratjawabanSubmit'])->name('projects.surat-jawaban-submit');
 
     Route::resource('user', UserController::class)->middleware('role:superadmin');
 
