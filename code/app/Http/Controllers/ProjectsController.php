@@ -160,23 +160,25 @@ class ProjectsController extends Controller
 
     public function submit(Request $request, $id, $status)
     {
-        $project = Projects::with('files')->find($id);
+        $project = Projects::with('data', 'files')->find($id);
         $project->status = $status;
 
         $project->save();
         
+        $path = $project->files?->where('label', 'SPTJM')?->first()->path;
         $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php', [
             "tahap" => 2,
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-            "status" => $status,
-            "alasan_tolak" => '',
-            "url_sptjm" => '',
-            "tgl_bast" => '',
+            "status" => $status == 3 ? 0 : ($status == 4 ? 3 : ''),
+            "alasan_tolak" => $status == 4 ? $project->data->asesor_note : '',
+            "url_sptjm" => $path ? asset('storage/'. $path) : '',
+            "tgl_bast" => $path ? now() : '',
         ]);
-        
+
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
+        $documentReceipt->stage = 2;
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;

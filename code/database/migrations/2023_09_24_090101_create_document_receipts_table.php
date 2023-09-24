@@ -16,6 +16,7 @@ class CreateDocumentReceiptsTable extends Migration
         Schema::create('document_receipts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->nullable()->references('id')->on('projects');
+            $table->string('stage');
             $table->text('siinas_response')->nullable();
             $table->string('siinas_message')->nullable();
             $table->string('siinas_post_at')->nullable();
