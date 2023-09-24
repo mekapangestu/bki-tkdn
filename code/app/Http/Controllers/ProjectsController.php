@@ -157,6 +157,13 @@ class ProjectsController extends Controller
         return view('projects.tkdn', compact('data'));
     }
 
+    public function verifyTkdn ($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.verifyTkdn', compact('data'));
+    }
+
     public function suratPengantar($id)
     {
         $data = Projects::with('files')->find($id);
@@ -303,51 +310,64 @@ class ProjectsController extends Controller
             $this->singleUpload(1, $request->file('hasil_persetujuan'), $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
         }
 
-        $project = Projects::with('data', 'files')->find($id);
-        $project->stage = 4;
-        $project->save();
+        return back()->with('success', 'Data Saved Successfully');
+    }
 
-        $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php', [
-            "tahap" => "4",
-            "verifikator" => "BKI",
-            "no_berkas" => $project->no_berkas,
-            "url_draft_persetujuan_penamaan_tanda_sah" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
-            "no_referensi" => "123\/REF\/2023",
-            "no_laporan" => "123\/AWK\/2023",
-            "produk" => [
-                "id_produk" => "3",
-                "produk" => "bubur bayi",
-                "spesifikasi" => "spesifikasi bubur",
-                "kbli" => "10130",
-                "kd_hs" => "07096010",
-                "kd_kelompok_barang" => "1",
-                "nilai_tkdn" => $request->tkdn,
-                "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa,
-                "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan,
-                "merk" => "bubur",
-                "tipe" => "bubut",
-                "standar" => "bubur",
-                "sertifikat_produk" => "123\/CERT\/2023",
-                "produsen" => "Nama Produsen"
-            ]
-        ]);
+    public function verifyTkdnSubmit(Request $request, $id)
+    {
+        if (auth()->user()->hasRole('administrator')) {
+            $project = Projects::with('data', 'files')->find($id);
+            $project->stage = 4;
+            $project->save();
+    
+            $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
+            $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php', [
+                "tahap" => "4",
+                "verifikator" => "BKI",
+                "no_berkas" => $project->no_berkas,
+                "url_draft_persetujuan_penamaan_tanda_sah" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+                "no_referensi" => "123\/REF\/2023",
+                "no_laporan" => "123\/AWK\/2023",
+                "produk" => [
+                    "id_produk" => "3",
+                    "produk" => "bubur bayi",
+                    "spesifikasi" => "spesifikasi bubur",
+                    "kbli" => "10130",
+                    "kd_hs" => "07096010",
+                    "kd_kelompok_barang" => "1",
+                    "nilai_tkdn" => $request->tkdn,
+                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa,
+                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan,
+                    "merk" => "bubur",
+                    "tipe" => "bubut",
+                    "standar" => "bubur",
+                    "sertifikat_produk" => "123\/CERT\/2023",
+                    "produsen" => "Nama Produsen"
+                ]
+            ]);
+    
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 4;
+            if (is_array($response)) {
+                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+            } else if ($response) {
+                $documentReceipt->siinas_response = (string)$response;
+            }
+    
+            if ($response) {
+                $documentReceipt->siinas_post_at = now();
+            }
+    
+            $documentReceipt->save();   
+        }else{
+            $asesor = Asesors::find($id);
+            $asesor->kepala_status = 1;
 
-        $documentReceipt = new DocumentReceipt();
-        $documentReceipt->project_id = $project->id;
-        $documentReceipt->stage = 4;
-        if (is_array($response)) {
-            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-        } else if ($response) {
-            $documentReceipt->siinas_response = (string)$response;
+            $asesor->save();
         }
 
-        if ($response) {
-            $documentReceipt->siinas_post_at = now();
-        }
-
-        $documentReceipt->save();
 
         return back()->with('success', 'Data Saved Successfully');
     }
