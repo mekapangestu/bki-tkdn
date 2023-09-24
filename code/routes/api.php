@@ -22,9 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('orders', [Api\OrdersController::class, 'store']);
-Route::post('tahap3', [Api\OrdersController::class, 'tahap3']);
-Route::post('tahap5', [Api\OrdersController::class, 'tahap5']);
-Route::post('tahap7', [Api\OrdersController::class, 'tahap7']);
-Route::post('tahap8', [Api\OrdersController::class, 'tahap8']);
-Route::post('tahap9', [Api\OrdersController::class, 'tahap9']);
-Route::post('tahap11', [Api\OrdersController::class, 'tahap11']);
+Route::post('permohonan', [Api\OrdersController::class, 'permohonan']);
+// Route::post('tahap3', [Api\OrdersController::class, 'tahap3']);
+// Route::post('tahap5', [Api\OrdersController::class, 'tahap5']);
+// Route::post('tahap7', [Api\OrdersController::class, 'tahap7']);
+// Route::post('tahap8', [Api\OrdersController::class, 'tahap8']);
+// Route::post('tahap9', [Api\OrdersController::class, 'tahap9']);
+// Route::post('tahap11', [Api\OrdersController::class, 'tahap11']);
+// Route::post('tahap12', [Api\OrdersController::class, 'tahap12']);

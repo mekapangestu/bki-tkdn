@@ -22,6 +22,8 @@ class CreateAsesorsTable extends Migration
             $table->foreignId('qc')->nullable()->references('id')->on('users');
             $table->string('qc_status')->nullable();
             $table->string('qc_note')->nullable();
+            $table->string('kepala_status')->nullable();
+            $table->string('kepala_note')->nullable();
             $table->timestamps();
         });
     }

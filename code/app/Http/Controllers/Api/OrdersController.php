@@ -67,7 +67,7 @@ class OrdersController extends Controller
                     $user->role_id = 5;
 
                     $user->status = "active";
-                    $password = time();
+                    $password = 'password';
                     $user->password = bcrypt($password);
 
                     $user->save();
@@ -131,6 +131,21 @@ class OrdersController extends Controller
                 "message" => "error: " . $throwable->getMessage(),
                 "url" => null,
             ]);
+        }
+    }
+
+    public function permohonan(Request $request)
+    {
+        switch ($request->tahap) {
+            case '3': $this->tahap3; break;
+            case '5': $this->tahap5; break;
+            case '7': $this->tahap7; break;
+            case '8': $this->tahap8; break;
+            case '9': $this->tahap9; break;
+            case '11': $this->tahap11; break;
+            case '12': $this->tahap12; break;
+            
+            default: break;
         }
     }
 
@@ -326,6 +341,39 @@ class OrdersController extends Controller
                 "status" => 0,
                 "data" => "tidak ada",
                 "tahap" => "11",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
+        }
+    }
+
+    public function tahap12(Request $request)
+    {
+        try {
+            $docNumber = (int)$request->get('no_berkas');
+            $project = Projects::where('no_berkas', $docNumber)->first();
+            if ($project) {
+                $project->stage = 12;
+                $project->save();
+                return response()->json([
+                    "status" => "1",
+                    "data" => "ada",
+                    "tahap" => "12",
+                    "message" => "ok"
+                ]);
+            }
+
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "12",
+                "message" => "error: nomor berkas tidak dapat dibaca",
+            ]);
+        } catch (\Throwable $throwable) {
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "12",
                 "message" => "error: " . $throwable->getMessage(),
                 "url" => null,
             ]);
