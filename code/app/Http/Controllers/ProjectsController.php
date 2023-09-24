@@ -196,10 +196,9 @@ class ProjectsController extends Controller
 
     public function verify2Submit(Request $request, $id)
     {
-        $asesor = Asesors::find($id);
-        $asesor->asesor_status = 5;
+        // $asesor = Asesors::find($id);
 
-        $asesor->save();
+        // $asesor->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
@@ -229,8 +228,8 @@ class ProjectsController extends Controller
             "tahap" => 2,
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-            "status" => $status == 3 ? 0 : ($status == 4 ? 3 : ''),
-            "alasan_tolak" => $status == 4 ? $project->data->asesor_note : '',
+            "status" => $status,
+            "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
             "url_sptjm" => $path ? asset('storage/'. $path) : '',
             "tgl_bast" => $path ? now() : '',
         ]);
@@ -254,7 +253,7 @@ class ProjectsController extends Controller
         return back()->with('success', 'Data Saved Successfully');
     }
 
-    public function drafSubmit(Request $request, $id, $status)
+    public function drafSubmit(Request $request, $id)
     {
         $project = Projects::with('data', 'files')->find($id);
         $project->stage = 3;
@@ -420,7 +419,7 @@ class ProjectsController extends Controller
         $project->save();
 
         $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php', [
+        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php', [
             "tahap" => "10",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,

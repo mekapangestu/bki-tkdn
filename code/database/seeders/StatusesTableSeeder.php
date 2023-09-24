@@ -36,14 +36,14 @@ class StatusesTableSeeder extends Seeder
             ),
             2 =>
             array(
-                'id' => 3,
+                'id' => 0,
                 'name' => 'Tolak',
                 'created_at' => '2022-11-22 01:51:43',
                 'updated_at' => '2022-11-22 01:51:43',
             ),
             3 =>
             array(
-                'id' => 4,
+                'id' => 3,
                 'name' => 'Freeze/Pending',
                 'created_at' => '2022-11-22 01:51:43',
                 'updated_at' => '2022-11-22 01:51:43',

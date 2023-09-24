@@ -99,7 +99,7 @@
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
                                                         <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
-                                                    @elseif($item->data == null)
+                                                    @elseif($item->stage == 1)
                                                         <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
                                                     @endif
 
@@ -122,7 +122,7 @@
                                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="fe fe-more-horizontal fs-14"></span>
                                                 </button>
-                                                @if ($item->data->asesor_status == 1)
+                                                @if ($item->stage == 3)
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                         <li><a href="{{route('projects.verify2', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                     </ul>

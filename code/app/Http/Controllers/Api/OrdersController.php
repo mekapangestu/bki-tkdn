@@ -55,7 +55,6 @@ class OrdersController extends Controller
                         "no_hp_cp" => $request->get('no_hp_cp'),
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
-                        "stage" => 1,
                     ]);
                 } else {
                     $user = new User();
@@ -84,6 +83,7 @@ class OrdersController extends Controller
                         "no_hp_cp" => $request->get('no_hp_cp'),
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
+                        "stage" => 1,
                     ]);
 
                     Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
