@@ -203,13 +203,15 @@ class ProjectsController extends Controller
 
     public function verify2Submit(Request $request, $id)
     {
-        $tkdn = new Tkdn();
-        $tkdn->project_id = $id;
-        $tkdn->nilai_tkdn = $request->nilai_tkdn;
-        $tkdn->nilai_tkdn_jasa = $request->nilai_tkdn_jasa;
-        $tkdn->nilai_tkdn_gabungan = $request->nilai_tkdn_gabungan;
-
-        $tkdn->save();
+        $tkdn = Tkdn::updateOrCreate(
+            ['project_id' => $id],
+            [
+                'project_id' => $id,
+                'nilai_tkdn' => $request->nilai_tkdn,
+                'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa,
+                'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan,
+            ]
+        );
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {

@@ -158,7 +158,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
+                                <button type="submit" class="btn btn-primary mt-4 mb-0">Sesuai</button>
+                                <a href="{{ route('dashboard') }}" class="btn btn-warning mt-4 mb-0">Tidak Sesuai</a>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>
