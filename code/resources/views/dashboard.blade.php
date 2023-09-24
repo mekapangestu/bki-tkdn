@@ -49,6 +49,81 @@
                     {{ session('success') }}
                 </div>
             @endif
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Data</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0 filter">NIB</th>
+                                        <th class="border-bottom-0 filter">NPWP</th>
+                                        <th class="border-bottom-0 filter">Kode Produk</th>
+                                        <th class="border-bottom-0 filter">Nama CP</th>
+                                        <th class="border-bottom-0 filter">Jabatan CP</th>
+                                        <th class="border-bottom-0 filter">Status</th>
+                                        <th class="border-bottom-0" style="width: 25px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $item->nib }}</td>
+                                        <td>{{ $item->npwp }}</td>
+                                        <td>{{ $item->kd_produk }}</td>
+                                        <td>{{ $item->nama_cp }}</td>
+                                        <td>{{ $item->jabatan_cp }}</td>
+                                        <td>Diterima, Belum Selesai</td>
+                                        <td>
+                                            @role('superadmin|administrator')
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="fe fe-more-horizontal fs-14"></span>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                    <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
+                                                    {{-- <li><a href="" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
+                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Diterima, Belum Selesai</a></li>
+                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Selesai</a></li>
+                                                    <li class=""><a href="" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li> --}}
+                                                </ul>
+                                            </div>
+                                            @endrole
+                                            @role('guest')
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="fe fe-more-horizontal fs-14"></span>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                    <li><a href="{{route('projects.edit', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
+                                                </ul>
+                                            </div>
+                                            @endrole
+                                            @role('assessor')
+                                            <div class="dropdown">
+                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="fe fe-more-horizontal fs-14"></span>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                    <li><a href="{{route('projects.verify', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
+                                                </ul>
+                                            </div>
+                                            @endrole
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!-- CONTAINER END -->
     </div>
 @endsection

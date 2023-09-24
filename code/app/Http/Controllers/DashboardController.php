@@ -8,6 +8,7 @@ use App\Models\Boq;
 use App\Models\DeliveryOrder;
 use App\Models\Sos;
 use App\Models\JobExecutor;
+use App\Models\Projects;
 use App\Models\ViewData;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -23,7 +24,9 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        return view('dashboard');
+        $data = Projects::all();
+
+        return view('dashboard', compact('data'));
     }
 
     public function detailProject(Request $request)

@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilController;
 use App\Http\Controllers\CoiController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProjectsController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::get('/dashboard/detail-project', [DashboardController::class, 'detailProject'])->name('dashboard.detail-project');
     // Route::get('/dashboard/detail-progress/{id}', [DashboardController::class, 'detailProgress'])->name('dashboard.detail-progress');
+    
+    Route::resource('projects', ProjectsController::class);
+    Route::get('/projects/verify/{id}', [ProjectsController::class, 'verify'])->name('projects.verify');
 
     Route::resource('user', UserController::class)->middleware('role:superadmin');
 
