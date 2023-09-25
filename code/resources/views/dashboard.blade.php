@@ -29,7 +29,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Dashboard</h1>
+                <h1 class="page-title">TKDN - Dashboard</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -51,126 +51,98 @@
             @endif
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Data</h3>
-                        </div>
-                        <div class="card-body">
-                            <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
-                                <thead>
-                                    <tr>
-                                        <th class="border-bottom-0 filter">NIB</th>
-                                        <th class="border-bottom-0 filter">NPWP</th>
-                                        <th class="border-bottom-0 filter">Kode Produk</th>
-                                        <th class="border-bottom-0 filter">Nama CP</th>
-                                        <th class="border-bottom-0 filter">Jabatan CP</th>
-                                        <th class="border-bottom-0 filter">Status Asesor</th>
-                                        <th class="border-bottom-0 filter">Catatan Asesor</th>
-                                        <th class="border-bottom-0 filter">Status QC</th>
-                                        <th class="border-bottom-0 filter">Catatan QC</th>
-                                        <th class="border-bottom-0 filter">Status</th>
-                                        <th class="border-bottom-0" style="width: 25px">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data as $item)
-                                    <tr>
-                                        <td>{{ $item->nib }}</td>
-                                        <td>{{ $item->npwp }}</td>
-                                        <td>{{ $item->kd_produk }}</td>
-                                        <td>{{ $item->nama_cp }}</td>
-                                        <td>{{ $item->jabatan_cp }}</td>
-                                        <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td>
-                                        <td>{{ $item->data?->asesor_note ?? '-' }}</td>
-                                        <td>{{ $item->data?->statusQc->name ?? '-' }}</td>
-                                        <td>{{ $item->data?->qc_note ?? '-' }}</td>
-                                        <td>{{ $item->statuses?->name ?? '-' }}</td>
-                                        <td>
-                                            @role('superadmin|administrator')
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fe fe-more-horizontal fs-14"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    @if ($item->stage == 9)
-                                                        <li class=""><a href="{{ route('projects.surat-jawaban', $item->id) }}" class="btn text-primary btn-sm"      data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Jawaban</a></li>
-                                                    @elseif ($item->stage == 5)
-                                                        <li class=""><a href="{{ route('projects.surat-pengantar', $item->id) }}" class="btn text-primary btn-sm"      data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Pengantar</a></li>
-                                                    @elseif ($item->stage == 2)
-                                                        <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li>
-                                                    @elseif ($item->data?->kepala_status == 1)
-                                                        <li><a href="{{route('projects.verify-tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
-                                                    @elseif ($item->data && $item->status != 1)
-                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 1]) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Terima</a></li>
-                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
-                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
-                                                        <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
-                                                    @elseif($item->stage == 1)
-                                                        <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
-                                                        @endif
-                                                        <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
-
-                                                </ul>
+                     <!-- ROW-1 -->
+                     <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Users</h6>
+                                                    <h2 class="mb-0 number-font">44,278</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart"
+                                                            class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            @endrole
-                                            @role('guest')
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fe fe-more-horizontal fs-14"></span>
-                                                </button>
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.edit', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
-                                                </ul>
+                                            <span class="text-muted fs-12"><span class="text-secondary"><i
+                                                        class="fe fe-arrow-up-circle  text-secondary"></i> 5%</span>
+                                                Last week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Profit</h6>
+                                                    <h2 class="mb-0 number-font">67,987</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="leadschart"
+                                                            class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            @endrole
-                                            @role('assessor')
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fe fe-more-horizontal fs-14"></span>
-                                                </button>
-                                                @if ($item->stage == 2)
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                        <li><a href="{{route('projects.verify2', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
-                                                    </ul>
-                                                @elseif($item->stage == 1)
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                        <li><a href="{{route('projects.verify', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
-                                                    </ul>
-                                                @else
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                        <li><a href="{{route('projects.view', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
-                                                    </ul>
-                                                @endif
+                                            <span class="text-muted fs-12"><span class="text-pink"><i
+                                                        class="fe fe-arrow-down-circle text-pink"></i> 0.75%</span>
+                                                Last 6 days</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Expenses</h6>
+                                                    <h2 class="mb-0 number-font">$76,965</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="profitchart"
+                                                            class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            @endrole
-                                            @role('qc-officer')
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fe fe-more-horizontal fs-14"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Input Perhitungan TKDN</a></li>
-                                                </ul>
+                                            <span class="text-muted fs-12"><span class="text-green"><i
+                                                        class="fe fe-arrow-up-circle text-green"></i> 0.9%</span>
+                                                Last 9 days</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Cost</h6>
+                                                    <h2 class="mb-0 number-font">$59,765</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="costchart"
+                                                            class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            @endrole
-                                            @role('kepala-verifikasi')
-                                            <div class="dropdown">
-                                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="fe fe-more-horizontal fs-14"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.verify-tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
-                                                </ul>
-                                            </div>
-                                            @endrole
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            <span class="text-muted fs-12"><span class="text-warning"><i
+                                                        class="fe fe-arrow-up-circle text-warning"></i> 0.6%</span>
+                                                Last year</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- ROW-1 END -->
                 </div>
             </div>
         <!-- CONTAINER END -->

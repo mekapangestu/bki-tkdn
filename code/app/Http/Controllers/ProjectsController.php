@@ -24,7 +24,20 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        $data = Projects::with('statuses')
+                ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                    return $q->whereHas('data', function ($q) {
+                        return $q->where('asesor', '=', auth()->user()->id);
+                    });
+                })
+                ->when(auth()->user()->hasRole('qc-officer'), function ($q) {
+                    return $q->whereHas('data', function ($q) {
+                        return $q->where('qc', '=', auth()->user()->id);
+                    });
+                })
+                ->get();
+        
+        return view('project', compact('data'));
     }
 
     /**
