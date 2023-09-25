@@ -1,0 +1,77 @@
+stages:
+  - pullcode
+  - stagingcontainer
+  - codeproduction
+  - deploy
+
+deploy_staging:
+  stage: pullcode
+  before_script:
+    - 'which ssh-agent || ( apk update && apk add --no-cache openssh )'
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_STAGING" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    # - echo "$CI_PROJECT_PATH"
+    # - echo "$GITLAB_USER_LOGIN"
+    # - echo "$CI_REPOSITORY_URL"
+    # - echo "$CI_PROJECT_NAME"
+    # - echo "$CI_PROJECT_NAMESPACE"
+    # - echo "$CI_PROJECT_PATH_SLUG"
+    - bash ./gitlabpull.sh
+  only:
+    - main
+
+
+container_staging:
+  stage: stagingcontainer
+  script:
+    - bash ./gitlabpull.sh
+  environment:
+    name: staging
+    url: http://10.0.6.35:5093
+  when: manual
+  #allow_failure: false
+  only:
+    - main
+
+deploy_productioncode:
+  stage: codeproduction
+  before_script:
+    - 'which ssh-agent || ( apk update && apk add --no-cache openssh )'
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_PRD_INT" | tr -d '\r' > ~/.ssh/id_rsa_prd
+    - chmod 700 ~/.ssh/id_rsa_prd
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa_prd
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - bash ./gitlabpull.sh
+  environment:
+    name: production
+    url: http://10.0.1.56:5192
+  when: manual
+  only:
+    - main
+
+deploy_production:
+  stage: deploy
+  before_script:
+    - 'which ssh-agent || ( apk update && apk add --no-cache openssh )'
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY_PRD_INT" | tr -d '\r' > ~/.ssh/id_rsa_prd
+    - chmod 700 ~/.ssh/id_rsa_prd
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa_prd
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - bash ./gitlabpull.sh
+  environment:
+    name: production
+    url: http://10.0.1.56:5192
+  when: manual
+  only:
+    - main

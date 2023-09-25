@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  php-fpm:
+    build: install/php-fpm
+    container_name: tkdn-bki-php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./code:/var/www/html/
+      - ./install/php-fpm/local.ini:/usr/local/etc/php/conf.d/local.ini
+    links:
+      - db:tkdnbkidb
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  db:
+    image: postgres:14
+    container_name: tkdn-bki-db
+    restart: unless-stopped
+    ports:
+      - "5415:5432"
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_USER: root
+      POSTGRES_DB: tkdn_db
+    volumes:
+      - db:/data/postgres
+      - ./database:/database
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  nginx:
+    build: install/nginx
+    container_name: kso-eni-nginx
+    restart: unless-stopped
+    ports:
+      - 9047:7070
+    links:
+      - php-fpm
+    volumes:
+      - ./code:/var/www/html/
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet:  10.250.3.1/24
+
+volumes:
+  db:
