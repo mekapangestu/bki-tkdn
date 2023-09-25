@@ -2,7 +2,6 @@ version: "3.7"
 services:
   php-fpm:
     build: install/php-fpm
-    image: bki
     container_name: tkdn-bki-php
     restart: unless-stopped
     working_dir: /var/www/html
@@ -37,7 +36,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet:  10.140.0.1/16
-
-volumes:
-  db:
+        - subnet:  10.250.3.1/24
