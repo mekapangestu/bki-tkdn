@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
-    private $password;
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +21,6 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $this->password = 'password';
     }
 
     /**
@@ -70,8 +68,8 @@ class OrdersController extends Controller
                     $user->role_id = 5;
 
                     $user->status = "active";
-                    
-                    $user->password = bcrypt($this->password);
+                    $password = 'password';
+                    $user->password = bcrypt($password);
 
                     $user->save();
                     
@@ -89,7 +87,7 @@ class OrdersController extends Controller
                         "stage" => 1,
                     ]);
                     
-                    Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $this->password], function ($message) use ($request) {
+                    Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
                         $message->from('no-reply@site.com', "Site name");
                         $message->subject("Welcome to site name");
                         $message->to($request->get('email_cp'));
