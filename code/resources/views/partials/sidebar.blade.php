@@ -31,12 +31,9 @@
                     <li>
                         <a class="side-menu__item has-link" href="{{ route('role.index') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Role Mgt.</span></a>
                     </li>
-<<<<<<< HEAD
                     <li>
                         <a class="side-menu__item has-link" href="{{ route('document-receipt.index') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Logs</span></a>
                     </li>
-=======
->>>>>>> cf10e7d978006918e22539267bd43fbf9b28cf4f
                 @endrole
             </ul>
             <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
