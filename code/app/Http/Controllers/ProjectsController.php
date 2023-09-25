@@ -205,7 +205,7 @@ class ProjectsController extends Controller
         $asesor->data->asesor_status = $request->action;
         $asesor->data->asesor_note = $request->note;
 
-        $asesor->save();
+        $asesor->data->save();
         
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
@@ -331,13 +331,13 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        $asesor = Asesors::find($id);
-        $asesor->qc_status = $request->action;
-        $asesor->qc_note = $request->note;
-        $asesor->save();
+        $asesor = Projects::with('data')->find($id);
+        $asesor->data->qc_status = $request->action;
+        $asesor->data->qc_note = $request->note;
+        $asesor->data->save();
 
-        $asesor->project->stage = 2;
-        $asesor->project->save();
+        $asesor->stage = 2;
+        $asesor->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
@@ -405,10 +405,10 @@ class ProjectsController extends Controller
     
             $documentReceipt->save();   
         }else{
-            $asesor = Asesors::find($id);
-            $asesor->kepala_status = 1;
+            $asesor = Projects::with('data')->find($id);
+            $asesor->data->kepala_status = 1;
 
-            $asesor->save();
+            $asesor->data->save();
         }
 
 
