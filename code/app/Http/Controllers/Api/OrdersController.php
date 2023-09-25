@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Orders;
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use App\Models\DocumentReceipt;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -154,6 +155,18 @@ class OrdersController extends Controller
             default: break;
         }
 
+        $documentReceipt = new DocumentReceipt();
+        $documentReceipt->project_id = Projects::where('no_berkas', (int)$request->get('no_berkas'))->first()?->id;
+        $documentReceipt->stage = $request->tahap;
+        $documentReceipt->end_point = url('api/v1/permohonan');
+        $documentReceipt->payload = json_encode($request->all());
+
+        $documentReceipt->siinas_response = $return;
+
+        $documentReceipt->siinas_post_at = now();
+
+        $documentReceipt->save();   
+
         return $return;
     }
 
@@ -263,6 +276,8 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 8;
+                $project->nm_reviewer = $request->get('nm_reviewer');
+                $project->tgl_rencana_review = $request->get('tgl_rencana_review');
                 $project->save();
                 return response()->json([
                     "status" => "1",
@@ -296,6 +311,9 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 9;
+                $project->tgl_pelaksanaan_reviu = $request->get('tgl_pelaksanaan_reviu');
+                $project->mom = $request->get('mom');
+                $project->catatan = $request->get('catatan');
                 $project->save();
                 return response()->json([
                     "status" => "1",
