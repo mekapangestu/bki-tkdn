@@ -41,26 +41,6 @@ https://templatemo.com/tm-562-space-dynamic
                         <a href="index.html" class="logo">
                             <h4>Spac<span>Dyna</span></h4>
                         </a>
-<<<<<<< Updated upstream
-                        <!-- LOGO -->
-                        <div class="d-flex order-lg-2 ms-auto header-right-icons">
-                            <button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
-                                aria-controls="navbarSupportedContent-4" aria-expanded="false"
-                                aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon fe fe-more-vertical"></span>
-                            </button>
-                            <div class="navbar navbar-collapse responsive-navbar p-0">
-                                <div class="collapse navbar-collapse bg-white px-0" id="navbarSupportedContent-4">
-                                    <!-- SEARCH -->
-                                    <div class="header-nav-right p-5">
-                                        {{-- <a href="register.html" class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto"
-                                            target="_blank">New User
-                                        </a> --}}
-                                        <a href="login.html" class="btn ripple btn-min w-sm btn-primary me-2 my-auto">Login</a>
-                                    </div>
-                                </div>
-=======
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
@@ -96,13 +76,12 @@ https://templatemo.com/tm-562-space-dynamic
                                 <h5>Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi</h5>
                                 <h2><em>TKDN</em> <span>BKI</span></h2>
                                 <p>Mudah, Cepat, dan Tepat dalam melakukan verifikasi sertifikat anda.</p>
-                            <button class="btn btn-lg btn-primary" style="border-radius: 20px">Tentang TKDN</button>
+                            <button class="btn btn-lg btn-primary" style="border-radius: 20px">Tentang TKDN<git /button>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
                                 <img src="{{ asset('landing/assets/images/banner-right-image.png') }}" alt="team meeting">
->>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
@@ -111,66 +90,12 @@ https://templatemo.com/tm-562-space-dynamic
         </div>
     </div>
 
-<<<<<<< Updated upstream
-            <div class="landing-top-header overflow-hidden">
-                <div class="top sticky overflow-hidden">
-                    <!--APP-SIDEBAR-->
-                    <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
-                    <div class="app-sidebar bg-transparent horizontal-main">
-                        <div class="container">
-                            <div class="row">
-                                <div class="main-sidemenu navbar px-0">
-                                    <a class="navbar-brand ps-0 d-none d-lg-block" href="index.html">
-                                        <img alt="" class="logo-2" src="{{ asset('assets/images/bki-color-logo.png') }}" style="max-width: 80px;">
-                                        <img src="{{ asset('assets/images/bki-color-logo.png') }}" class="logo-3" alt="logo" style="max-width: 80px;">
-                                    </a>
-                                    <ul class="side-menu">
-                                        <li class="slide">
-                                            <a href="{{route('dashboard')}}" class="side-menu__item"><span class="side-menu__label">Dashboard</span></a>
-                                        </li>
-                                        {{-- <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#Features"><span
-                                                    class="side-menu__label">Features</span></a>
-                                        </li>
-                                        <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#About"><span
-                                                    class="side-menu__label">About</span></a>
-                                        </li>
-                                        <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#Faqs"><span
-                                                    class="side-menu__label">Faq's</span></a>
-                                        </li>
-                                        <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#Blog"><span
-                                                    class="side-menu__label">Blog</span></a>
-                                        </li>
-                                        <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#Clients"><span
-                                                    class="side-menu__label">Clients</span></a>
-                                        </li>
-                                        <li class="slide">
-                                            <a class="side-menu__item" data-bs-toggle="slide" href="#Contact"><span
-                                                    class="side-menu__label">Contact</span></a>
-                                        </li> --}}
-                                    </ul>
-                                    <div class="header-nav-right d-none d-lg-flex">
-                                        {{-- <a href="register.html"
-                                            class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto d-lg-none d-xl-block d-block"
-                                            target="_blank">New User
-                                        </a> --}}
-                                        <a href="/login" class="btn ripple btn-min w-sm btn-primary me-2 my-auto d-lg-none d-xl-block d-block">Login</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-=======
     <div id="about" class="about-us section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="left-image wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
                         <img src="{{ asset('landing/assets/images/about-left-image.png') }}" alt="person graphic">
->>>>>>> Stashed changes
                     </div>
                 </div>
                 <div class="col-lg-8 align-self-center">

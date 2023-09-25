@@ -15,10 +15,7 @@ use App\Http\Controllers\UtilController;
 use App\Http\Controllers\CoiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectsController;
-<<<<<<< HEAD
 use App\Http\Controllers\DocumentReceiptController;
-=======
->>>>>>> cf10e7d978006918e22539267bd43fbf9b28cf4f
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
