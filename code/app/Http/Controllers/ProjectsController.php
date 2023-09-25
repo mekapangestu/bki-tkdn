@@ -278,16 +278,21 @@ class ProjectsController extends Controller
         $project = Projects::with('data', 'files')->find($id);
         $project->stage = 3;
         $project->save();
-        
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php', [
+
+        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
+        $payload = [
             "tahap" => 3,
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-        ]);
+        ];
+
+        $response = Http::post($endPoint, $payload);
 
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
         $documentReceipt->stage = 3;
+        $documentReceipt->end_point = $endPoint;
+        $documentReceipt->payload = json_encode($payload);
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
@@ -334,7 +339,8 @@ class ProjectsController extends Controller
             $project->save();
     
             $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
-            $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php', [
+            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
+            $payload = [
                 "tahap" => "4",
                 "verifikator" => "BKI",
                 "no_berkas" => $project->no_berkas,
@@ -357,11 +363,15 @@ class ProjectsController extends Controller
                     "sertifikat_produk" => "123\/CERT\/2023",
                     "produsen" => "Nama Produsen"
                 ]
-            ]);
+            ];
+
+            $response = Http::post($endPoint, $payload);
     
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 4;
+            $documentReceipt->end_point = $endPoint;
+            $documentReceipt->payload = json_encode($payload);
             if (is_array($response)) {
                 $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
                 $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
@@ -401,18 +411,23 @@ class ProjectsController extends Controller
         $project->save();
         
         $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php', [
+        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
+        $payload = [
             "tahap" => "6",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "url_surat_pengantar" => $path ?? "http:\/\/116.206.198.97\/surat_pengantar.pdf",
             "url_lhv_ttd" => "http:\/\/116.206.198.97\/lhv_ttd.pdf",
             "nama_asesor" => "Budi"
-        ]);
+        ];
+
+        $response = Http::post($endPoint, $payload);
 
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
         $documentReceipt->stage = 6;
+        $documentReceipt->end_point = $endPoint;
+        $documentReceipt->payload = json_encode($payload);
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
@@ -452,7 +467,8 @@ class ProjectsController extends Controller
         $project->save();
 
         $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php', [
+        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php';
+        $payload = [
             "tahap" => "10",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
@@ -481,11 +497,15 @@ class ProjectsController extends Controller
                 "sertifikat_produk" => "123\/CERT\/2023",
                 "produsen" => "Nama Produsen"
             ]
-        ]);
+        ];
+
+        $response = Http::post($endPoint, $payload);
 
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
         $documentReceipt->stage = 10;
+        $documentReceipt->end_point = $endPoint;
+        $documentReceipt->payload = json_encode($payload);
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
