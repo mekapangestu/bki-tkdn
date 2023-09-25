@@ -29,17 +29,17 @@ button.bg-primary:focus {
 
 /*--- gradient-backgrounds --*/
 .bg-primary-gradient {
-    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #8e77fa 100%) !important;
+    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #6e2711 100%) !important;
 }
 
 a.bg-primary-gradient:hover,
 a.bg-primary-gradient:focus {
-    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #8e77fa 100%) !important;
+    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #6e2711 100%) !important;
 }
 
 button.bg-primary-gradient:hover,
 button.bg-primary-gradient:focus {
-    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #8e77fa 100%) !important;
+    background: linear-gradient(to bottom right, var(--primary-bg-color) 0%, #6e2711 100%) !important;
 }
 
 .border-primary {

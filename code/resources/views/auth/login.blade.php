@@ -7,16 +7,15 @@
 
             <!-- CONTAINER OPEN -->
             <div class="col col-login mx-auto mt-7">
-                <div class="text-center">
-                    <a><img src="{{ asset('assets/images/bki-color-logo.png') }}" style="width: 100px" class="header-brand-img" alt=""></a>
-                </div>
             </div>
             <div class="container-login100">
                 <div class="wrap-login100 p-6">
                     <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                         @csrf
                         <span class="login100-form-title pb-5">
-                            LOGIN
+                            <div class="text-center">
+                                <a><img src="{{ asset('assets/images/tkdn-bki.png') }}" style="width: 100px" class="header-brand-img" alt=""></a>
+                            </div>
                         </span>
                         @if (session('error'))
                             <div class="alert alert-danger" role="alert">
