@@ -336,8 +336,8 @@ class ProjectsController extends Controller
         $asesor->data->qc_note = $request->note;
         $asesor->data->save();
 
-        $asesor->stage = 2;
-        $asesor->save();
+        // $asesor->stage = 2;
+        // $asesor->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
