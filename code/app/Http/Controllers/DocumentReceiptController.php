@@ -14,7 +14,7 @@ class DocumentReceiptController extends Controller
      */
     public function index()
     {
-        $data = DocumentReceipt::with('project')->get();
+        $data = DocumentReceipt::with('project')->orderBydesc('created_at')->get();
 
         return view('logs-siinas', compact('data'));
     }

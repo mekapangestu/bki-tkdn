@@ -70,7 +70,7 @@
                                 <tbody>
                                     @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $item->project->no_berkas }}</td>
+                                        <td>{{ $item->project?->no_berkas }}</td>
                                         <td>{{ $item->stage }}</td>
                                         <td>{{ $item->end_point }}</td>
                                         <td>{{ $item->payload }}</td>

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Orders;
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use App\Models\DocumentReceipt;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -153,6 +154,18 @@ class OrdersController extends Controller
             case '12': $return = $this->tahap12($request); break;
             default: break;
         }
+
+        $documentReceipt = new DocumentReceipt();
+        $documentReceipt->project_id = Projects::where('no_berkas', (int)$request->get('no_berkas'))->first()?->id;
+        $documentReceipt->stage = $request->tahap;
+        $documentReceipt->end_point = url('api/v1/permohonan');
+        $documentReceipt->payload = json_encode($request->all());
+
+        $documentReceipt->siinas_response = $return;
+
+        $documentReceipt->siinas_post_at = now();
+
+        $documentReceipt->save();   
 
         return $return;
     }
