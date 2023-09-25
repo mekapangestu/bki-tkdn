@@ -263,6 +263,8 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 8;
+                $project->nm_reviewer = $request->get('nm_reviewer');
+                $project->tgl_rencana_review = $request->get('tgl_rencana_review');
                 $project->save();
                 return response()->json([
                     "status" => "1",
@@ -296,6 +298,9 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 9;
+                $project->tgl_pelaksanaan_reviu = $request->get('tgl_pelaksanaan_reviu');
+                $project->mom = $request->get('mom');
+                $project->catatan = $request->get('catatan');
                 $project->save();
                 return response()->json([
                     "status" => "1",
