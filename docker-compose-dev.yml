@@ -35,7 +35,7 @@ services:
 
   nginx:
     build: install/nginx
-    container_name: kso-eni-nginx
+    container_name: tkdn-bki-nginx
     restart: unless-stopped
     ports:
       - 9047:7070

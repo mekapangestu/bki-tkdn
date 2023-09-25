@@ -124,7 +124,7 @@ elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
 
     # cd db
     # echo "\n import last database"
-    # cat backup.sql | docker exec -i kso-eni-db psql -U root -d kso_eni
+    # cat backup.sql | docker exec -i tkdn-bki-db psql -U root -d tkdn_db
 
 EOF
 elif  [ "pullcode" = $CI_JOB_STAGE ]; then
