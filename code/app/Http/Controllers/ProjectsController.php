@@ -201,9 +201,9 @@ class ProjectsController extends Controller
 
     public function verifySubmit(Request $request, $id)
     {
-        $asesor = Asesors::find($id);
-        $asesor->asesor_status = $request->action;
-        $asesor->asesor_note = $request->note;
+        $asesor = Projects::with('data')->find($id);
+        $asesor->data->asesor_status = $request->action;
+        $asesor->data->asesor_note = $request->note;
 
         $asesor->save();
         
