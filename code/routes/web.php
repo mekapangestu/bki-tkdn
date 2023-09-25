@@ -29,9 +29,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
+// Route::get('/', function () {
+//     return redirect('login');
+// });
+
+Route::view('/', 'landing');
 
 Route::group(['middleware' => ['auth']], function () {
     // Route::get('/dashboard', function () {
