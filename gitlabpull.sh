@@ -133,7 +133,7 @@ elif  [ "pullcode" = $CI_JOB_STAGE ]; then
     cd /home/administrator
     if [ ! -d $CI_PROJECT_NAME ]; then
         echo "\n Cloning into remote repo... ${CI_PROJECT_NAME}"
-        git clone https://${SANDIDEPLOYER_RLS}@repo.bki.co.id/${CI_PROJECT_PATH}.git
+        git clone https://${SANDIDEPLOYER}@repo.bki.co.id/${CI_PROJECT_PATH}.git
 
         # Create and activate virtualenv
         echo "\n change env to staging"
@@ -159,7 +159,7 @@ elif  [ "codeproduction" = $CI_JOB_STAGE ]; then
      cd /home/administrator
         if [ ! -d $CI_PROJECT_NAME ]; then
             echo "\n Cloning into remote repo... ${CI_PROJECT_NAME}"
-            git clone https://${SANDIDEPLOYER_RLS}@repo.bki.co.id/${CI_PROJECT_PATH}.git
+            git clone https://${SANDIDEPLOYER}@repo.bki.co.id/${CI_PROJECT_PATH}.git
 
             # Create and activate virtualenv
             echo "\n change env to staging"
