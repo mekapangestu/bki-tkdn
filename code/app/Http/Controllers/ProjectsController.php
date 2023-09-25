@@ -238,19 +238,25 @@ class ProjectsController extends Controller
         $project->save();
         
         $path = $project->files?->where('label', 'SPTJM')?->first()->path ?? '';
-        $response = Http::post('http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php', [
+
+        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
+        $payload = [
             "tahap" => 2,
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "status" => $status,
             "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
-            "url_sptjm" => $path ? asset('storage/'. $path) : '',
+            "url_sptjm" => $path ? asset('storage/' . $path) : '',
             "tgl_bast" => $path ? now() : '',
-        ]);
+        ];
+
+        $response = Http::post($endPoint, $payload);
 
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = $project->id;
         $documentReceipt->stage = 2;
+        $documentReceipt->payload = json_encode($payload);
+        $documentReceipt->end_point = $endPoint;
         if (is_array($response)) {
             $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
             $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;

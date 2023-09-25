@@ -72,9 +72,7 @@
                                         {{-- <a href="register.html" class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto"
                                             target="_blank">New User
                                         </a> --}}
-                                        <a href="login.html" class="btn ripple btn-min w-sm btn-primary me-2 my-auto"
-                                            target="_blank">Login
-                                        </a>
+                                        <a href="login.html" class="btn ripple btn-min w-sm btn-primary me-2 my-auto">Login</a>
                                     </div>
                                 </div>
                             </div>
@@ -130,9 +128,7 @@
                                             class="btn ripple btn-min w-sm btn-outline-primary me-2 my-auto d-lg-none d-xl-block d-block"
                                             target="_blank">New User
                                         </a> --}}
-                                        <a href="/login" class="btn ripple btn-min w-sm btn-primary me-2 my-auto d-lg-none d-xl-block d-block"
-                                            target="_blank">Login
-                                        </a>
+                                        <a href="/login" class="btn ripple btn-min w-sm btn-primary me-2 my-auto d-lg-none d-xl-block d-block">Login</a>
                                     </div>
                                 </div>
                             </div>
