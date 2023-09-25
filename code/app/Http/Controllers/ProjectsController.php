@@ -51,20 +51,20 @@ class ProjectsController extends Controller
                 File::makeDirectory($folderPath, 0777, true, true);
             }
 
-            if (isset($request->nib)) {
-                $this->singleUpload(1, $request->file('nib'), $request->project_id, 'NIB', 'project');
+            if (isset($request->aspek_produksi)) {
+                $this->singleUpload(1, $request->file('aspek_produksi'), $request->project_id, 'Aspek Produksi', 'project');
             }
 
-            if (isset($request->izin_usaha_industri)) {
-                $this->singleUpload(2, $request->file('izin_usaha_industri'), $request->project_id, 'Izin Usaha Industri', 'project');
+            if (isset($request->aspek_pemasaran)) {
+                $this->singleUpload(2, $request->file('aspek_pemasaran'), $request->project_id, 'Aspek Pemasaran', 'project');
             }
 
-            if (isset($request->akta_perusahaan)) {
-                $this->singleUpload(3, $request->file('akta_perusahaan'), $request->project_id, 'Akta Perusahaan', 'project');
+            if (isset($request->perhitungan_tkdn)) {
+                $this->singleUpload(3, $request->file('perhitungan_tkdn'), $request->project_id, 'Perhitungan TKDN Pemohon', 'project');
             }
 
-            if (isset($request->npwp)) {
-                $this->singleUpload(4, $request->file('npwp'), $request->project_id, 'NPWP', 'project');
+            if (isset($request->dokumen_lainnya)) {
+                $this->singleUpload(4, $request->file('dokumen_lainnya'), $request->project_id, 'Dokumen Lainnya', 'project');
             }
 
             return back()->with('success', 'Data Saved Successfully');
@@ -177,6 +177,13 @@ class ProjectsController extends Controller
         $data = Projects::with('files')->find($id);
 
         return view('projects.surat-jawaban', compact('data'));
+    }
+
+    public function view($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.view', compact('data'));
     }
 
     public function verifySubmit(Request $request, $id)
@@ -311,13 +318,13 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        // $tkdn = new Tkdn();
-        // $tkdn->project_id = $id;
-        // $tkdn->nilai_tkdn = $request->nilai_tkdn;
-        // $tkdn->nilai_tkdn_jasa = $request->nilai_tkdn_jasa;
-        // $tkdn->nilai_tkdn_gabungan = $request->nilai_tkdn_gabungan;
+        $asesor = Asesors::find($id);
+        $asesor->qc_status = $request->action;
+        $asesor->qc_note = $request->note;
+        $asesor->save();
 
-        // $tkdn->save();
+        $asesor->project->stage = 2;
+        $asesor->project->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {

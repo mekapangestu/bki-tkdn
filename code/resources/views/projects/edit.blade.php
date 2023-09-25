@@ -96,32 +96,32 @@
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">NIB</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="nib" accept="application/pdf">
+                                            <label for="" class="form-label">Aspek Produksi</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="aspek_produksi" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Izin Usaha Industri</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="izin_usaha_industri" accept="application/pdf">
+                                            <label for="" class="form-label">Aspek Pemasaran</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="aspek_pemasaran" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Akta Perusahaan</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="akta_perusahaan" accept="application/pdf">
+                                            <label for="" class="form-label">Perhitungan TKDN Pemohon</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="perhitungan_tkdn" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">NPWP</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="npwp" accept="application/pdf">
+                                            <label for="" class="form-label">Dokumen Lainnya</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="dokumen_lainnya" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
