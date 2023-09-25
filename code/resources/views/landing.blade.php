@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Space Dynamic - SEO HTML5 Template</title>
+    <title>TKDN BKI</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('landing/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -39,7 +39,7 @@ https://templatemo.com/tm-562-space-dynamic
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="index.html" class="logo">
-                            <h4>Spac<span>Dyna</span></h4>
+                            <img src="{{ asset('landing/assets/images/tkdn-bki.png') }}" style="max-height: 50px" alt="">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -51,7 +51,7 @@ https://templatemo.com/tm-562-space-dynamic
                             <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                             {{-- <li class="scroll-to-section"><a href="#contact">Message Us</a></li> --}}
                             <li class="scroll-to-section">
-                                <div class="main-red-button"><a href="#">Login</a></div>
+                                <div class="main-red-button"><a href="{{ route('login') }}">Login</a></div>
                             </li>
                         </ul>
                         <a class='menu-trigger'>
@@ -76,12 +76,12 @@ https://templatemo.com/tm-562-space-dynamic
                                 <h5>Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi</h5>
                                 <h2><em>TKDN</em> <span>BKI</span></h2>
                                 <p>Mudah, Cepat, dan Tepat dalam melakukan verifikasi sertifikat anda.</p>
-                            <button class="btn btn-lg btn-primary" style="border-radius: 20px">Tentang TKDN<git /button>
+                                <button class="btn btn-lg btn-primary" style="border-radius: 20px">Tentang TKDN<git /button>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing/assets/images/banner-right-image.png') }}" alt="team meeting">
+                                <img src="{{ asset('landing/assets/images/banner.png') }}" alt="team meeting">
                             </div>
                         </div>
                     </div>
@@ -101,47 +101,11 @@ https://templatemo.com/tm-562-space-dynamic
                 <div class="col-lg-8 align-self-center">
                     <div class="services">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="icon">
-                                        <img src="{{ asset('landing/assets/images/service-icon-01.png') }}" alt="reporting">
-                                    </div>
                                     <div class="right-text">
-                                        <h4>Data Analysis</h4>
-                                        <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-                                    <div class="icon">
-                                        <img src="{{ asset('landing/assets/images/service-icon-02.png') }}" alt="">
-                                    </div>
-                                    <div class="right-text">
-                                        <h4>Data Reporting</h4>
-                                        <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.9s">
-                                    <div class="icon">
-                                        <img src="{{ asset('landing/assets/images/service-icon-03.png') }}" alt="">
-                                    </div>
-                                    <div class="right-text">
-                                        <h4>Web Analytics</h4>
-                                        <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="1.1s">
-                                    <div class="icon">
-                                        <img src="{{ asset('landing/assets/images/service-icon-04.png') }}" alt="">
-                                    </div>
-                                    <div class="right-text">
-                                        <h4>SEO Suggestions</h4>
-                                        <p>Lorem ipsum dolor sit amet, ctetur aoi adipiscing eliter</p>
+                                        <h4>Tentang TKDN</h4>
+                                        <p>Perusahaan di Indonesia umumnya masih perlu mengimpor barang yang dibutuhkan pabrik di Indonesia guna mendukung proses produksi. namun demikian Pemerintah juga berupaya mendorong peningkatan penggunaan produk dalam negeri. Dalam proses impor inilah pemerintah menetapkan peraturan tentang tingkat kandungan dalam negeri (TKDN) yang harus diikuti oleh importir. Perusahaan akan mendapatkan sertifikat TKDN yang dikeluarkan oleh lembaga yang ditunjuk, setelah melakukan inspeksi dan pengujian dari perusahaan inspeksi independen Sucofindo.Sebagai perusahaan milik negara yang bergerak di bidang inspeksi dan pengujian, Sucofindo selama ini melayani pengujian dan sertifikasi TKDN untuk pemerintah maupun industri. Dalam hal keperluan sertifikasi TKDN, KementerianPerindustrian telah menunjuk beberapa lembaga surveyor yang akan menilai dan memverifikasi, salah satunya adalah PT Sucofindo. Dengan importir telah memiliki sertifikat TKDN, pemerintah akan memberikan izin impor untuk mendukung proses produksi pabrik di Indonesia. Dengan adanya ketentuan tentang TKDN, pemerintah ingin tetap memberikan keseimbangan pada perusahaan untuk berproduksi di Indonesia. Produksi perusahaan tetap dapat berlangsung, namun harus memberikan porsi secara proporsional terhadap hasil-hasil produksi dalam negeri. Agar para produsen di Indonesia ikut berkembang.</p>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +116,7 @@ https://templatemo.com/tm-562-space-dynamic
         </div>
     </div>
 
-    <div id="services" class="our-services section">
+    {{-- <div id="services" class="our-services section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 align-self-center  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -194,150 +158,76 @@ https://templatemo.com/tm-562-space-dynamic
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div id="portfolio" class="our-portfolio section">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-heading  wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
                         <h2>See What Our Agency <em>Offers</em> &amp; What We <span>Provide</span></h2>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
-                    <a href="#">
-                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                            <div class="hidden-content">
-                                <h4>SEO Analysis</h4>
-                                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('landing/assets/images/service-icon-01.png') }}" class="img-fluid rounded-start" alt="...">
                             </div>
-                            <div class="showed-content">
-                                <img src="{{ asset('landing/assets/images/portfolio-image.png') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <a href="#">
-                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.4s">
-                            <div class="hidden-content">
-                                <h4>Website Reporting</h4>
-                                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-                            </div>
-                            <div class="showed-content">
-                                <img src="{{ asset('landing/assets/images/portfolio-image.png') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <a href="#">
-                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <div class="hidden-content">
-                                <h4>Performance Tests</h4>
-                                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-                            </div>
-                            <div class="showed-content">
-                                <img src="{{ asset('landing/assets/images/portfolio-image.png') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <a href="#">
-                        <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.6s">
-                            <div class="hidden-content">
-                                <h4>Data Analysis</h4>
-                                <p>Lorem ipsum dolor sit ameti ctetur aoi adipiscing eto.</p>
-                            </div>
-                            <div class="showed-content">
-                                <img src="{{ asset('landing/assets/images/portfolio-image.png') }}" alt="">
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="blog" class="our-blog section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <div class="section-heading">
-                        <h2>Check Out What Is <em>Trending</em> In Our Latest <span>News</span></h2>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <div class="top-dec">
-                        <img src="{{ asset('landing/assets/images/blog-dec.png') }}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <div class="left-image">
-                        <a href="#"><img src="{{ asset('landing/assets/images/big-blog-thumb.jpg') }}" alt="Workspace Desktop"></a>
-                        <div class="info">
-                            <div class="inner-content">
-                                <ul>
-                                    <li><i class="fa fa-calendar"></i> 24 Mar 2021</li>
-                                    <li><i class="fa fa-users"></i> TemplateMo</li>
-                                    <li><i class="fa fa-folder"></i> Branding</li>
-                                </ul>
-                                <a href="#">
-                                    <h4>SEO Agency &amp; Digital Marketing</h4>
-                                </a>
-                                <p>Lorem ipsum dolor sit amet, consectetur and sed doer ket eismod tempor incididunt ut labore et dolore magna...</p>
-                                <div class="main-blue-button">
-                                    <a href="#">Discover More</a>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Verifikasi</h5>
+                                    <h3>200</h3>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <div class="right-list">
-                        <ul>
-                            <li>
-                                <div class="left-content align-self-center">
-                                    <span><i class="fa fa-calendar"></i> 18 Mar 2021</span>
-                                    <a href="#">
-                                        <h4>New Websites &amp; Backlinks</h4>
-                                    </a>
-                                    <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('landing/assets/images/service-icon-02.png') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Produk Verifikasi</h5>
+                                    <h3>200</h3>
                                 </div>
-                                <div class="right-image">
-                                    <a href="#"><img src="{{ asset('landing/assets/images/blog-thumb-01.jpg') }}" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('landing/assets/images/service-icon-03.png') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Product</h5>
+                                    <h3>200</h3>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="left-content align-self-center">
-                                    <span><i class="fa fa-calendar"></i> 14 Mar 2021</span>
-                                    <a href="#">
-                                        <h4>SEO Analysis &amp; Content Ideas</h4>
-                                    </a>
-                                    <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ asset('landing/assets/images/service-icon-04.png') }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Sertifikat/</h5>
+                                    <h3>200</h3>
                                 </div>
-                                <div class="right-image">
-                                    <a href="#"><img src="{{ asset('landing/assets/images/blog-thumb-01.jpg') }}" alt=""></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="left-content align-self-center">
-                                    <span><i class="fa fa-calendar"></i> 06 Mar 2021</span>
-                                    <a href="#">
-                                        <h4>SEO Tips &amp; Digital Marketing</h4>
-                                    </a>
-                                    <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                                </div>
-                                <div class="right-image">
-                                    <a href="#"><img src="{{ asset('landing/assets/images/blog-thumb-01.jpg') }}" alt=""></a>
-                                </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -398,9 +288,10 @@ https://templatemo.com/tm-562-space-dynamic
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <p>© Copyright 2021 Space Dynamic Co. All Rights Reserved.
+                    <p>© Copyright <?php $year = date('Y');
+                    echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
 
-                        <br>Design: <a rel="nofollow" href="https://templatemo.com">TemplateMo</a>
+                        <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a>
                     </p>
                 </div>
             </div>
