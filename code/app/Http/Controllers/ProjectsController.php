@@ -204,7 +204,7 @@ class ProjectsController extends Controller
         $asesor = Projects::with('data')->find($id);
         $asesor->data->asesor_status = $request->action;
         $asesor->data->asesor_note = $request->note;
-
+        
         $asesor->data->save();
         
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
