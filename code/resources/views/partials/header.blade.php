@@ -12,7 +12,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}" />
 
     <!-- TITLE -->
+<<<<<<< HEAD
     <title>BKI - TKDN</title>
+=======
+    <title>KSO | @yield('title')</title>
+>>>>>>> cf10e7d978006918e22539267bd43fbf9b28cf4f
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />

@@ -36,7 +36,7 @@ if [ "deploy" = $CI_JOB_STAGE ]; then
 
     #mount NFS
     echo "\n mount NFS"
-    mount -t nfs 10.0.1.180:/volume1/Data_inspeksi_kso/prod code/storage
+    mount -t nfs 10.0.1.180:/volume1/Data_TKDN/prod code/storage
 
     #Removing previus container
     echo "\n Removing previus container"
@@ -48,19 +48,19 @@ if [ "deploy" = $CI_JOB_STAGE ]; then
     sudo docker-compose -f docker-compose-prod.yml up -d
 
     echo "\n check php version"
-    docker exec kso-eni-app php -v
+    docker exec tkdn-bki-php php -v
 
-    docker exec kso-eni-app chown -R 1000:33 /var/www/html
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage/framework
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage/logs
+    docker exec tkdn-bki-php chown -R 1000:33 /var/www/html
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage/framework
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage/logs
 
     # debug
-    docker exec kso-eni-app id www-data
-    docker exec kso-eni-app ls -l /var/www/html/storage
+    docker exec tkdn-bki-php id www-data
+    docker exec tkdn-bki-php ls -l /var/www/html/storage
 
-    docker exec kso-eni-app composer install --ignore-platform-reqs
-    docker exec kso-eni-app php artisan storage:link
+    docker exec tkdn-bki-php composer install --ignore-platform-reqs
+    docker exec tkdn-bki-php php artisan storage:link
 EOF
 elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
     echo "${CI_JOB_STAGE}"
@@ -93,7 +93,7 @@ elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
 
     #mount NFS
     echo "\n mount NFS"
-    mount -t nfs 10.0.1.180:/volume1/Data_inspeksi_kso/staging code/storage
+    mount -t nfs 10.0.1.180:/volume1/Data_TKDN/staging code/storage
 
     #Removing previus container
     echo "\n Removing previus container"
@@ -105,26 +105,26 @@ elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
     sudo docker-compose -f docker-compose-dev.yml up -d
 	
     echo "\n check php version"
-    docker exec kso-eni-app php -v
+    docker exec tkdn-bki-php php -v
 	
-    docker exec kso-eni-app chown -R 1000:33 /var/www/html
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage/framework
-    docker exec kso-eni-app chmod -R 775 /var/www/html/storage/logs
+    docker exec tkdn-bki-php chown -R 1000:33 /var/www/html
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage/framework
+    docker exec tkdn-bki-php chmod -R 775 /var/www/html/storage/logs
     
     # debug
-    docker exec kso-eni-app id www-data
-    docker exec kso-eni-app ls -l /var/www/html/storage
+    docker exec tkdn-bki-php id www-data
+    docker exec tkdn-bki-php ls -l /var/www/html/storage
     
-	docker exec kso-eni-app composer install --ignore-platform-reqs
-    docker exec kso-eni-app php artisan key:generate
-    docker exec kso-eni-app php artisan storage:link
-    docker exec kso-eni-app php artisan migrate
-    docker exec kso-eni-app php artisan db:seed
+	docker exec tkdn-bki-php composer install --ignore-platform-reqs
+    docker exec tkdn-bki-php php artisan key:generate
+    docker exec tkdn-bki-php php artisan storage:link
+    docker exec tkdn-bki-php php artisan migrate
+    docker exec tkdn-bki-php php artisan db:seed
 
     # cd db
     # echo "\n import last database"
-    # cat backup.sql | docker exec -i kso-eni-db psql -U root -d kso_eni
+    # cat backup.sql | docker exec -i tkdn-bki-db psql -U root -d tkdn_db
 
 EOF
 elif  [ "pullcode" = $CI_JOB_STAGE ]; then
@@ -133,7 +133,7 @@ elif  [ "pullcode" = $CI_JOB_STAGE ]; then
     cd /home/administrator
     if [ ! -d $CI_PROJECT_NAME ]; then
         echo "\n Cloning into remote repo... ${CI_PROJECT_NAME}"
-        git clone https://${SANDIDEPLOYER_RLS}@repo.bki.co.id/${CI_PROJECT_PATH}.git
+        git clone https://${SANDIDEPLOYER}@repo.bki.co.id/${CI_PROJECT_PATH}.git
 
         # Create and activate virtualenv
         echo "\n change env to staging"
@@ -159,7 +159,7 @@ elif  [ "codeproduction" = $CI_JOB_STAGE ]; then
      cd /home/administrator
         if [ ! -d $CI_PROJECT_NAME ]; then
             echo "\n Cloning into remote repo... ${CI_PROJECT_NAME}"
-            git clone https://${SANDIDEPLOYER_RLS}@repo.bki.co.id/${CI_PROJECT_PATH}.git
+            git clone https://${SANDIDEPLOYER}@repo.bki.co.id/${CI_PROJECT_PATH}.git
 
             # Create and activate virtualenv
             echo "\n change env to staging"
