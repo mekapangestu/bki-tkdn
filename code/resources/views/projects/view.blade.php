@@ -29,7 +29,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Verifikasi</h1>
+                <h1 class="page-title">View</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.verify-submit', $data->id) }}" enctype="multipart/form-data">
+                            <form>
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
                                 <div class="row">
@@ -134,35 +134,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">BAST</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="bast" accept="application/pdf">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">SPTJM</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/pdf">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Alasan</label>
-                                            <textarea class="form-control" name="note">{{$data->data->asesor_note}}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
-                                <button type="submit" name="action" value="2" class="btn btn-success mt-4 mb-0">Terima Tidak Lengkap</button>
-                                <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
-                                <button type="submit" name="action" value="3" class="btn btn-warning mt-4 mb-0">Freeze/Pending</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>

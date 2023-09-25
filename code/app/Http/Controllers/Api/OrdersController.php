@@ -7,12 +7,14 @@ use App\Models\User;
 use App\Models\Orders;
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
+    private $password;
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +22,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+        $this->password = 'password';
     }
 
     /**
@@ -41,6 +43,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
             $docNumber = (int)$request->get('no_berkas');
             if ($docNumber > 0) {
@@ -67,8 +70,8 @@ class OrdersController extends Controller
                     $user->role_id = 5;
 
                     $user->status = "active";
-                    $password = 'password';
-                    $user->password = bcrypt($password);
+                    
+                    $user->password = bcrypt($this->password);
 
                     $user->save();
                     
@@ -85,14 +88,15 @@ class OrdersController extends Controller
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
                         "stage" => 1,
                     ]);
-
-                    Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
+                    
+                    Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $this->password], function ($message) use ($request) {
                         $message->from('no-reply@site.com', "Site name");
                         $message->subject("Welcome to site name");
                         $message->to($request->get('email_cp'));
                     });
-                }
 
+                }
+                
                 $order = Orders::create([
                     'siinas_data' => json_encode($request->all(), JSON_PRETTY_PRINT),
                     "no_berkas" => $request->get('no_berkas'),
@@ -106,6 +110,9 @@ class OrdersController extends Controller
                     "alamat_kantor" => $request->get('alamat_kantor'),
                     "alamat_pabrik" => $request->get('alamat_pabrik'),
                 ]);
+                
+                DB::commit();
+
             } else {
                 return response()->json([
                     "status" => 0,
@@ -124,6 +131,7 @@ class OrdersController extends Controller
                 "url" => url("/projects/{$project->id}"),
             ]);
         } catch (\Throwable $throwable) {
+            DB::rollback();
             return response()->json([
                 "status" => 0,
                 "data" => "tidak ada",
