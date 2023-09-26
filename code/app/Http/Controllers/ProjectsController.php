@@ -492,6 +492,25 @@ class ProjectsController extends Controller
         $project->stage = 10;
         $project->save();
 
+        $produk = [];
+        foreach (json_decode($project->orders->siinas_data)->produk as $value) {
+            array_push($produk, [
+                "id_produk" => $value->id_produk,
+                "produk" => $value->produk,
+                "spesifikasi" => "spesifikasi",
+                "kd_hs" => "07096010",
+                "kd_kelompok_barang" => "1",
+                "nilai_tkdn" => $project->tkdn->nilai_tkdn ?? 22,
+                "nilai_tkdn_jasa" => $project->nilai_tkdn_jasa ?? 20,
+                "nilai_tkdn_gabungan" => $project->nilai_tkdn_gabungan ?? 42,
+                "merk" => "bubur",
+                "tipe" => "bubut",
+                "standar" => "bubur",
+                "sertifikat_produk" => "123\/CERT\/2023",
+                "produsen" => "Nama Produsen"
+            ]);
+        }
+
         $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php';
         $payload = [
@@ -511,23 +530,7 @@ class ProjectsController extends Controller
             ),
             "kbli" => "15340",
             "bidang_usaha" => "Industri Makanan",
-            "produk" => array (
-                0 => array(
-                    "id_produk" => "4",
-                    "produk" => "bubur bayi",
-                    "spesifikasi" => "Rasa Wortel",
-                    "kd_hs" => "12345678",
-                    "kd_kelompok_barang" => "1",
-                    "nilai_tkdn" => $project->tkdn->nilai_tkdn,
-                    "nilai_tkdn_jasa" => $project->nilai_tkdn_jasa,
-                    "nilai_tkdn_gabungan" => $project->nilai_tkdn_gabungan,
-                    "merk" => "merk",
-                    "tipe" => "tipe",
-                    "standar" => "standar",
-                    "sertifikat_produk" => "sertifikat_produk",
-                    "produsen" => "produsen",
-                )
-            ),
+            "produk" => $produk
         ];
 
         $response = Http::post($endPoint, $payload);
