@@ -148,6 +148,7 @@ elif  [ "pullcode" = $CI_JOB_STAGE ]; then
         #env untuk laravel lumen
         #jika diperlukan tambahkan symlink, chmod, dll
         sort -u -t '=' -k 1,1 ../.env.staging .env.example > .env
+        docker exec tkdn-bki-php php artisan migrate
         #composer install
     else
         echo "Pulling remote repo origin... ${CI_PROJECT_NAME}"

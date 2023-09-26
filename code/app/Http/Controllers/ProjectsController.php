@@ -366,9 +366,9 @@ class ProjectsController extends Controller
                     "spesifikasi" => "spesifikasi",
                     "kd_hs" => "07096010",
                     "kd_kelompok_barang" => "1",
-                    "nilai_tkdn" => $request->tkdn,
-                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa,
-                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan,
+                    "nilai_tkdn" => $request->tkdn ?? 0,
+                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa ?? 0,
+                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan ?? 0,
                     "merk" => "bubur",
                     "tipe" => "bubut",
                     "standar" => "bubur",
@@ -387,7 +387,7 @@ class ProjectsController extends Controller
                 "no_referensi" => "123\/REF\/2023",
                 "no_laporan" => "123\/AWK\/2023",
                 "kbli" => "15340",
-                "bidang_usaha" => "",
+                "bidang_usaha" => "15340",
                 "produk" => $produk
             ];
 
