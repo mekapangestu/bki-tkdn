@@ -492,31 +492,36 @@ class ProjectsController extends Controller
             "tahap" => "10",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-            "status" => '1',
-            "alasan" => '',
-            "no_referensi" => "123\/REF\/2023",
-            "no_laporan" => "123\/AWK\/2023",
+            "status" => "1",
+            "alasan" => "contoh alasan",
+            "no_referensi" => "sdasda",
+            "no_laporan" => "asfsdfsd",
             "url_surat_jawaban" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
-            "url_lhv_penyesuaian" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
-            "url_dok_dukung" => [
-                "url" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf"
-            ],
-            "produk" => [
-                "id_produk" => "3",
-                "produk" => "bubur bayi",
-                "spesifikasi" => "spesifikasi bubur",
-                "kbli" => "10130",
-                "kd_hs" => "07096010",
-                "kd_kelompok_barang" => "1",
-                "nilai_tkdn" => $project->tkdn->nilai_tkdn,
-                "nilai_tkdn_jasa" => $project->nilai_tkdn_jasa,
-                "nilai_tkdn_gabungan" => $project->nilai_tkdn_gabungan,
-                "merk" => "bubur",
-                "tipe" => "bubut",
-                "standar" => "bubur",
-                "sertifikat_produk" => "123\/CERT\/2023",
-                "produsen" => "Nama Produsen"
-            ]
+            "url_lhv_penyesuaian" =>  $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+            "url_dok_dukung" => array (
+                0 => array(
+                    "url" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+                )
+            ),
+            "kbli" => "15340",
+            "bidang_usaha" => "Industri Makanan",
+            "produk" => array (
+                0 => array(
+                    "id_produk" => "4",
+                    "produk" => "bubur bayi",
+                    "spesifikasi" => "Rasa Wortel",
+                    "kd_hs" => "12345678",
+                    "kd_kelompok_barang" => "1",
+                    "nilai_tkdn" => $project->tkdn->nilai_tkdn,
+                    "nilai_tkdn_jasa" => $project->nilai_tkdn_jasa,
+                    "nilai_tkdn_gabungan" => $project->nilai_tkdn_gabungan,
+                    "merk" => "merk",
+                    "tipe" => "tipe",
+                    "standar" => "standar",
+                    "sertifikat_produk" => "sertifikat_produk",
+                    "produsen" => "produsen",
+                )
+            ),
         ];
 
         $response = Http::post($endPoint, $payload);

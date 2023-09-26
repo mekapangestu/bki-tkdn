@@ -347,6 +347,7 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 11;
+                $project->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
                 $project->save();
                 return response()->json([
                     "status" => "1",
@@ -380,6 +381,11 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 $project->stage = 12;
+                $project->alasan_tolak = $request->get('alasan_tolak');
+                $project->no_tanda_sah = $request->get('no_tanda_sah');
+                $project->tgl_tanda_sah = $request->get('tgl_tanda_sah');
+                $project->tgl_expire = $request->get('tgl_expire');
+                $project->url_sertifikat_terbit = $request->get('url_sertifikat_terbit');
                 $project->save();
                 return response()->json([
                     "status" => "1",
