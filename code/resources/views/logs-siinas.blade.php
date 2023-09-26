@@ -63,7 +63,7 @@
                                         <th class="border-bottom-0 filter">Stage</th>
                                         <th class="border-bottom-0 filter">End Point</th>
                                         <th class="border-bottom-0 filter">Payload</th>
-                                        <th class="border-bottom-0 filter">Siinas Response</th>
+                                        <th class="border-bottom-0 filter">Response</th>
                                         <th class="border-bottom-0 filter">Created Date</th>
                                     </tr>
                                 </thead>
