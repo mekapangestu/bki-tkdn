@@ -124,6 +124,22 @@ class OrdersController extends Controller
                 "alamat_pabrik" => $request->get('alamat_pabrik'),
             ]);
 
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 1;
+            $documentReceipt->payload = json_encode($request->all());
+            $documentReceipt->end_point = url('api/v1/permohonan');
+            $documentReceipt->siinas_response = json_encode([
+                "status" => "1",
+                "data" => "ada",
+                "tahap" => "1",
+                "message" => "ok",
+                "url" => url("/projects/{$project->id}"),
+            ], JSON_PRETTY_PRINT);
+            $documentReceipt->siinas_post_at = now();
+
+            $documentReceipt->save();
+
             DB::commit();
 
             return response()->json([
