@@ -46,8 +46,8 @@ https://templatemo.com/tm-562-space-dynamic
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
-                            <li class="scroll-to-section"><a href="#services">Customer</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Gallery</a></li>
+                            {{-- <li class="scroll-to-section"><a href="#services">Customer</a></li> --}}
+                            <li class="scroll-to-section"><a href="#portfolio">Progress</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                             {{-- <li class="scroll-to-section"><a href="#contact">Message Us</a></li> --}}
                             <li class="scroll-to-section">
@@ -76,7 +76,7 @@ https://templatemo.com/tm-562-space-dynamic
                                 <h5>Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi</h5>
                                 <h2><em>TKDN</em> <span>BKI</span></h2>
                                 <p>Mudah, Cepat, dan Tepat dalam melakukan verifikasi sertifikat anda.</p>
-                                <button class="btn btn-lg btn-primary" style="border-radius: 20px">Tentang TKDN<git /button>
+                                <a class="btn btn-lg btn-primary" href="#about" style="border-radius: 20px">Tentang TKDN</a>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -160,15 +160,15 @@ https://templatemo.com/tm-562-space-dynamic
         </div>
     </div> --}}
 
-    <div id="portfolio" class="our-portfolio section">
+    <div id="portfolio" class="our-portfolio section" style="padding-bottom: 100px">
         <div class="container">
-            {{-- <div class="row">
-                <div class="col-lg-6 offset-lg-3">
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="section-heading  wow bounceIn" data-wow-duration="1s" data-wow-delay="0.2s">
-                        <h2>See What Our Agency <em>Offers</em> &amp; What We <span>Provide</span></h2>
+                        <h2>Rekapitulasi Proses Pekerjaan <em>Verifikasi</em> <span>Sertifikat</span> TKDN</h2>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="card mb-3" style="max-width: 540px;">
@@ -291,7 +291,7 @@ https://templatemo.com/tm-562-space-dynamic
                     <p>© Copyright <?php $year = date('Y');
                     echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
 
-                        <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a>
+                        {{-- <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a> --}}
                     </p>
                 </div>
             </div>

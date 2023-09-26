@@ -367,11 +367,12 @@ class ProjectsController extends Controller
                 "url_draft_persetujuan_penamaan_tanda_sah" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
                 "no_referensi" => "123\/REF\/2023",
                 "no_laporan" => "123\/AWK\/2023",
+                "kbli" => "15340",
+                "bidang_usaha" => "",
                 "produk" => [
                     "id_produk" => "3",
                     "produk" => "bubur bayi",
                     "spesifikasi" => "spesifikasi bubur",
-                    "kbli" => "10130",
                     "kd_hs" => "07096010",
                     "kd_kelompok_barang" => "1",
                     "nilai_tkdn" => $request->tkdn,
