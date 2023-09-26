@@ -44,10 +44,10 @@ class OrdersController extends Controller
     {
         DB::beginTransaction();
         try {
-            $docNumber = (int)$request->get('no_berkas');
-            if ($docNumber > 0) {
-                $project = Projects::where('no_berkas', $docNumber)->first();
-                if ($project) {
+            $project = Projects::where('nib', $request->get('nib'))->first();
+            if ($project) {
+                $no_berkas = Projects::where('no_berkas', $request->get('no_berkas'))->first();
+                if ($no_berkas) {
                     $project->update([
                         "nib" => $request->get('nib'),
                         "npwp" => $request->get('npwp'),
@@ -59,23 +59,8 @@ class OrdersController extends Controller
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
                     ]);
                 } else {
-                    $user = new User();
-                    $user->name = $request->get('nama_cp');
-                    $user->contact = 0;
-                    $user->email = $request->get('email_cp');
-
-                    $role = Role::find(5);
-                    $user->assignRole($role->name);
-                    $user->role_id = 5;
-
-                    $user->status = "active";
-                    $password = 'password';
-                    $user->password = bcrypt($password);
-
-                    $user->save();
-                    
                     $project = Projects::create([
-                        "user_id" => $user->id,
+                        "user_id" => $project->user_id,
                         "no_berkas" => $request->get('no_berkas'),
                         "nib" => $request->get('nib'),
                         "npwp" => $request->get('npwp'),
@@ -87,40 +72,59 @@ class OrdersController extends Controller
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
                         "stage" => 1,
                     ]);
-                    
-                    // Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
-                    //     $message->from('no-reply@site.com', "Site name");
-                    //     $message->subject("Welcome to site name");
-                    //     $message->to($request->get('email_cp'));
-                    // });
-
                 }
-                
-                $order = Orders::create([
-                    'siinas_data' => json_encode($request->all(), JSON_PRETTY_PRINT),
+            } else {
+                $user = new User();
+                $user->name = $request->get('nama_cp');
+                $user->contact = 0;
+                $user->email = $request->get('email_cp');
+
+                $role = Role::find(5);
+                $user->assignRole($role->name);
+                $user->role_id = 5;
+
+                $user->status = "active";
+                $password = 'password';
+                $user->password = bcrypt($password);
+
+                $user->save();
+
+                $project = Projects::create([
+                    "user_id" => $user->id,
                     "no_berkas" => $request->get('no_berkas'),
                     "nib" => $request->get('nib'),
                     "npwp" => $request->get('npwp'),
-                    "verifikator" => $request->get('verifikator'),
                     "kd_produk" => $request->get('kd_produk'),
                     "nama_cp" => $request->get('nama_cp'),
                     "jabatan_cp" => $request->get('jabatan_cp'),
                     "no_hp_cp" => $request->get('no_hp_cp'),
                     "alamat_kantor" => $request->get('alamat_kantor'),
                     "alamat_pabrik" => $request->get('alamat_pabrik'),
+                    "stage" => 1,
                 ]);
-                
-                DB::commit();
-
-            } else {
-                return response()->json([
-                    "status" => 0,
-                    "data" => "tidak ada",
-                    "tahap" => "1",
-                    "message" => "error: nomor berkas tidak dapat dibaca",
-                    "url" => null,
-                ]);
+                                    
+                // Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
+                //     $message->from('no-reply@site.com', "Site name");
+                //     $message->subject("Welcome to site name");
+                //     $message->to($request->get('email_cp'));
+                // });
             }
+
+            Orders::create([
+                'siinas_data' => json_encode($request->all(), JSON_PRETTY_PRINT),
+                "no_berkas" => $request->get('no_berkas'),
+                "nib" => $request->get('nib'),
+                "npwp" => $request->get('npwp'),
+                "verifikator" => $request->get('verifikator'),
+                "kd_produk" => $request->get('kd_produk'),
+                "nama_cp" => $request->get('nama_cp'),
+                "jabatan_cp" => $request->get('jabatan_cp'),
+                "no_hp_cp" => $request->get('no_hp_cp'),
+                "alamat_kantor" => $request->get('alamat_kantor'),
+                "alamat_pabrik" => $request->get('alamat_pabrik'),
+            ]);
+
+            DB::commit();
 
             return response()->json([
                 "status" => "1",
@@ -135,9 +139,16 @@ class OrdersController extends Controller
                 "status" => 0,
                 "data" => "tidak ada",
                 "tahap" => "1",
-                "message" => "error: " . $throwable->getMessage(),
+                "message" => "error: nomor berkas tidak dapat dibaca",
                 "url" => null,
             ]);
+            // return response()->json([
+            //     "status" => 0,
+            //     "data" => "tidak ada",
+            //     "tahap" => "1",
+            //     "message" => "error: " . $throwable->getMessage(),
+            //     "url" => null,
+            // ]);
         }
     }
 
