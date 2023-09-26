@@ -368,7 +368,7 @@ class ProjectsController extends Controller
                 "no_referensi" => "123\/REF\/2023",
                 "no_laporan" => "123\/AWK\/2023",
                 "kbli" => "15340",
-                "bidang_usaha" => "",
+                "bidang_usaha" => "15340",
                 "produk" => [
                     "id_produk" => "3",
                     "produk" => "bubur bayi",
