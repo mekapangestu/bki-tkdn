@@ -32,6 +32,11 @@ class Projects extends Model
         return $this->hasOne(Tkdn::class, 'project_id', 'id');
     }
 
+    public function logs()
+    {
+        return $this->hasMany(DocumentReceipt::class, 'project_id', 'id');
+    }
+
     public function statuses()
     {
         return $this->belongsTo(Statuses::class, 'status', 'id');

@@ -69,6 +69,7 @@
                                         <th class="border-bottom-0 filter">Status QC</th>
                                         <th class="border-bottom-0 filter">Catatan QC</th>
                                         <th class="border-bottom-0 filter">Status</th>
+                                        <th class="border-bottom-0 filter">Last Activity</th>
                                         <th class="border-bottom-0" style="width: 25px">Action</th>
                                     </tr>
                                 </thead>
@@ -85,6 +86,13 @@
                                         <td>{{ $item->data?->statusQc->name ?? '-' }}</td>
                                         <td>{{ $item->data?->qc_note ?? '-' }}</td>
                                         <td>{{ $item->statuses?->name ?? '-' }}</td>
+                                        <td style="text-align: left;">
+                                            @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)
+                                                {{$key . ' = ' . $val}}<br>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </td>
                                         <td>
                                             @role('superadmin|administrator')
                                             <div class="dropdown">
@@ -105,10 +113,12 @@
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
                                                         <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
-                                                    @elseif($item->stage == 1)
+                                                    @elseif($item->stage == 1 && $item->status == 1)
                                                         <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
-                                                        @endif
-                                                        <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
+                                                    @elseif($item->stage == 1 && $item->status == null)
+                                                        <li><a href="{{route('projects.verify-admin', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi</a></li>
+                                                    @endif
+                                                    <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
 
                                                 </ul>
                                             </div>

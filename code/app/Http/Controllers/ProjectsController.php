@@ -24,7 +24,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $data = Projects::with('statuses')
+        $data = Projects::with('statuses', 'logs')
                 ->when(auth()->user()->hasRole('assessor'), function ($q) {
                     return $q->whereHas('data', function ($q) {
                         return $q->where('asesor', '=', auth()->user()->id);
@@ -143,6 +143,13 @@ class ProjectsController extends Controller
         //
     }
 
+    public function verifyAdmin($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.verify-admin', compact('data'));
+    }
+
     public function verify($id)
     {
         $data = Projects::with('files')->find($id);
@@ -197,6 +204,16 @@ class ProjectsController extends Controller
         $data = Projects::with('files')->find($id);
 
         return view('projects.view', compact('data'));
+    }
+
+    public function verifyAdminSubmit(Request $request, $id)
+    {
+        $project = Projects::with('data')->find($id);
+        $project->status = $request->action;
+
+        $project->save();
+
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function verifySubmit(Request $request, $id)

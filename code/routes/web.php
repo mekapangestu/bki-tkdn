@@ -45,8 +45,10 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/dashboard/detail-progress/{id}', [DashboardController::class, 'detailProgress'])->name('dashboard.detail-progress');
     
     Route::resource('projects', ProjectsController::class);
+    Route::get('/projects/verify-admin/{id}', [ProjectsController::class, 'verifyAdmin'])->name('projects.verify-admin');
     Route::get('/projects/verify/{id}', [ProjectsController::class, 'verify'])->name('projects.verify');
     Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
+    Route::post('/projects/verify-admin/{id}', [ProjectsController::class, 'verifyAdminSubmit'])->name('projects.verify-admin-submit');
     Route::post('/projects/verify/{id}', [ProjectsController::class, 'verifySubmit'])->name('projects.verify-submit');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
