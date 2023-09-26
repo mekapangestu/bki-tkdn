@@ -59,6 +59,9 @@ if [ "deploy" = $CI_JOB_STAGE ]; then
     docker exec tkdn-bki-php id www-data
     docker exec tkdn-bki-php ls -l /var/www/html/storage
 
+
+    docker exec tkdn-bki-php php artisan optimize:clear
+    docker exec tkdn-bki-php php artisan cache:clear
 	  docker exec tkdn-bki-php composer install --ignore-platform-reqs
     docker exec tkdn-bki-php php artisan key:generate
     docker exec tkdn-bki-php php artisan storage:link
