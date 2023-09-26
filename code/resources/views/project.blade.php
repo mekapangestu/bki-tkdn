@@ -120,11 +120,11 @@
                                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="fe fe-more-horizontal fs-14"></span>
                                                 </button>
-                                                @if ($item->url_sertifikat_terbit)
+                                                {{-- @if ($item->url_sertifikat_terbit)
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                         <li><a href="{{url($item->url_sertifikat_terbit)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                     </ul>
-                                                @endif
+                                                @endif --}}
 
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                     <li><a href="{{route('projects.edit', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
