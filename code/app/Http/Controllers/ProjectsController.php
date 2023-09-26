@@ -357,6 +357,25 @@ class ProjectsController extends Controller
             $project = Projects::with('data', 'files')->find($id);
             $project->stage = 4;
             $project->save();
+
+            $produk = [];
+            foreach (json_decode($project->orders->siinas_data)->produk as $value) {
+                array_push($produk, [
+                    "id_produk" => $value->id_produk,
+                    "produk" => $value->produk,
+                    "spesifikasi" => "spesifikasi",
+                    "kd_hs" => "07096010",
+                    "kd_kelompok_barang" => "1",
+                    "nilai_tkdn" => $request->tkdn,
+                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa,
+                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan,
+                    "merk" => "bubur",
+                    "tipe" => "bubut",
+                    "standar" => "bubur",
+                    "sertifikat_produk" => "123\/CERT\/2023",
+                    "produsen" => "Nama Produsen"
+                ]);
+            }
     
             $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
@@ -369,21 +388,7 @@ class ProjectsController extends Controller
                 "no_laporan" => "123\/AWK\/2023",
                 "kbli" => "15340",
                 "bidang_usaha" => "",
-                "produk" => [
-                    "id_produk" => "3",
-                    "produk" => "bubur bayi",
-                    "spesifikasi" => "spesifikasi bubur",
-                    "kd_hs" => "07096010",
-                    "kd_kelompok_barang" => "1",
-                    "nilai_tkdn" => $request->tkdn,
-                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa,
-                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan,
-                    "merk" => "bubur",
-                    "tipe" => "bubut",
-                    "standar" => "bubur",
-                    "sertifikat_produk" => "123\/CERT\/2023",
-                    "produsen" => "Nama Produsen"
-                ]
+                "produk" => $produk
             ];
 
             $response = Http::post($endPoint, $payload);
