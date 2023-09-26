@@ -65,8 +65,8 @@ if [ "deploy" = $CI_JOB_STAGE ]; then
 	  docker exec tkdn-bki-php php artisan optimize:clear
     docker exec tkdn-bki-php php artisan cache:clear
     docker exec tkdn-bki-php php artisan storage:link
-    docker exec -it tkdn-bki-php php artisan migrate --force
-    docker exec -it tkdn-bki-php php artisan db:seed --force
+    docker exec -it -T tkdn-bki-php php artisan migrate --force
+    docker exec -it -T tkdn-bki-php php artisan db:seed --force
 
 EOF
 elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
