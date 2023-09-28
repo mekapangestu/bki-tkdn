@@ -65,6 +65,7 @@
                                         <th class="border-bottom-0 filter">Payload</th>
                                         <th class="border-bottom-0 filter">Response</th>
                                         <th class="border-bottom-0 filter">Created Date</th>
+                                        <th class="border-bottom-0 filter">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,6 +77,7 @@
                                         <td>{{ $item->payload }}</td>
                                         <td>{{ $item->siinas_response }}</td>
                                         <td>{{ $item->created_at->diffForHumans() }}</td>
+                                        <td><a href="{{route('repost', $item->id)}}">Repost</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

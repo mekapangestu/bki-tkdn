@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DocumentReceipt;
 use Illuminate\Http\Request;
+use App\Models\DocumentReceipt;
+use Illuminate\Support\Facades\Http;
 
 class DocumentReceiptController extends Controller
 {
@@ -83,5 +84,32 @@ class DocumentReceiptController extends Controller
     public function destroy(DocumentReceipt $documentReceipt)
     {
         //
+    }
+
+    public function rePost($id)
+    {
+        $data = DocumentReceipt::find($id);
+
+        // $response = Http::post($data->end_point, (array) json_decode($data->payload));
+
+        // $documentReceipt = new DocumentReceipt();
+        // $documentReceipt->project_id = $data->project_id;
+        // $documentReceipt->stage = 2;
+        // $documentReceipt->payload = $data->payload;
+        // $documentReceipt->end_point = $data->end_point;
+        // if (is_array($response)) {
+        //     $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+        //     $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+        // } else if ($response) {
+        //     $documentReceipt->siinas_response = (string)$response;
+        // }
+
+        // if ($response) {
+        //     $documentReceipt->siinas_post_at = now();
+        // }
+
+        // $documentReceipt->save();
+
+        return back()->with('success', 'Data Repost Successfully');
     }
 }
