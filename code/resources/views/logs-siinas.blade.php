@@ -77,7 +77,11 @@
                                         <td>{{ $item->payload }}</td>
                                         <td>{{ $item->siinas_response }}</td>
                                         <td>{{ $item->created_at->diffForHumans() }}</td>
-                                        <td><a href="{{route('repost', $item->id)}}">Repost</a></td>
+                                        <td>
+                                            @if (str_contains($item->end_point, url('/')))
+                                                {{-- <a href="{{route('repost', $item->id)}}">Repost</a> --}}
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

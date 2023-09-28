@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.update', $data->id) }}">
+                            <form method="POST" action="{{ route('projects.update', $data->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
@@ -104,8 +104,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                                <label for="sos_date" class="form-label">Asesor</label>
-                                                <select class="form-control" name="asesor">
+                                                <label for="" class="form-label">Asesor</label>
+                                                <select class="form-control select2" name="asesor[]" multiple>
                                                     @foreach ($user->where('role_id', 3) as $asesor)
                                                         <option value="{{ $asesor->id }}">{{ $asesor->name }}</option>
                                                     @endforeach
@@ -114,8 +114,8 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                                <label for="sos_date" class="form-label">QC</label>
-                                                <select class="form-control" name="qc">
+                                                <label for="" class="form-label">QC</label>
+                                                <select class="form-control select2" name="qc">
                                                     @foreach ($user->where('role_id', 6) as $qc)
                                                         <option value="{{ $qc->id }}">{{ $qc->name }}</option>
                                                     @endforeach
@@ -123,7 +123,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button> <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Surat Tugas</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_tugas" accept="application/pdf">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
+                                <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>
                     </div>

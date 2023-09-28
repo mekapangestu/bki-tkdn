@@ -69,6 +69,7 @@
                                         <th class="border-bottom-0 filter">Status QC</th>
                                         <th class="border-bottom-0 filter">Catatan QC</th>
                                         <th class="border-bottom-0 filter">Status</th>
+                                        {{-- <th class="border-bottom-0 filter">Last Activity</th> --}}
                                         <th class="border-bottom-0" style="width: 25px">Action</th>
                                     </tr>
                                 </thead>
@@ -80,11 +81,34 @@
                                         <td>{{ $item->kd_produk }}</td>
                                         <td>{{ $item->nama_cp }}</td>
                                         <td>{{ $item->jabatan_cp }}</td>
-                                        <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td>
-                                        <td>{{ $item->data?->asesor_note ?? '-' }}</td>
+                                        {{-- <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td> --}}
+                                        <td>
+                                            @forelse ($item->asesors as $asesor)
+                                                {{$asesor->user->name. ' : ' .$asesor->statusAsesor?->name ?? '-'}}
+                                                <br>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </td>
+                                        <td>
+                                            @forelse ($item->asesors as $asesor)
+                                                {{$asesor->user->name. ' : ' .$asesor->asesor_note ?? '-'}}
+                                                <br>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </td>
+                                        {{-- <td>{{ $item->data?->asesor_note ?? '-' }}</td> --}}
                                         <td>{{ $item->data?->statusQc->name ?? '-' }}</td>
                                         <td>{{ $item->data?->qc_note ?? '-' }}</td>
                                         <td>{{ $item->statuses?->name ?? '-' }}</td>
+                                        {{-- <td style="text-align: left;">
+                                            @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)
+                                                {{$key . ' = ' . json_encode($val)}}<br>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </td> --}}
                                         <td>
                                             @role('superadmin|administrator')
                                             <div class="dropdown">
@@ -100,18 +124,18 @@
                                                         <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li>
                                                     @elseif ($item->data?->kepala_status == 1)
                                                         <li><a href="{{route('projects.verify-tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
-                                                    @elseif ($item->data && $item->status != 1)
+                                                    @elseif ($item->data && $item->status == 2)
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 1]) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Terima</a></li>
-                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li>
-                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
-                                                        <li><a href="{{ route('projects.submit', [$item->id, 4]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
-                                                    @elseif($item->stage == 1)
+                                                        {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li> --}}
+                                                        <li class=""><a href="{{ route('projects.submit', [$item->id, 0]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
+                                                        <li><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li>
+                                                    @elseif($item->stage == 1 && $item->status == 2)
                                                         <li><a href="{{route('projects.show', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
+                                                    @elseif($item->stage == 1 && $item->status == null)
+                                                        <li><a href="{{route('projects.verify-admin', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
                                                     @endif
-                                                        <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
-                                                    @if ($item->url_sertifikat_terbit)
-                                                        <li><a href="{{url($item->url_sertifikat_terbit)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
-                                                    @endif
+                                                    <li><a href="{{route('projects.detail', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
+
                                                 </ul>
                                             </div>
                                             @endrole

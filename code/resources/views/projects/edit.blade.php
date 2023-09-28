@@ -93,40 +93,22 @@
                             <form method="POST" action="{{ route('projects.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Aspek Produksi</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="aspek_produksi" accept="application/pdf">
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="spk_no" class="form-label">File Name</label>
+                                        <div class="row">
+                                            <input type="text" class="form-control col-2" name="file_name[]">
+                                            <br>
+                                            <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Aspek Pemasaran</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="aspek_pemasaran" accept="application/pdf">
-                                        </div>
-                                    </div>
+                                <div class="form-upload">
                                 </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Perhitungan TKDN Pemohon</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="perhitungan_tkdn" accept="application/pdf">
-                                        </div>
-                                    </div>
+                                <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
+                                <div>
+                                    <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button> <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Dokumen Lainnya</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="dokumen_lainnya" accept="application/pdf">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button> <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>
                     </div>
@@ -136,4 +118,45 @@
     </div>
 @endsection
 @section('js')
+@endsection
+@section('custom-js')
+    <script>
+        $(document).ready(function() {
+            var max_fields = 10; //maximum input boxes allowed
+            var wrapper = $(".form-upload"); //Fields wrapper
+            var add_button = $(".add_field_button"); //Add button ID
+
+            var x = 1; //initlal text box count
+            $(add_button).on("click", function(e) { //on add input button click
+                e.preventDefault();
+                if (x < max_fields) { //max input box allowed
+                    x++; //text box increment
+                    $(wrapper).append(`
+                        <div class="col-xl-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="spk_no" class="form-label">File Name</label>
+                                <div class="row">
+                                    <input type="text" class="form-control col-2" name="file_name[]">
+                                    <br>
+                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+                                </div>
+                            </div>
+                        </div>
+                    `); //add input box
+                }
+            });
+
+            $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+        });
+
+        // $(function(e) {
+        //     $('.fc-datepicker').datepicker({
+        //         dateFormat: 'yy-mm-dd'
+        //     });
+        // });
+    </script>
 @endsection
