@@ -259,6 +259,37 @@ class ProjectsController extends Controller
 
         $project->save();
 
+        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
+        $payload = [
+            "tahap" => 2,
+            "verifikator" => "BKI",
+            "no_berkas" => $project->no_berkas,
+            "status" => $request->action,
+            "alasan_tolak" => $request->alasan_tolak ?? '',
+            "url_sptjm" => '',
+            "tgl_bast" => now()->format('Y-m-d'),
+        ];
+
+        $response = Http::post($endPoint, $payload);
+
+        $documentReceipt = new DocumentReceipt();
+        $documentReceipt->project_id = $project->id;
+        $documentReceipt->stage = 2;
+        $documentReceipt->payload = json_encode($payload);
+        $documentReceipt->end_point = $endPoint;
+        if (is_array($response)) {
+            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+        } else if ($response) {
+            $documentReceipt->siinas_response = (string)$response;
+        }
+
+        if ($response) {
+            $documentReceipt->siinas_post_at = now();
+        }
+
+        $documentReceipt->save();
+
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 

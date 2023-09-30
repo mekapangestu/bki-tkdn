@@ -306,7 +306,7 @@
             
             swal({
                 title: "",
-                text: '<textarea class="form-control" name="note"></textarea>',
+                text: '<textarea class="form-control" name="note" id="note"></textarea>',
                 html: true,
                 customClass: 'swal-wide',
                 showCancelButton: true,
@@ -322,6 +322,7 @@
                 fd.append( '_token', '{{ csrf_token() }}' );
                 fd.append( 'project_id', '{{ $project->id }}' );
                 fd.append( 'action', 0 );
+                fd.append( 'alasan_tolak', document.getElementById('note').value );
                 $.ajax({
                     url: '{{ route("projects.verify-admin-submit", $project->id) }}',
                     headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
