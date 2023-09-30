@@ -159,10 +159,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
-                                {{-- <button type="submit" name="action" value="2" class="btn btn-success mt-4 mb-0">Terima Tidak Lengkap</button> --}}
-                                <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
-                                <button type="submit" name="action" value="3" class="btn btn-warning mt-4 mb-0">Freeze/Pending</button>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Status</label>
+                                            <select class="form-control" name="action" required>
+                                                <option value="" selected disabled>-- Pilih Status --</option>
+                                                <option value="1">Terima</option>
+                                                <option value="0">Tolak</option>
+                                                <option value="3">Freeze/Pending</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>

@@ -99,6 +99,19 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2022-11-22 01:53:39',
                 'updated_at' => '2022-11-22 01:54:18',
             ),
+            6 =>
+            array(
+                'name' => 'Asesor 2',
+                'contact' => '123',
+                'role_id' => 3,
+                'email' => 'assessor2@mail.com',
+                'email_verified_at' => NULL,
+                'password' => Hash::make('password'),
+                'status' => 'active',
+                'remember_token' => NULL,
+                'created_at' => '2022-11-22 01:53:39',
+                'updated_at' => '2022-11-22 01:54:18',
+            ),
 
         ));
     }

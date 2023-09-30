@@ -41,7 +41,7 @@ class ProjectsController extends Controller
                     });
                 })
                 ->get();
-        
+                
         return view('project', compact('data'));
     }
 
@@ -191,7 +191,7 @@ class ProjectsController extends Controller
     {
         $project = Projects::with('files')->find($id);
 
-        $data = $this->jsonToDebug($project->orders->siinas_data);
+        $data = (object) json_decode($project->orders->siinas_data, true);
 
         return view('projects.verify-admin', compact('project', 'data'));
     }
@@ -264,15 +264,16 @@ class ProjectsController extends Controller
 
     public function verifySubmit(Request $request, $id)
     {
-        $asesor = Projects::with('data')->find($id);
-        $asesor->data->asesor_status = $request->action;
-        $asesor->data->asesor_note = $request->note;
-        if ($asesor->status == 0) {
-            $asesor->status = 2;
-            $asesor->save();
+        $project = Projects::find($id);
+        $asesor = Asesors::where('project_id', $id)->where('asesor', auth()->user()->id)->first();
+        $asesor->asesor_status = $request->action;
+        $asesor->asesor_note = $request->note;
+        if ($project->status == 0) {
+            $project->status = 2;
+            $project->save();
         }
         
-        $asesor->data->save();
+        $asesor->save();
         
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
