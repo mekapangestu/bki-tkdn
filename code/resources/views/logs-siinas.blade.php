@@ -78,8 +78,10 @@
                                         <td>{{ $item->siinas_response }}</td>
                                         <td>{{ $item->created_at->diffForHumans() }}</td>
                                         <td>
-                                            @if (str_contains($item->end_point, url('/')))
-                                                {{-- <a href="{{route('repost', $item->id)}}">Repost</a> --}}
+                                            @if (!str_contains($item->end_point, url('/')))
+                                                <a href="{{route('repost', $item->id)}}">Repost</a>
+                                            @else
+                                                Local
                                             @endif
                                         </td>
                                     </tr>

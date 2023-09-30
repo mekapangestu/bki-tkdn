@@ -175,9 +175,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
-                                <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
+                                
+                                <div class="form-upload"></div>
+                                <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
+                                <div>
+                                    <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
+                                    <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
+                                    <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -187,4 +192,46 @@
     </div>
 @endsection
 @section('js')
+@endsection
+
+@section('custom-js')
+    <script>
+        $(document).ready(function() {
+            var max_fields = 10; //maximum input boxes allowed
+            var wrapper = $(".form-upload"); //Fields wrapper
+            var add_button = $(".add_field_button"); //Add button ID
+
+            var x = 1; //initlal text box count
+            $(add_button).on("click", function(e) { //on add input button click
+                e.preventDefault();
+                if (x < max_fields) { //max input box allowed
+                    x++; //text box increment
+                    $(wrapper).append(`
+                        <div class="col-xl-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="spk_no" class="form-label">File Name</label>
+                                <div class="row">
+                                    <input type="text" class="form-control col-2" name="file_name[]">
+                                    <br>
+                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+                                </div>
+                            </div>
+                        </div>
+                    `); //add input box
+                }
+            });
+
+            $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+        });
+
+        // $(function(e) {
+        //     $('.fc-datepicker').datepicker({
+        //         dateFormat: 'yy-mm-dd'
+        //     });
+        // });
+    </script>
 @endsection

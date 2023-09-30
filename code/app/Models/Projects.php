@@ -32,6 +32,11 @@ class Projects extends Model
         return $this->hasMany(Asesors::class, 'project_id', 'id');
     }
 
+    public function qc()
+    {
+        return $this->hasOne(Qcs::class, 'project_id', 'id');
+    }
+
     public function tkdn()
     {
         return $this->hasOne(Tkdn::class, 'project_id', 'id');

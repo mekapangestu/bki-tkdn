@@ -99,8 +99,8 @@
                                             @endforelse
                                         </td>
                                         {{-- <td>{{ $item->data?->asesor_note ?? '-' }}</td> --}}
-                                        <td>{{ $item->data?->statusQc->name ?? '-' }}</td>
-                                        <td>{{ $item->data?->qc_note ?? '-' }}</td>
+                                        <td>{{ $item->qc?->statusQc->name ?? '-' }}</td>
+                                        <td>{{ $item->qc?->qc_note ?? '-' }}</td>
                                         <td>{{ $item->statuses?->name ?? '-' }}</td>
                                         {{-- <td style="text-align: left;">
                                             @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)

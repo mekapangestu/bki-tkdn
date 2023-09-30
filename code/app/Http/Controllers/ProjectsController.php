@@ -36,7 +36,7 @@ class ProjectsController extends Controller
                     });
                 })
                 ->when(auth()->user()->hasRole('qc-officer'), function ($q) {
-                    return $q->whereHas('data', function ($q) {
+                    return $q->whereHas('qc', function ($q) {
                         return $q->where('qc', '=', auth()->user()->id);
                     });
                 })
@@ -148,8 +148,11 @@ class ProjectsController extends Controller
                 $asesor->asesor = $value;
                 $asesor->save();
             }
+            
             $qc = new Qcs();
+            $qc->project_id = $request->project_id;
             $qc->qc = $request->qc;
+            $qc->save();
     
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
@@ -344,6 +347,25 @@ class ProjectsController extends Controller
         if (isset($request->form_nilai_tkdn)) {
             $this->singleUpload(1, $request->file('form_nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
         }
+        
+        if (isset($request->file_name)) {
+            foreach ($request->file_name as $key => $value) {
+                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            }
+        }
+
+        $project = Projects::find($id);
+        $user = User::find($project->qc->qc);
+        $admin = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => 'No Dokumen ' . $project->no_berkas . ' Telah Input Nilai TKDN',
+            'actionURL' => route('projects.verify', $request->project_id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+        $admin->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -434,10 +456,10 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        $asesor = Projects::with('data')->find($id);
-        $asesor->data->qc_status = $request->action;
-        $asesor->data->qc_note = $request->note;
-        $asesor->data->save();
+        $project = Projects::find($id);
+        $project->qc->qc_status = $request->action;
+        $project->qc->qc_note = $request->note;
+        $project->qc->save();
 
         // $asesor->stage = 2;
         // $asesor->save();
@@ -449,6 +471,12 @@ class ProjectsController extends Controller
 
         if (isset($request->hasil_persetujuan)) {
             $this->singleUpload(1, $request->file('hasil_persetujuan'), $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
+        }
+
+        if (isset($request->file_name)) {
+            foreach ($request->file_name as $key => $value) {
+                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            }
         }
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
