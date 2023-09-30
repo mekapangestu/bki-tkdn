@@ -162,11 +162,11 @@ class ProjectsController extends Controller
     
             $projects = Projects::find($request->project_id);
             
-            Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
-                $message->from('no-reply@site.com', "Site name");
-                $message->subject("Welcome to site name");
-                $message->to($projects->user->email);
-            });
+            // Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
+            //     $message->from('no-reply@site.com', "Site name");
+            //     $message->subject("Welcome to site name");
+            //     $message->to($projects->user->email);
+            // });
 
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
