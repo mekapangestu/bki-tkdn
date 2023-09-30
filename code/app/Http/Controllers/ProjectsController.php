@@ -143,11 +143,23 @@ class ProjectsController extends Controller
     {
         DB::beginTransaction();
         try {
+            $project = Projects::find($request->project_id);
+
             foreach ($request->asesor as $value) {
                 $asesor = new Asesors();
                 $asesor->project_id = $request->project_id;
                 $asesor->asesor = $value;
                 $asesor->save();
+
+                $user = User::find($value);
+
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify', $project->id)
+                ];
+
+                $user->notify(new ProjectNotification($details));
             }
             
             $qc = new Qcs();
@@ -167,14 +179,12 @@ class ProjectsController extends Controller
             if (isset($request->surat_tugas)) {
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
-    
-            $projects = Projects::find($request->project_id);
             
-            Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
-                $message->from('no-reply@site.com', "Site name");
-                $message->subject("Welcome to site name");
-                $message->to($projects->user->email);
-            });
+            // Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
+            //     $message->from('no-reply@site.com', "Site name");
+            //     $message->subject("Welcome to site name");
+            //     $message->to($projects->user->email);
+            // });
 
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
@@ -298,6 +308,16 @@ class ProjectsController extends Controller
 
         $documentReceipt->save();
 
+        $user = User::find($project->user_id);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $project->id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
@@ -325,6 +345,16 @@ class ProjectsController extends Controller
         if (isset($request->sptjm)) {
             $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
         }
+
+        $user = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending' ))  . ' Nomor Berkas ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $project->id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -483,6 +513,18 @@ class ProjectsController extends Controller
                 $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
             }
         }
+
+        $user = User::find(4);
+        $admin = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => 'Review No Dokumen ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $request->project_id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+        $admin->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }

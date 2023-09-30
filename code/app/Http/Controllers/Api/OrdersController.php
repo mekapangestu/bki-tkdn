@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\ProjectNotification;
 
 class OrdersController extends Controller
 {
@@ -46,6 +47,7 @@ class OrdersController extends Controller
         try {
             $project = Projects::where('nib', $request->get('nib'))->first();
             if ($project) {
+                $user = User::find($project->user_id);
                 $no_berkas = Projects::where('no_berkas', $request->get('no_berkas'))->first();
                 if ($no_berkas) {
                     $project->update([
@@ -139,6 +141,16 @@ class OrdersController extends Controller
             $documentReceipt->siinas_post_at = now();
 
             $documentReceipt->save();
+
+            $admin = User::find(2);
+
+            $details = [
+                'from' => $user->id,
+                'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
+                'actionURL' => route('projects.verify', $project->id)
+            ];
+
+            $admin->notify(new ProjectNotification($details));
 
             DB::commit();
 
