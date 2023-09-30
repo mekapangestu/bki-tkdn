@@ -37,6 +37,11 @@ class Projects extends Model
         return $this->hasOne(Qcs::class, 'project_id', 'id');
     }
 
+    public function kepala()
+    {
+        return $this->hasOne(Heads::class, 'project_id', 'id');
+    }
+
     public function tkdn()
     {
         return $this->hasOne(Tkdn::class, 'project_id', 'id');

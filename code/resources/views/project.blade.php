@@ -120,9 +120,9 @@
                                                         <li class=""><a href="{{ route('projects.surat-jawaban', $item->id) }}" class="btn text-primary btn-sm"      data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Jawaban</a></li>
                                                     @elseif ($item->stage == 5)
                                                         <li class=""><a href="{{ route('projects.surat-pengantar', $item->id) }}" class="btn text-primary btn-sm"      data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Pengantar</a></li>
-                                                    @elseif ($item->stage == 2)
+                                                    @elseif ($item->stage == 2 && $item->kepala?->kepala_status != 1)
                                                         <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li>
-                                                    @elseif ($item->data?->kepala_status == 1)
+                                                    @elseif ($item->kepala?->kepala_status == 1)
                                                         <li><a href="{{route('projects.verify-tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
                                                     @elseif ($item->data && $item->status == 2)
                                                         <li class=""><a href="{{ route('projects.submit', [$item->id, 1]) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Terima</a></li>

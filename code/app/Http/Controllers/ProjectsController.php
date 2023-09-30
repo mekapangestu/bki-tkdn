@@ -12,6 +12,7 @@ use App\Models\Projects;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\DocumentReceipt;
+use App\Models\Heads;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -152,6 +153,10 @@ class ProjectsController extends Controller
             $qc = new Qcs();
             $qc->project_id = $request->project_id;
             $qc->qc = $request->qc;
+            $qc->save();
+            
+            $qc = new Heads();
+            $qc->project_id = $request->project_id;
             $qc->save();
     
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
@@ -492,7 +497,7 @@ class ProjectsController extends Controller
             $produk = [];
             foreach (json_decode($project->orders->siinas_data)->produk as $value) {
                 array_push($produk, [
-                    "id_produk" => $value->id_produk,
+                    "id_produk" => $value->id_produk??0,
                     "produk" => $value->produk,
                     "spesifikasi" => "spesifikasi",
                     "kd_hs" => "07096010",
@@ -542,10 +547,32 @@ class ProjectsController extends Controller
     
             $documentReceipt->save();   
         }else{
-            $asesor = Projects::with('data')->find($id);
-            $asesor->data->kepala_status = 1;
+            $project = Projects::with('data')->find($id);
+            $project->kepala->kepala_status = $request->action;
 
-            $asesor->data->save();
+            $project->kepala->save();
+            if ($request->action == 1) {
+
+                $admin = User::find(2);
+
+                $details = [
+                        'from' => auth()->id(),
+                        'message' => 'Menyetujui No Dokumen ' . $project->no_berkas,
+                        'actionURL' => route('projects.verify', $request->project_id)
+                    ];
+
+                $admin->notify(new ProjectNotification($details));
+            }else{
+                $user = User::find($project->data->asesor);
+
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Menolak No Dokumen ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify', $request->project_id)
+                ];
+
+                $user->notify(new ProjectNotification($details));
+            }
         }
 
 
