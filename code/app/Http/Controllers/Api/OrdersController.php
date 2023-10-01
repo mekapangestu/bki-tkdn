@@ -389,13 +389,17 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $project->stage = 11;
                 $project->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
+                if ($request->get('status') == "0") {
+                    $project->stage = 10;
+                } else {
+                    $project->stage = 11;
+                }
                 $project->save();
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",
-                    "tahap" => "11",
+                    "tahap" => $project->stage,
                     "message" => "ok"
                 ]);
             }
