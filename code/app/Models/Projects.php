@@ -14,7 +14,17 @@ class Projects extends Model
 
     public function files()
     {
-        return $this->hasMany(Upload::class, 'request_id', 'id');
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'project');
+    }
+
+    public function internal_files()
+    {
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'internal');
+    }
+
+    public function template_files()
+    {
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'template');
     }
 
     public function orders()

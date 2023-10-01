@@ -346,7 +346,7 @@ class ProjectsController extends Controller
 
             if (isset($request->file_name)) {
                 foreach ($request->file_name as $key => $value) {
-                    $this->singleUpload(1, $request->file('file')[$key], $request->project_id, 'Template-'.$value, 'template');
+                    $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'template');
                 }
             }
 
