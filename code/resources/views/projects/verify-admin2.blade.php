@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.verify-submit', $data->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('projects.submit', $data->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
                                 <div class="row">
@@ -134,50 +134,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($data->data->whereNotNull('list_file')->first())
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="" class="form-label">BAST</label>
-                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="bast" accept="application/pdf">
-                                            </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Status</label>
+                                            <select class="form-control" name="action" required>
+                                                <option value="" selected disabled>-- Pilih Status --</option>
+                                                <option value="1">Terima</option>
+                                                <option value="0">Tolak</option>
+                                                <option value="3">Freeze/Pending</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="" class="form-label">SPTJM</label>
-                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/pdf">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="" class="form-label">Alasan</label>
-                                                <textarea class="form-control" name="note">{{$data->data->asesor_note}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="" class="form-label">Status</label>
-                                                <select class="form-control" name="action" required>
-                                                    <option value="" selected disabled>-- Pilih Status --</option>
-                                                    <option value="1">Terima</option>
-                                                    <option value="0">Tolak</option>
-                                                    <option value="3">Freeze/Pending</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <h4>Tambahkan list data pemohon yang harus dilengkapi.</h4>
-                                    <div class="form-upload">
-                                    </div>
-                                    <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
-                                @endif
+                                </div>
                                 <div>
                                     <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>

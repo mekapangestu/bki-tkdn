@@ -52,6 +52,7 @@ trait Util
             'path' => $this->getPath($file, $name, $id, $folderName),
             'label' => $label,
             'order' => $order,
+            'tag' => $folderName,
             'upload_date' => now()
         ]);
     }
