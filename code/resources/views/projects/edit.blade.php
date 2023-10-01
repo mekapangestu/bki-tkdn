@@ -73,7 +73,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data->files as $file)
+                                                @foreach ($data->files->where('tag' ,'!=', 'internal') as $file)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
@@ -93,16 +93,22 @@
                             <form method="POST" action="{{ route('projects.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">File Name</label>
-                                        <div class="row">
-                                            <input type="text" class="form-control col-2" name="file_name[]">
-                                            <br>
-                                            <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+                                @if ($data->data->whereNotNull('list_file')->first())
+                                    @forelse (json_decode($data->data->whereNotNull('list_file')->first()->list_file) as $item)
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">File Name</label>
+                                                <div class="row">
+                                                    <input type="text" class="form-control col-2" name="file_name[]" value="{{$item}}" readonly>
+                                                    <br>
+                                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    @empty
+                                        
+                                    @endforelse
+                                @endif
                                 <div class="form-upload">
                                 </div>
                                 <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>

@@ -87,6 +87,8 @@ class ProjectsController extends Controller
             // }
 
             $projects = Projects::find($request->project_id);
+            $projects->status_pemohon = 2;
+            $projects->save();
             foreach ($projects->asesors as $value) {
                 $user = User::find($value->asesor);
 
@@ -214,6 +216,13 @@ class ProjectsController extends Controller
         return view('projects.verify-admin', compact('project', 'data'));
     }
 
+    public function verifyAdmin2($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.verify-admin2', compact('data'));
+    }
+
     public function verify($id)
     {
         $data = Projects::with('files')->find($id);
@@ -325,36 +334,66 @@ class ProjectsController extends Controller
     {
         $project = Projects::find($id);
         $asesor = Asesors::where('project_id', $id)->where('asesor', auth()->user()->id)->first();
-        $asesor->asesor_status = $request->action;
-        $asesor->asesor_note = $request->note;
-        if ($project->status == 0) {
-            $project->status = 2;
+
+        if (isset($request->file_name)) {
+            $asesor->list_file = json_encode($request->file_name);
+            $asesor->save();
+
+            $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+            if (!File::isDirectory($folderPath)) {
+                File::makeDirectory($folderPath, 0777, true, true);
+            }
+
+            if (isset($request->file_name)) {
+                foreach ($request->file_name as $key => $value) {
+                    $this->singleUpload(1, $request->file('file')[$key], $request->project_id, 'Template-'.$value, 'template');
+                }
+            }
+
+            $user = User::find(2);
+
+            $details = [
+                'from' => auth()->id(),
+                'message' => 'Telah Membuat List FIle Untuk No Berkas ' . $project->no_berkas,
+                'actionURL' => route('projects.verify', $project->id)
+            ];
+
+            $user->notify(new ProjectNotification($details));
+        }else{
+            $asesor->asesor_status = $request->action;
+            $asesor->asesor_note = $request->note;
+            if ($project->status == 0) {
+                $project->status = 2;
+                $project->save();
+            }
+            
+            $asesor->save();
+            
+            $project->status_pemohon = $request->action;
             $project->save();
+            
+            $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+            if (!File::isDirectory($folderPath)) {
+                File::makeDirectory($folderPath, 0777, true, true);
+            }
+    
+            if (isset($request->bast)) {
+                $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'project');
+            }
+            if (isset($request->sptjm)) {
+                $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
+            }
+    
+            $user = User::find(2);
+    
+            $details = [
+                'from' => auth()->id(),
+                'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending' ))  . ' Nomor Berkas ' . $project->no_berkas,
+                'actionURL' => route('projects.verify', $project->id)
+            ];
+    
+            $user->notify(new ProjectNotification($details));
         }
-        
-        $asesor->save();
-        
-        $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-        if (!File::isDirectory($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
-        }
-
-        if (isset($request->bast)) {
-            $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'project');
-        }
-        if (isset($request->sptjm)) {
-            $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
-        }
-
-        $user = User::find(2);
-
-        $details = [
-            'from' => auth()->id(),
-            'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending' ))  . ' Nomor Berkas ' . $project->no_berkas,
-            'actionURL' => route('projects.verify', $project->id)
-        ];
-
-        $user->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -405,8 +444,10 @@ class ProjectsController extends Controller
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
-    public function submit(Request $request, $id, $status)
+    public function submit(Request $request, $id)
     {
+        $status = $request->action;
+        
         $project = Projects::with('data', 'files')->find($id);
         $project->status = $status;
         if ($status == 0) {
