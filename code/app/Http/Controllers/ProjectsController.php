@@ -12,6 +12,7 @@ use App\Models\Projects;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\DocumentReceipt;
+use App\Models\Heads;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -36,7 +37,7 @@ class ProjectsController extends Controller
                     });
                 })
                 ->when(auth()->user()->hasRole('qc-officer'), function ($q) {
-                    return $q->whereHas('data', function ($q) {
+                    return $q->whereHas('qc', function ($q) {
                         return $q->where('qc', '=', auth()->user()->id);
                     });
                 })
@@ -142,14 +143,33 @@ class ProjectsController extends Controller
     {
         DB::beginTransaction();
         try {
+            $project = Projects::find($request->project_id);
+
             foreach ($request->asesor as $value) {
                 $asesor = new Asesors();
                 $asesor->project_id = $request->project_id;
                 $asesor->asesor = $value;
                 $asesor->save();
+
+                $user = User::find($value);
+
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify', $project->id)
+                ];
+
+                $user->notify(new ProjectNotification($details));
             }
+            
             $qc = new Qcs();
+            $qc->project_id = $request->project_id;
             $qc->qc = $request->qc;
+            $qc->save();
+            
+            $qc = new Heads();
+            $qc->project_id = $request->project_id;
+            $qc->save();
     
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
@@ -159,8 +179,6 @@ class ProjectsController extends Controller
             if (isset($request->surat_tugas)) {
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
-    
-            $projects = Projects::find($request->project_id);
             
             // Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
             //     $message->from('no-reply@site.com', "Site name");
@@ -290,6 +308,16 @@ class ProjectsController extends Controller
 
         $documentReceipt->save();
 
+        $user = User::find($project->user_id);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $project->id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
@@ -318,6 +346,16 @@ class ProjectsController extends Controller
             $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
         }
 
+        $user = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending' ))  . ' Nomor Berkas ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $project->id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
@@ -344,6 +382,25 @@ class ProjectsController extends Controller
         if (isset($request->form_nilai_tkdn)) {
             $this->singleUpload(1, $request->file('form_nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
         }
+        
+        if (isset($request->file_name)) {
+            foreach ($request->file_name as $key => $value) {
+                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            }
+        }
+
+        $project = Projects::find($id);
+        $user = User::find($project->qc->qc);
+        $admin = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => 'No Dokumen ' . $project->no_berkas . ' Telah Input Nilai TKDN',
+            'actionURL' => route('projects.verify', $request->project_id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+        $admin->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -434,10 +491,10 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        $asesor = Projects::with('data')->find($id);
-        $asesor->data->qc_status = $request->action;
-        $asesor->data->qc_note = $request->note;
-        $asesor->data->save();
+        $project = Projects::find($id);
+        $project->qc->qc_status = $request->action;
+        $project->qc->qc_note = $request->note;
+        $project->qc->save();
 
         // $asesor->stage = 2;
         // $asesor->save();
@@ -450,6 +507,24 @@ class ProjectsController extends Controller
         if (isset($request->hasil_persetujuan)) {
             $this->singleUpload(1, $request->file('hasil_persetujuan'), $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
         }
+
+        if (isset($request->file_name)) {
+            foreach ($request->file_name as $key => $value) {
+                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            }
+        }
+
+        $user = User::find(4);
+        $admin = User::find(2);
+
+        $details = [
+            'from' => auth()->id(),
+            'message' => 'Review No Dokumen ' . $project->no_berkas,
+            'actionURL' => route('projects.verify', $request->project_id)
+        ];
+
+        $user->notify(new ProjectNotification($details));
+        $admin->notify(new ProjectNotification($details));
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -464,7 +539,7 @@ class ProjectsController extends Controller
             $produk = [];
             foreach (json_decode($project->orders->siinas_data)->produk as $value) {
                 array_push($produk, [
-                    "id_produk" => $value->id_produk,
+                    "id_produk" => $value->id_produk??0,
                     "produk" => $value->produk,
                     "spesifikasi" => "spesifikasi",
                     "kd_hs" => "07096010",
@@ -514,10 +589,32 @@ class ProjectsController extends Controller
     
             $documentReceipt->save();   
         }else{
-            $asesor = Projects::with('data')->find($id);
-            $asesor->data->kepala_status = 1;
+            $project = Projects::with('data')->find($id);
+            $project->kepala->kepala_status = $request->action;
 
-            $asesor->data->save();
+            $project->kepala->save();
+            if ($request->action == 1) {
+
+                $admin = User::find(2);
+
+                $details = [
+                        'from' => auth()->id(),
+                        'message' => 'Menyetujui No Dokumen ' . $project->no_berkas,
+                        'actionURL' => route('projects.verify', $request->project_id)
+                    ];
+
+                $admin->notify(new ProjectNotification($details));
+            }else{
+                $user = User::find($project->data->asesor);
+
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Menolak No Dokumen ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify', $request->project_id)
+                ];
+
+                $user->notify(new ProjectNotification($details));
+            }
         }
 
 
