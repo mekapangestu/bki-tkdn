@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     //     return view('dashboard');
     // })->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('open/{id}', [NotificationController::class, 'markAsRead'])->name('notif.markasread');
     // Route::get('/dashboard/detail-project', [DashboardController::class, 'detailProject'])->name('dashboard.detail-project');
     // Route::get('/dashboard/detail-progress/{id}', [DashboardController::class, 'detailProgress'])->name('dashboard.detail-progress');
     

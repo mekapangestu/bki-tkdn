@@ -183,7 +183,7 @@
                                                 </button>
                                                 @if($item->stage == 3 && $item->qc->qc_status == null)
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                    <li><a href="{{route('projects.tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Input Perhitungan TKDN</a></li>
+                                                    <li><a href="{{route('projects.tkdn', $item->id)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Review Perhitungan TKDN</a></li>
                                                 </ul>
                                                 @endif
                                             </div>

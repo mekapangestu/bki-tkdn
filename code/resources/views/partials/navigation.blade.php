@@ -188,7 +188,7 @@
                                         </div>
                                         <div class="notifications-menu" id="notification">
                                             @forelse (auth()->user()->unreadNotifications->take(4) as $item)
-                                                <a class="dropdown-item d-flex" href="">
+                                                <a class="dropdown-item d-flex" href="{{ route('notif.markasread', $item->id) }}">
                                                     <div class="me-3 notifyimg  bg-primary brround box-shadow-primary">
                                                         <i class="fe fe-mail"></i>
                                                     </div>

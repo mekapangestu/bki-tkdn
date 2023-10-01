@@ -147,7 +147,7 @@ class OrdersController extends Controller
             $details = [
                 'from' => $user->id,
                 'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
-                'actionURL' => route('projects.verify', $project->id)
+                'actionURL' => route('projects.verify-admin2', $project->id)
             ];
 
             $admin->notify(new ProjectNotification($details));
