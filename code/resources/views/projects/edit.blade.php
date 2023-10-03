@@ -300,7 +300,8 @@
                                             </div>
                                         </div>
                                         @forelse (json_decode($project->orders->siinas_data)->produk ?? [] as $item)
-                                        <br><p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
+                                            <br>
+                                            <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
                                             <div class="form-upload-{{ $item->id_produk }}">
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
@@ -328,23 +329,24 @@
                 </div>
                 <!-- CONTAINER END -->
             </div>
-        @endsection
-        @section('js')
-        @endsection
-        @section('custom-js')
-            <script>
-                $(document).ready(function() {
-                    var max_fields = 10; //maximum input boxes allowed
-                    var wrapper = $("[class*=form-upload]"); //Fields wrapper
-                    var add_button = $("[class*=add_field_button]"); //Add button ID
+        </div>
+    @endsection
+    @section('js')
+    @endsection
+    @section('custom-js')
+        <script>
+            $(document).ready(function() {
+                var max_fields = 10; //maximum input boxes allowed
+                var wrapper = $("[class*=form-upload]"); //Fields wrapper
+                var add_button = $("[class*=add_field_button]"); //Add button ID
 
-                    var x = 1; //initlal text box count
-                    $(add_button).on("click", function(e) { //on add input button click
-                        $(this).prev().find('div').first().clone().appendTo($(this).prev())
-                        // e.preventDefault();
-                        // if (x < max_fields) { //max input box allowed
-                        //     x++; //text box increment
-                        //     $(this).prev().append(`
+                var x = 1; //initlal text box count
+                $(add_button).on("click", function(e) { //on add input button click
+                    $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                    // e.preventDefault();
+                    // if (x < max_fields) { //max input box allowed
+                    //     x++; //text box increment
+                    //     $(this).prev().append(`
             //         <div class="col-xl-12 col-md-12 col-sm-12">
             //             <div class="form-group">
             //                 <label for="spk_no" class="form-label">File Name</label>
@@ -356,20 +358,20 @@
             //             </div>
             //         </div>
             //     `); //add input box
-                        // }
-                    });
-
-                    $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
-                        e.preventDefault();
-                        $(this).parent('div').remove();
-                        x--;
-                    })
+                    // }
                 });
 
-                // $(function(e) {
-                //     $('.fc-datepicker').datepicker({
-                //         dateFormat: 'yy-mm-dd'
-                //     });
-                // });
-            </script>
-        @endsection
+                $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+                    e.preventDefault();
+                    $(this).parent('div').remove();
+                    x--;
+                })
+            });
+
+            // $(function(e) {
+            //     $('.fc-datepicker').datepicker({
+            //         dateFormat: 'yy-mm-dd'
+            //     });
+            // });
+        </script>
+    @endsection
