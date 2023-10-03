@@ -67,14 +67,22 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        try {            
+        try { 
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
             }
+
+            if (isset($request->sptjm)) {
+                $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'project');
+            }
             
-            foreach ($request->file_name as $key => $value) {
-                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            foreach ($request->file_name as $k => $files) {
+                foreach ($files as $key => $value) {
+                    if (isset($request->file('file')[$k][$key])) {
+                        $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k).'-'.$value, 'project');
+                    }
+                }
             }
 
             // if (isset($request->aspek_pemasaran)) {
@@ -286,9 +294,8 @@ class ProjectsController extends Controller
     {
         $project = Projects::with('data')->find($id);
         $project->status = $request->action;
-
         $project->save();
-
+        
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
         $payload = [
             "tahap" => 2,

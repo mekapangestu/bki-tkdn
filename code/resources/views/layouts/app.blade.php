@@ -174,6 +174,37 @@
     <script type="text/javascript">
         Chart.defaults.global.defaultFontColor = "#000";
 
+        function siinasSubmit(status = null) {
+            event.preventDefault(); // prevent form submit
+            var form = event.target.form; // storing the form
+
+            if (status != null) {
+                $("<input />").attr("type", "hidden")
+                    .attr("name", "action")
+                    .attr("value", status)
+                    .appendTo(form);
+            }
+
+            swal({
+                    title: "Apakah anda yakin?",
+                    text: "Data dan dikirimkan ke SIINAS",
+                    type: status == 0 ? "error":"info",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Submit!',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        form.submit();
+                    } else {
+                        swal("Cancelled", "", "error");
+                    }
+                });
+        }
+
         function deleteFunction() {
             event.preventDefault(); // prevent form submit
             var form = event.target.form; // storing the form

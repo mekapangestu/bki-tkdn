@@ -262,10 +262,18 @@
                                             @endforelse
                                         </table>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="form-label">Alasan</label>
+                                                <textarea class="form-control" name="alasan_tolak"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 {{-- <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button> --}}
-                                <button type="submit" name="action" value="2" class="btn btn-success mt-4 mb-0">Terima</button>
-                                <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0 tolak">Tolak</button>
+                                <button type="submit" name="action" value="2" onclick="siinasSubmit(2)" class="btn btn-success mt-4 mb-0">Terima</button>
+                                <button type="submit" name="action" value="0" onclick="siinasSubmit(0)" class="btn btn-danger mt-4 mb-0">Tolak</button>
                                 {{-- <button type="submit" name="action" value="3" class="btn btn-warning mt-4 mb-0">Freeze/Pending</button> --}}
                                 {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a> --}}
                             </form>
@@ -275,49 +283,4 @@
             </div>
         <!-- CONTAINER END -->
     </div>
-@endsection
-@section('js')
-<script>
-        $( document ).on( 'click', '.tolak', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            swal({
-                title: "",
-                text: '<textarea class="form-control" name="note" id="note"></textarea>',
-                html: true,
-                customClass: 'swal-wide',
-                showCancelButton: true,
-                confirmButtonColor: '#8CD4F5',
-                // cancelButtonColor: '#000!important',
-                confirmButtonText: 'Submit',
-                closeOnConfirm: false,
-                closeOnCancel: false,
-            },
-            function(isConfirm){
-            if (isConfirm) {
-                var fd = new FormData();
-                fd.append( '_token', '{{ csrf_token() }}' );
-                fd.append( 'project_id', '{{ $project->id }}' );
-                fd.append( 'action', 0 );
-                fd.append( 'alasan_tolak', document.getElementById('note').value );
-                $.ajax({
-                    url: '{{ route("projects.verify-admin-submit", $project->id) }}',
-                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-                    type: 'POST',
-                    data: fd,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                }).done(function(res) {
-                    swal("Submited", "", "success");
-                    window.location.href = "/projects";
-                });
-            } else {
-                swal("Cancelled", "", "error");
-            }
-            });
-            return false;        
-        });
-    </script>
 @endsection

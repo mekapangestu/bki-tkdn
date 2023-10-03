@@ -45,16 +45,21 @@ trait Util
         $name = $order . '_' . now()->format('YmdHis') . '_' . auth()->user()->email . '-' . $label . '.' .
             $file->getClientOriginalExtension();
 
-        Upload::create([
-            'request_id' => $id,
-            'name' => $file->getClientOriginalName(),
-            'filename' => $name,
-            'path' => $this->getPath($file, $name, $id, $folderName),
-            'label' => $label,
-            'order' => $order,
-            'tag' => $folderName,
-            'upload_date' => now()
-        ]);
+        Upload::updateOrCreate(
+            [
+                'request_id' => $id,
+                'label' => $label,],
+            [
+                'request_id' => $id,
+                'name' => $file->getClientOriginalName(),
+                'filename' => $name,
+                'path' => $this->getPath($file, $name, $id, $folderName),
+                'label' => $label,
+                'order' => $order,
+                'tag' => $folderName,
+                'upload_date' => now()
+            ]
+        );
     }
 
     public function deleteUploadedFile($id, $label)
