@@ -132,7 +132,8 @@ p {
 
 img {
   width: 100%;
-  overflow: hidden;
+  padding: 0px auto;
+  /* overflow: hidden; */
 }
 
 /* 
@@ -193,7 +194,7 @@ body {
 }
 
 .section-heading h2 span {
-  color: #fe3f40;
+  color: #df5c35;
 }
 
 .main-blue-button a {
@@ -210,7 +211,7 @@ body {
 
 .main-red-button a {
   display: inline-block;
-  background-color: #fe3f40;
+  background-color: #df5c35;
   font-size: 15px;
   font-weight: 400;
   color: #fff;
@@ -225,10 +226,22 @@ body {
   background-color: #fff;
   font-size: 15px;
   font-weight: 400;
-  color: #fe3f40;
+  color: #df5c35;
   text-transform: capitalize;
   padding: 12px 25px;
   border-radius: 23px;
+  letter-spacing: 0.25px;
+}
+
+.main-blue-button a {
+  display: inline-block;
+  background-color: #133e64;
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  text-transform: capitalize;
+  padding: 12px 25px;
+  border-radius: 10px;
   letter-spacing: 0.25px;
 }
 
@@ -254,11 +267,11 @@ header
 }
 
 .background-header .main-nav .nav li:hover a {
-  color: #fe3f40!important;
+  color: #df5c35!important;
 }
 
 .background-header .nav li a.active {
-  color: #fe3f40!important;
+  color: #df5c35!important;
 }
 
 .header-area {
@@ -308,7 +321,7 @@ header
 }
 
 .logo h4 span {
-  color: #fe3f40;
+  color: #df5c35;
 }
 
 .background-header .main-nav .logo h4 {
@@ -376,12 +389,12 @@ header
 
 .header-area .main-nav .nav li:hover a,
 .header-area .main-nav .nav li a.active {
-  color: #fe3f40!important;
+  color: #df5c35!important;
 }
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {
-  color: #fe3f40!important;
+  color: #df5c35!important;
   opacity: 1;
 }
 
@@ -448,7 +461,7 @@ header
 
 .header-area .main-nav .nav li.submenu ul li a:hover {
   background: #fff;
-  color: #fe3f40!important;
+  color: #df5c35!important;
   padding-left: 25px;
 }
 
@@ -588,7 +601,7 @@ header
 }
 
 .header-area.header-sticky .nav li a.active {
-  color: #fe3f40;
+  color: #df5c35;
 }
 
 @media (max-width: 1200px) {
@@ -621,7 +634,7 @@ header
   }
   .header-area.header-sticky .nav li a:hover,
   .header-area.header-sticky .nav li a.active {
-    color: #fe3f40!important;
+    color: #df5c35!important;
     opacity: 1;
   }
   .header-area.header-sticky .nav li.search-icon a {
@@ -682,7 +695,7 @@ header
   }
   .header-area .main-nav .nav li a:hover {
     background: #eee !important;
-    color: #fe3f40!important;
+    color: #df5c35!important;
   }
   .header-area .main-nav .nav li.submenu ul {
     position: relative;
@@ -796,7 +809,7 @@ preloader
     height: 16px;
     top: 12px;
     left: 15px;
-    background: #fe3f40;
+    background: #df5c35;
     border-radius: 50%;
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -819,7 +832,7 @@ preloader
     width: 16px;
     height: 16px;
     margin-left: 16px;
-    background: #fe3f40;
+    background: #df5c35;
     border-radius: 50%;
 }
 
@@ -869,24 +882,24 @@ Banner Style
 .main-banner .left-content h6 {
   text-transform: uppercase;
   font-size: 18px;
-  color: #fe3f40;
+  color: #df5c35;
   margin-bottom: 15px;
 }
 
 .main-banner .left-content h2 {
   font-size: 50px;
   font-weight: 700;
-  color: #2a2a2a;
+  color: #ecb143;
   line-height: 72px;
 }
 
 .main-banner .left-content h2 em {
-  color: #03a4ed;
+  color: #133e64;
   font-style: normal;
 }
 
 .main-banner .left-content h2 span {
-  color: #fe3f40;
+  color: #df5c35;
 }
 
 .main-banner .left-content p {
@@ -908,7 +921,7 @@ Banner Style
   background-color: #fff;
   font-size: 15px;
   font-weight: 500;
-  color: #fe3f40;
+  color: #df5c35;
   text-transform: capitalize;
   padding: 12px 25px;
   border-radius: 23px;
@@ -1288,8 +1301,8 @@ contact
 */
 
 .contact-us {
-  padding: 170px 0px;
-  background-image: url(../images/contact-bg-2.png);
+  padding: 140px 0px 120px 0px;
+  background-image: url(../images/about-bg-2.png);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1410,7 +1423,7 @@ form#contact button {
 }
 
 form#contact button:hover {
-  background-color: #fe3f40;
+  background-color: #df5c35;
 }
 
 
@@ -1426,7 +1439,7 @@ footer p {
 }
 
 footer p a {
-  color: #fe3f40;
+  color: #df5c35;
 }
 
 /* 
