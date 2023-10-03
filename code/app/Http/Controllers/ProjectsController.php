@@ -31,21 +31,21 @@ class ProjectsController extends Controller
     public function index()
     {
         $data = Projects::with('statuses', 'logs')
-                ->when(auth()->user()->hasRole('assessor'), function ($q) {
-                    return $q->whereHas('asesors', function ($q) {
-                        return $q->where('asesor', '=', auth()->user()->id);
-                    });
-                })
-                ->when(auth()->user()->hasRole('qc-officer'), function ($q) {
-                    return $q->whereHas('qc', function ($q) {
-                        return $q->where('qc', '=', auth()->user()->id);
-                    });
-                })
-                ->when(auth()->user()->hasRole('guest'), function ($q) {
-                    return $q->where('user_id', '=', auth()->user()->id);
-                })
-                ->get();
-                
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('qc-officer'), function ($q) {
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->get();
+
         return view('project', compact('data'));
     }
 
@@ -67,7 +67,7 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        try { 
+        try {
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
@@ -76,11 +76,11 @@ class ProjectsController extends Controller
             if (isset($request->sptjm)) {
                 $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'project');
             }
-            
+
             foreach ($request->file_name as $k => $files) {
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
-                        $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k).'-'.$value, 'project');
+                        $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
                     }
                 }
             }
@@ -104,11 +104,11 @@ class ProjectsController extends Controller
                 $user = User::find($value->asesor);
 
                 $details = [
-                        'from' => auth()->id(),
-                        'message' => 'Pemohon Dengan No Dokumen ' . $projects->no_berkas . ' Telah Melengkapi Dokumen',
-                        'actionURL' => route('projects.verify', $request->project_id)
-                    ];
-    
+                    'from' => auth()->id(),
+                    'message' => 'Pemohon Dengan No Dokumen ' . $projects->no_berkas . ' Telah Melengkapi Dokumen',
+                    'actionURL' => route('projects.verify', $request->project_id)
+                ];
+
                 $user->notify(new ProjectNotification($details));
             }
 
@@ -128,7 +128,7 @@ class ProjectsController extends Controller
     {
         $data = Projects::find($id);
         $user = User::all();
-        
+
         return view('projects.index', compact('data', 'user'));
     }
 
@@ -140,9 +140,11 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        $data = Projects::find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.edit', compact('data'));
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        return view('projects.edit', compact('data', 'project'));
     }
 
     /**
@@ -174,30 +176,30 @@ class ProjectsController extends Controller
 
                 $user->notify(new ProjectNotification($details));
             }
-            
+
             $qc = new Qcs();
             $qc->project_id = $request->project_id;
             $qc->qc = $request->qc;
             $qc->save();
-            
+
             $qc = new Heads();
             $qc->project_id = $request->project_id;
             $qc->save();
-    
+
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
             }
-    
+
             if (isset($request->surat_tugas)) {
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
-            
-            // Mail::send('emails.welcome', ['name' => $projects->user->name, 'email' => $projects->user->email, 'password' => 'password'], function ($message) use ($projects) {
-            //     $message->from('no-reply@site.com', "Site name");
-            //     $message->subject("Welcome to site name");
-            //     $message->to($projects->user->email);
-            // });
+
+            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
+                $message->from('no-reply@site.com', "Site name");
+                $message->subject("Informasi Akun Aplikasi TKDN BKI");
+                $message->to($project->user->email);
+            });
 
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
@@ -236,9 +238,12 @@ class ProjectsController extends Controller
 
     public function verify($id)
     {
-        $data = Projects::with('files')->find($id);
+        // $project = Projects::with('orders')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.verify', compact('data'));
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        return view('projects.verify', compact('project', 'data'));
     }
 
     public function verify2($id)
@@ -262,7 +267,7 @@ class ProjectsController extends Controller
         return view('projects.tkdn', compact('data'));
     }
 
-    public function verifyTkdn ($id)
+    public function verifyTkdn($id)
     {
         $data = Projects::with('files')->find($id);
 
@@ -295,7 +300,7 @@ class ProjectsController extends Controller
         $project = Projects::with('data')->find($id);
         $project->status = $request->action;
         $project->save();
-        
+
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
         $payload = [
             "tahap" => 2,
@@ -351,12 +356,12 @@ class ProjectsController extends Controller
             $project->status = 2;
             $project->save();
         }
-        
+
         $asesor->save();
-        
+
         $project->status_pemohon = $request->action;
         $project->save();
-        
+
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
             File::makeDirectory($folderPath, 0777, true, true);
@@ -373,12 +378,12 @@ class ProjectsController extends Controller
 
         $details = [
             'from' => auth()->id(),
-            'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending' ))  . ' Nomor Berkas ' . $project->no_berkas,
+            'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending'))  . ' Nomor Berkas ' . $project->no_berkas,
             'actionURL' => route('projects.verify', $project->id)
         ];
 
         $user->notify(new ProjectNotification($details));
-        
+
 
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
@@ -453,18 +458,18 @@ class ProjectsController extends Controller
     public function submit(Request $request, $id)
     {
         $status = $request->action;
-        
+
         $project = Projects::with('data', 'files')->find($id);
         $project->status = $status;
         if ($status == 0) {
             $project->save();
-        }else{
+        } else {
             $project->stage = 2;
-    
+
             $project->save();
-            
+
             $path = $project->files?->where('label', 'SPTJM')?->first()->path ?? '';
-    
+
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
             $payload = [
                 "tahap" => 2,
@@ -475,9 +480,9 @@ class ProjectsController extends Controller
                 "url_sptjm" => $path ? asset('storage/' . $path) : '',
                 "tgl_bast" => now()->format('Y-m-d'),
             ];
-    
+
             $response = Http::post($endPoint, $payload);
-    
+
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 2;
@@ -489,11 +494,11 @@ class ProjectsController extends Controller
             } else if ($response) {
                 $documentReceipt->siinas_response = (string)$response;
             }
-    
+
             if ($response) {
                 $documentReceipt->siinas_post_at = now();
             }
-    
+
             $documentReceipt->save();
         }
 
@@ -626,7 +631,7 @@ class ProjectsController extends Controller
             foreach (json_decode($project->orders->siinas_data)->produk as $value) {
                 $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->where('project_id', $project->id)->first();
                 array_push($produk, [
-                    "id_produk" => $value->id_produk??0,
+                    "id_produk" => $value->id_produk ?? 0,
                     "produk" => $value->produk,
                     "spesifikasi" => "spesifikasi",
                     "kd_hs" => "07096010",
@@ -641,7 +646,7 @@ class ProjectsController extends Controller
                     "produsen" => "Nama Produsen"
                 ]);
             }
-    
+
             $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
             $payload = [
@@ -657,7 +662,7 @@ class ProjectsController extends Controller
             ];
 
             $response = Http::post($endPoint, $payload);
-    
+
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 4;
@@ -669,13 +674,13 @@ class ProjectsController extends Controller
             } else if ($response) {
                 $documentReceipt->siinas_response = (string)$response;
             }
-    
+
             if ($response) {
                 $documentReceipt->siinas_post_at = now();
             }
-    
-            $documentReceipt->save();   
-        }else{
+
+            $documentReceipt->save();
+        } else {
             $project = Projects::with('data')->find($id);
             $project->kepala->kepala_status = $request->action;
 
@@ -685,13 +690,13 @@ class ProjectsController extends Controller
                 $admin = User::find(2);
 
                 $details = [
-                        'from' => auth()->id(),
-                        'message' => 'Menyetujui No Dokumen ' . $project->no_berkas,
-                        'actionURL' => route('projects.verify', $request->project_id)
-                    ];
+                    'from' => auth()->id(),
+                    'message' => 'Menyetujui No Dokumen ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify', $request->project_id)
+                ];
 
                 $admin->notify(new ProjectNotification($details));
-            }else{
+            } else {
                 $user = User::find($project->data->asesor);
 
                 $details = [
@@ -722,7 +727,7 @@ class ProjectsController extends Controller
         $project = Projects::with('data', 'files')->find($id);
         $project->stage = 6;
         $project->save();
-        
+
         $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
         $payload = [
@@ -759,12 +764,12 @@ class ProjectsController extends Controller
 
     public function suratJawabanSubmit(Request $request, $id)
     {
-        
+
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
             File::makeDirectory($folderPath, 0777, true, true);
         }
-        
+
         if (isset($request->surat_jawaban)) {
             $this->singleUpload(1, $request->file('surat_jawaban'), $id, 'Surat Jawaban', 'project');
         }
@@ -810,7 +815,7 @@ class ProjectsController extends Controller
             "no_laporan" => "asfsdfsd",
             "url_surat_jawaban" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
             "url_lhv_penyesuaian" =>  $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
-            "url_dok_dukung" => array (
+            "url_dok_dukung" => array(
                 0 => array(
                     "url" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
                 )
@@ -843,13 +848,28 @@ class ProjectsController extends Controller
         return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
-    public function detail($id){
+    public function detail($id)
+    {
         // $project = Projects::with('orders')->find($id);
         $project = Projects::with('files')->find($id);
 
         $data = (object) json_decode($project->orders->siinas_data, true);
 
         return view('projects.detail', compact('project', 'data'));
+
+        // return view('projects.detail', compact('data'));
+    }
+
+    public function detailPemohon($id)
+    {
+        // $project = Projects::with('orders')->find($id);
+        $project = Projects::with('files')->find($id);
+
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        // dd($data);
+
+        return view('projects.detail-pemohon', compact('project', 'data'));
 
         // return view('projects.detail', compact('data'));
     }
@@ -869,7 +889,7 @@ class ProjectsController extends Controller
         $str = "<table class='table'><tbody>";
         foreach ($arr as $key => $val) {
             $str .= "<tr>";
-            $str .= "<td>". Str::headline($key). "</td>";
+            $str .= "<td>" . Str::headline($key) . "</td>";
             $str .= "<td>";
             if (is_array($val)) {
                 if (!empty($val)) {
