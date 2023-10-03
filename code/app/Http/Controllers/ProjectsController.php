@@ -74,7 +74,7 @@ class ProjectsController extends Controller
             }
 
             if (isset($request->sptjm)) {
-                $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'project');
+                $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'internal');
             }
 
             foreach ($request->file_name as $k => $files) {
@@ -364,6 +364,9 @@ class ProjectsController extends Controller
         $asesor->save();
 
         $project->status_pemohon = $request->action;
+        $project->judul = $request->judul;
+        $project->bast_no = $request->bast_no;
+        $project->bast_date = $request->bast_date;
         $project->save();
 
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
@@ -372,10 +375,10 @@ class ProjectsController extends Controller
         }
 
         if (isset($request->bast)) {
-            $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'project');
+            $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'internal');
         }
         if (isset($request->sptjm)) {
-            $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'project');
+            $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'internal');
         }
 
         $user = User::find(2);
@@ -724,7 +727,7 @@ class ProjectsController extends Controller
         }
 
         if (isset($request->surat_pengantar)) {
-            $this->singleUpload(1, $request->file('surat_pengantar'), $id, 'Surat Pengantar Permohonan Jadwal Review', 'project');
+            $this->singleUpload(1, $request->file('surat_pengantar'), $id, 'Surat Pengantar Permohonan Jadwal Review', 'internal');
         }
 
         $project = Projects::with('data', 'files')->find($id);
@@ -774,13 +777,13 @@ class ProjectsController extends Controller
         }
 
         if (isset($request->surat_jawaban)) {
-            $this->singleUpload(1, $request->file('surat_jawaban'), $id, 'Surat Jawaban', 'project');
+            $this->singleUpload(1, $request->file('surat_jawaban'), $id, 'Surat Jawaban', 'internal');
         }
         if (isset($request->surat_penyesuaian)) {
-            $this->singleUpload(1, $request->file('surat_penyesuaian'), $id, 'Surat Penyesuaian', 'project');
+            $this->singleUpload(1, $request->file('surat_penyesuaian'), $id, 'Surat Penyesuaian', 'internal');
         }
         if (isset($request->surat_pendukung)) {
-            $this->singleUpload(1, $request->file('surat_pendukung'), $id, 'Surat Pendukung', 'project');
+            $this->singleUpload(1, $request->file('surat_pendukung'), $id, 'Surat Pendukung', 'internal');
         }
 
         $project = Projects::with('data', 'files', 'tkdn')->find($id);

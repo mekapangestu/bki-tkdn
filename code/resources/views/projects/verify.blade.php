@@ -360,6 +360,24 @@
                         <div class="card-body">
                             <form method="POST" action="{{ route('projects.verify-submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="spk_no" class="form-label">Judul BAST</label>
+                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="judul" placeholder="Enter SPK Number" value="{{ $project->judul }}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="spk_no" class="form-label">Nomor BAST</label>
+                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="bast_no" placeholder="Enter SPK Number" value="{{ $project->bast_no }}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="spk_no" class="form-label">Tanggal BAST</label>
+                                        <input type="text" class="form-control fc-datepicker" id="spk_no" autocomplete="off" name="bast_date" placeholder="Enter SPK Number" value="{{ $project->bast_date }}">
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
