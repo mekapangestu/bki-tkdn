@@ -85,6 +85,7 @@
                                         <tr>
                                             <td>{{ $item->nib }}</td>
                                             <td>{{ $item->npwp }}</td>
+                                            <td>{{ $item->no_berkas }}</td>
                                             <td>{{ $item->kd_produk }}</td>
                                             <td>{{ $item->nama_cp }}</td>
                                             <td>{{ $item->jabatan_cp }}</td>
@@ -141,6 +142,9 @@
                                                             @elseif($item->stage == 1 && $item->status == null)
                                                                 <li><a href="{{ route('projects.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
                                                             @endif
+                                                            @if ($item->url_sertifikat_terbit)
+                                                                <li><a href="{{ url($item->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
+                                                            @endif
                                                             <li><a href="{{ route('projects.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
                                                         </ul>
                                                     </div>
@@ -155,7 +159,7 @@
                                                         <li><a href="{{url($item->url_sertifikat_terbit)}}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                     </ul>
                                                 @endif --}}
-                                                        @if ($item->data?->list_file && ($item->status_pemohon == null || $item->status_pemohon == 0))
+                                                        @if ($item->status == 2 && ($item->status_pemohon == null || $item->status_pemohon == 0))
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             </ul>
@@ -171,7 +175,7 @@
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
-                                                        @elseif($item->stage == 1 && ($item->data?->list_file == null || $item->status_pemohon == 2))
+                                                            @elseif($item->stage == 1 && $item->status_pemohon == 2)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
