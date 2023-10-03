@@ -264,9 +264,11 @@ class ProjectsController extends Controller
 
     public function tkdn($id)
     {
-        $data = Projects::with('files')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.tkdn', compact('data'));
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        return view('projects.tkdn', compact('project', 'data'));
     }
 
     public function verifyTkdn($id)
