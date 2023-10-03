@@ -100,9 +100,10 @@
                                     </div>
                                 </div>
 
+                                @forelse (json_decode($data->orders->siinas_data)->produk ?? [] as $item)
                                 <div class="card custom-card">
                                     <div class="card-header border-bottom">
-                                        <h3 class="card-title">Uploaded Document</h3>
+                                        <h3 class="card-title">{{Str::headline($item->produk)}} Document</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="">
@@ -118,22 +119,27 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($data->files as $file)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $file->label }}</td>
-                                                            <td>{{ $file->created_at }}</td>
-                                                            <td>{{ $file->updated_at }}</td>
-                                                            <td>
-                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                            </td>
-                                                        </tr>
+                                                        @if (Str::is(Str::headline($item->produk).'*', $file->label))
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $file->label }}</td>
+                                                                <td>{{ $file->created_at }}</td>
+                                                                <td>{{ $file->updated_at }}</td>
+                                                                <td>
+                                                                    <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                    {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                @empty
+                                    <h4>Tidak ada produk</h4>
+                                @endforelse
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">

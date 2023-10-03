@@ -158,8 +158,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-4 mb-0">Sesuai</button>
-                                <a href="{{ route('dashboard') }}" class="btn btn-warning mt-4 mb-0">Tidak Sesuai</a>
+                                <button type="submit" onclick="siinasSubmit(1)" class="btn btn-primary mt-4 mb-0">Sesuai</button>
+                                <button type="submit" onclick="siinasSubmit(0)" class="btn btn-warning mt-4 mb-0">Tidak Sesuai</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>

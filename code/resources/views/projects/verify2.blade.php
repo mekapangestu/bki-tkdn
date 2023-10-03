@@ -134,11 +134,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                @forelse (json_decode($data->orders->siinas_data)->produk ?? [] as $item)
+                                <div class="card" style="col-12">
+                                <div class="card-header">
+                                    <h4>{{$item->produk}}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <input type="hidden" name="id_produk[{{$item->produk}}]" value="{{$item->id_produk}}">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn}}">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{$item->produk}}]" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn}}">
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +153,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_jasa}}">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{$item->produk}}]" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_jasa}}">
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +161,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_gabungan}}">
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{$item->produk}}]" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_gabungan}}">
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +169,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{$item->produk}}]" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
@@ -170,11 +177,15 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{$item->produk}}]" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>
-                                
+                                </div>
+                                </div>
+                                @empty
+                                    <h4>Tidak ada produk</h4>
+                                @endforelse
                                 <div class="form-upload"></div>
                                 <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
                                 <div>

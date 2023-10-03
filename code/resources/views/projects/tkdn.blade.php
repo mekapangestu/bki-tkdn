@@ -100,9 +100,10 @@
                                     </div>
                                 </div>
 
+                                @forelse (json_decode($data->orders->siinas_data)->produk ?? [] as $item)
                                 <div class="card custom-card">
                                     <div class="card-header border-bottom">
-                                        <h3 class="card-title">Uploaded Document</h3>
+                                        <h3 class="card-title">{{Str::headline($item->produk)}} Document</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="">
@@ -118,55 +119,73 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($data->files as $file)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $file->label }}</td>
-                                                            <td>{{ $file->created_at }}</td>
-                                                            <td>{{ $file->updated_at }}</td>
-                                                            <td>
-                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                            </td>
-                                                        </tr>
+                                                        @if (Str::is(Str::headline($item->produk).'*', $file->label))
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $file->label }}</td>
+                                                                <td>{{ $file->created_at }}</td>
+                                                                <td>{{ $file->updated_at }}</td>
+                                                                <td>
+                                                                    <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                    {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn}}" disabled>
+                                @forelse ($data->tkdn as $tkdn)
+                                    @if ($tkdn->id_produk == $item->id_produk)
+                                        <input type="hidden" name="id_produk[{{$item->produk}}]" value="{{$item->id_produk}}">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="spk_no" class="form-label">Nilai TKDN</label>
+                                                    <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" placeholder="Enter SPK Number" value="{{$tkdn?->nilai_tkdn}}" disabled>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_jasa}}" disabled>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
+                                                    <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" placeholder="Enter SPK Number" value="{{$tkdn?->nilai_tkdn_jasa}}" disabled>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{$data->tkdn?->nilai_tkdn_gabungan}}" disabled>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
+                                                    <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{$tkdn?->nilai_tkdn_gabungan}}" disabled>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan" accept="application/pdf">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
+                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{$item->produk}}]" accept="application/pdf">
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="" class="form-label">Laporan Hasil Verifikasi</label>
+                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{$item->produk}}]" accept="application/pdf">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @empty
+                                @endforelse
                                     </div>
                                 </div>
+                                @empty
+                                    <h4>Tidak ada produk</h4>
+                                @endforelse
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
@@ -176,11 +195,11 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-upload"></div>
-                                <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
+                                {{-- <div class="form-upload"></div>
+                                <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a> --}}
                                 <div>
-                                    <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
-                                    <button type="submit" name="action" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
+                                    <button type="submit" name="action" onclick="siinasSubmit(1)" value="1" class="btn btn-primary mt-4 mb-0">Terima</button>
+                                    <button type="submit" name="action" onclick="siinasSubmit(0)" value="0" class="btn btn-danger mt-4 mb-0">Tolak</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                                 </div>
                             </form>

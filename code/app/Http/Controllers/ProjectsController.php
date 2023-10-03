@@ -385,48 +385,69 @@ class ProjectsController extends Controller
 
     public function verify2Submit(Request $request, $id)
     {
-        $tkdn = Tkdn::updateOrCreate(
-            ['project_id' => $id],
-            [
-                'project_id' => $id,
-                'nilai_tkdn' => $request->nilai_tkdn,
-                'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa,
-                'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan,
-            ]
-        );
-
-        $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-        if (!File::isDirectory($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
-        }
-
-        if (isset($request->hasil_verifikasi)) {
-            $this->singleUpload(1, $request->file('hasil_verifikasi'), $id, 'Draft Laporan Hasil Verifikasi', 'project');
-        }
-        if (isset($request->form_nilai_tkdn)) {
-            $this->singleUpload(1, $request->file('form_nilai_tkdn'), $id, 'Draft Form Penghitungan Nilai TKDN', 'project');
-        }
+        // foreach ($request->file_name as $k => $files) {
+        //     foreach ($files as $key => $value) {
+        //         if (isset($request->file('file')[$k][$key])) {
+        //             $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
+        //         }
+        //     }
+        // }
+        DB::beginTransaction();
+        try {
+            foreach ($request->id_produk as $key => $id_produk) {
+                Tkdn::updateOrCreate(
+                    [
+                        'project_id' => $id,
+                        'id_produk' => $id_produk
+                    ],
+                    [
+                        'project_id' => $id,
+                        'id_produk' => $id_produk,
+                        'nilai_tkdn' => $request->nilai_tkdn[$key],
+                        'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa[$key],
+                        'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan[$key],
+                        'status' => null,
+                    ]
+                );
         
-        if (isset($request->file_name)) {
-            foreach ($request->file_name as $key => $value) {
-                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+                $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+                if (!File::isDirectory($folderPath)) {
+                    File::makeDirectory($folderPath, 0777, true, true);
+                }
+        
+                if (isset($request->hasil_verifikasi[$key])) {
+                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$key], $id, Str::headline($key).'-Draft Laporan Hasil Verifikasi', 'project');
+                }
+                if (isset($request->form_nilai_tkdn[$key])) {
+                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$key], $id, Str::headline($key).'-Draft Form Penghitungan Nilai TKDN', 'project');
+                }
+                
+                if (isset($request->file_name)) {
+                    foreach ($request->file_name as $key => $value) {
+                        $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+                    }
+                }
             }
+    
+            $project = Projects::find($id);
+            $user = User::find($project->qc->qc);
+            $admin = User::find(2);
+    
+            $details = [
+                'from' => auth()->id(),
+                'message' => 'No Dokumen ' . $project->no_berkas . ' Telah Input Nilai TKDN',
+                'actionURL' => route('projects.verify', $request->project_id)
+            ];
+    
+            $user->notify(new ProjectNotification($details));
+            $admin->notify(new ProjectNotification($details));
+            DB::commit();
+            return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
         }
 
-        $project = Projects::find($id);
-        $user = User::find($project->qc->qc);
-        $admin = User::find(2);
-
-        $details = [
-            'from' => auth()->id(),
-            'message' => 'No Dokumen ' . $project->no_berkas . ' Telah Input Nilai TKDN',
-            'actionURL' => route('projects.verify', $request->project_id)
-        ];
-
-        $user->notify(new ProjectNotification($details));
-        $admin->notify(new ProjectNotification($details));
-
-        return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
     public function submit(Request $request, $id)
@@ -481,9 +502,75 @@ class ProjectsController extends Controller
 
     public function drafSubmit(Request $request, $id)
     {
-        $project = Projects::with('data', 'files')->find($id);
+        if($request->action == 1){
+            $project = Projects::with('data', 'files')->find($id);
+            $project->stage = 3;
+            $project->save();
+    
+            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
+            $payload = [
+                "tahap" => 3,
+                "verifikator" => "BKI",
+                "no_berkas" => $project->no_berkas,
+            ];
+    
+            $response = Http::post($endPoint, $payload);
+    
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 3;
+            $documentReceipt->end_point = $endPoint;
+            $documentReceipt->payload = json_encode($payload);
+            if (is_array($response)) {
+                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+            } else if ($response) {
+                $documentReceipt->siinas_response = (string)$response;
+            }
+    
+            if ($response) {
+                $documentReceipt->siinas_post_at = now();
+            }
+    
+            $documentReceipt->save();
+        }else{
+            Tkdn::where('project_id', $id)->update([
+                 'status' => 0
+            ]);
+        }
+
+        return redirect('projects')->with('success', 'Data Saved Successfully');
+    }
+
+    public function tkdnSubmit(Request $request, $id)
+    {
+        $project = Projects::find($id);
+        $project->qc->qc_status = $request->action;
+        $project->qc->qc_note = $request->note;
+        $project->qc->save();
+
         $project->stage = 3;
         $project->save();
+
+        foreach ($request->id_produk as $key => $id_produk) {
+            $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+            if (!File::isDirectory($folderPath)) {
+                File::makeDirectory($folderPath, 0777, true, true);
+            }
+
+            if (isset($request->hasil_persetujuan[$key])) {
+                $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key).'-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
+            }
+            if (isset($request->laporan_hasil_verifikasi[$key])) {
+                $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key). '-Laporan Hasil Verifikasi', 'project');
+            }
+
+            // if (isset($request->file_name)) {
+            //     foreach ($request->file_name as $key => $value) {
+            //         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+            //     }
+            // }
+        }
 
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
         $payload = [
@@ -512,34 +599,6 @@ class ProjectsController extends Controller
 
         $documentReceipt->save();
 
-        return redirect('projects')->with('success', 'Data Saved Successfully');
-    }
-
-    public function tkdnSubmit(Request $request, $id)
-    {
-        $project = Projects::find($id);
-        $project->qc->qc_status = $request->action;
-        $project->qc->qc_note = $request->note;
-        $project->qc->save();
-
-        // $asesor->stage = 2;
-        // $asesor->save();
-
-        $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-        if (!File::isDirectory($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
-        }
-
-        if (isset($request->hasil_persetujuan)) {
-            $this->singleUpload(1, $request->file('hasil_persetujuan'), $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
-        }
-
-        if (isset($request->file_name)) {
-            foreach ($request->file_name as $key => $value) {
-                $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
-            }
-        }
-
         $user = User::find(4);
         $admin = User::find(2);
 
@@ -561,18 +620,20 @@ class ProjectsController extends Controller
             $project = Projects::with('data', 'files')->find($id);
             $project->stage = 4;
             $project->save();
-
+            
             $produk = [];
+
             foreach (json_decode($project->orders->siinas_data)->produk as $value) {
+                $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->where('project_id', $project->id)->first();
                 array_push($produk, [
                     "id_produk" => $value->id_produk??0,
                     "produk" => $value->produk,
                     "spesifikasi" => "spesifikasi",
                     "kd_hs" => "07096010",
                     "kd_kelompok_barang" => "1",
-                    "nilai_tkdn" => $request->tkdn ?? 22,
-                    "nilai_tkdn_jasa" => $request->nilai_tkdn_jasa ?? 20,
-                    "nilai_tkdn_gabungan" => $request->nilai_tkdn_gabungan ?? 42,
+                    "nilai_tkdn" => $tkdn->nilai_tkdn ?? 22,
+                    "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa ?? 20,
+                    "nilai_tkdn_gabungan" => $tkdn->nilai_tkdn_gabungan ?? 42,
                     "merk" => "bubur",
                     "tipe" => "bubut",
                     "standar" => "bubur",

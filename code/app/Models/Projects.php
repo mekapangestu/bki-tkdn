@@ -54,7 +54,7 @@ class Projects extends Model
 
     public function tkdn()
     {
-        return $this->hasOne(Tkdn::class, 'project_id', 'id');
+        return $this->hasMany(Tkdn::class, 'project_id', 'id');
     }
 
     public function logs()

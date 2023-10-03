@@ -171,7 +171,7 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 2 && !$item->tkdn)
+                                                        @if ($item->stage == 2 && (!$item->tkdn || $item->tkdn->status == 0))
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
@@ -191,7 +191,7 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 3 && $item->qc->qc_status == null)
+                                                        @if ($item->stage == 2 && $item->qc->qc_status != 1 && $item->tkdn)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Review Perhitungan TKDN</a></li>
                                                             </ul>
