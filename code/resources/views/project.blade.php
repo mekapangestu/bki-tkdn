@@ -61,12 +61,13 @@
                         <div class="card-header">
                             <h3 class="card-title">Data</h3>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body ">
                             <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0 filter">NIB</th>
                                         <th class="border-bottom-0 filter">NPWP</th>
+                                        <th class="border-bottom-0 filter">No Berkas</th>
                                         <th class="border-bottom-0 filter">Kode Produk</th>
                                         <th class="border-bottom-0 filter">Nama CP</th>
                                         <th class="border-bottom-0 filter">Jabatan CP</th>
