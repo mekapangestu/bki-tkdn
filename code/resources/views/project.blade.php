@@ -258,7 +258,7 @@
                 return '<div style="text-align: left">' + value + '</div>';
             }
             $(document).ready(function () {
-                var table = $('#project-datatable').DataTable({});
+                var table = $('#project-datatable').DataTable({"scrollX": true});
 
                 // Add event listener for opening and closing details
                 $('#project-datatable').on('click', 'td.details-control', function () {

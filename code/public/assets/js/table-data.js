@@ -3,6 +3,7 @@ $(function(e) {
 
     //______Basic Data Table
     $('#basic-datatable').DataTable({
+        "scrollX": true,
         language: {
             searchPlaceholder: 'Search...',
             sSearch: '',
