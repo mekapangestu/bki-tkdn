@@ -62,43 +62,43 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.submit', $data->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('projects.submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
+                                <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">NIB</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->nib }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->nib }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">NPWP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->npwp }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->npwp }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Kode Produk</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->kd_produk }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->kd_produk }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Nomer Berkas</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->no_berkas }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->no_berkas }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Alamat Kantor</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->alamat_kantor }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->alamat_kantor }}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -106,44 +106,39 @@
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Nama CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->nama_cp }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->nama_cp }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">No HP CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->no_hp_cp }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->no_hp_cp }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Email CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->email_cp }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->email_cp }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Jabatan CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->jabatan_cp }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->jabatan_cp }}" disabled>
                                             </div>
                                         </div>
 
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Alamat Pabrik</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $data->alamat_pabrik }}" disabled>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{ $project->alamat_pabrik }}" disabled>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                @forelse (json_decode($data->orders->siinas_data)->produk ?? [] as $item)
-                                <div class="card custom-card">
-                                    <div class="card-header border-bottom">
-                                        <h3 class="card-title">{{Str::headline($item->produk)}} Document</h3>
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist" style="padding: 25px;">
                                         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#collapseProduk" type="button" role="tab" aria-controls="collapseProduk" aria-selected="true">Produk</button>
@@ -279,10 +274,10 @@
                                             @endforelse
                                         </table>
                                     </div>
-
-                                    <div class="card custom-card">
-                                        <div class="card-header border-bottom">
-                                            <h3 class="card-title">Uploaded Document</h3>
+                                @forelse (json_decode($project->orders->siinas_data)->produk ?? [] as $item)
+                                <div class="card custom-card">
+                                    <div class="card-header border-bottom">
+                                        <h3 class="card-title">{{Str::headline($item->produk)}} Document</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="">
@@ -297,7 +292,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($data->files as $file)
+                                                        @foreach ($project->files as $file)
+                                                        @if (Str::is(Str::headline($item->produk) . '*', $file->label))
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $file->label }}</td>
@@ -309,7 +305,7 @@
                                                                 </td>
                                                             </tr>
                                                         @endif
-                                                    @endforeach
+                                                        @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -328,22 +324,6 @@
                                                 <option value="0">Tolak</option>
                                                 <option value="3">Freeze/Pending</option>
                                             </select>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="" class="form-label">Status</label>
-                                                <select class="form-control" name="action" required>
-                                                    <option value="" selected disabled>-- Pilih Status --</option>
-                                                    <option value="1">Terima</option>
-                                                    <option value="0">Tolak</option>
-                                                    <option value="3">Freeze/Pending</option>
-                                                </select>
                                             </div>
                                         </div>
                                     </div>

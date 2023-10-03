@@ -128,8 +128,8 @@
                                                                 <li class=""><a href="{{ route('projects.surat-jawaban', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Jawaban</a></li>
                                                             @elseif ($item->stage == 5)
                                                                 <li class=""><a href="{{ route('projects.surat-pengantar', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Pengantar</a></li>
-                                                            @elseif ($item->stage == 2 && $item->tkdn)
-                                                                <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li>
+                                                            {{-- @elseif ($item->stage == 2 && $item->tkdn)
+                                                                <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li> --}}
                                                             @elseif ($item->stage == 3 && $item->kepala?->kepala_status == 1)
                                                                 <li><a href="{{ route('projects.verify-tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
                                                             @elseif ($item->data && $item->status == 2 && $item->data->asesor_status == 1)
@@ -172,7 +172,7 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 2 && (!$item->tkdn || $item->tkdn->status == 0))
+                                                        @if ($item->stage == 2 && !$item->tkdn->count())
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>

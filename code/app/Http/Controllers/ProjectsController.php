@@ -231,9 +231,11 @@ class ProjectsController extends Controller
 
     public function verifyAdmin2($id)
     {
-        $data = Projects::with('files')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.verify-admin2', compact('data'));
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        return view('projects.verify-admin2', compact('project', 'data'));
     }
 
     public function verify($id)
