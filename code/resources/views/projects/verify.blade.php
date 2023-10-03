@@ -105,7 +105,7 @@
                                         <h3 class="card-title">Internal Document</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="">
                                             <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
                                                 <thead>
                                                     <tr>
@@ -140,7 +140,7 @@
                                         <h3 class="card-title">Uploaded Document</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="">
                                             <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
                                                 <thead>
                                                     <tr>
@@ -175,7 +175,7 @@
                                         <h3 class="card-title">Uploaded Template</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="">
                                             <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
                                                 <thead>
                                                     <tr>
@@ -204,7 +204,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($data->data->list_file != null)
                                     <div class="row">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
@@ -242,12 +241,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                @else
-                                    <h4>Tambahkan list data pemohon yang harus dilengkapi.</h4>
-                                    <div class="form-upload">
-                                    </div>
-                                    <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a>
-                                @endif
                                 <div>
                                     <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>

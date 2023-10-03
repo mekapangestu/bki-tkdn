@@ -105,7 +105,7 @@
                                         <h3 class="card-title">Uploaded Document</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="">
                                             <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
                                                 <thead>
                                                     <tr>

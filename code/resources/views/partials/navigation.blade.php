@@ -194,7 +194,7 @@
                                                     </div>
                                                     <div class="mt-1 wd-80p">
                                                         <h5 class="notification-label mb-1">
-                                                            {{ DB::table('users')->where('id', $item->data['from'])->first()?->name }}
+                                                            {{ is_numeric($item->data['from']) ? DB::table('users')->where('id', $item->data['from'])->first()?->name : $item->data['from']}}
                                                             {{ $item->data['message'] }}
                                                         </h5>
                                                         <span class="notification-subtext">{{ $item->created_at->diffForHumans() }}</span>

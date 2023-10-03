@@ -250,6 +250,17 @@ class OrdersController extends Controller
             if ($project) {
                 $project->stage = 5;
                 $project->save();
+
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => 'Submit Tahap 5 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",
@@ -287,6 +298,17 @@ class OrdersController extends Controller
                     $project->stage = 7;
                 }
                 $project->save();
+
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => $request->get('status') == "0" ? 'Menolak':'Menerima'. ' Tahap 7 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => $request->get('status'),
                     "data" => "ada",
@@ -322,6 +344,16 @@ class OrdersController extends Controller
                 $project->nm_reviewer = $request->get('nm_reviewer');
                 $project->tgl_rencana_review = $request->get('tgl_rencana_review');
                 $project->save();
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 8 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",
@@ -358,6 +390,17 @@ class OrdersController extends Controller
                 $project->mom = $request->get('mom');
                 $project->catatan = $request->get('catatan');
                 $project->save();
+
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 9 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",
@@ -396,6 +439,17 @@ class OrdersController extends Controller
                     $project->stage = 11;
                 }
                 $project->save();
+
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 11 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",
@@ -434,6 +488,17 @@ class OrdersController extends Controller
                 $project->tgl_expire = $request->get('tgl_expire');
                 $project->url_sertifikat_terbit = $request->get('url_sertifikat_terbit');
                 $project->save();
+
+                $admin = User::find(2);
+
+                $details = [
+                    'from' => 'Siinas',
+                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 12 untuk berkas ' . $project->no_berkas,
+                    'actionURL' => route('projects.verify-admin2', $project->id)
+                ];
+
+                $admin->notify(new ProjectNotification($details));
+
                 return response()->json([
                     "status" => "1",
                     "data" => "ada",

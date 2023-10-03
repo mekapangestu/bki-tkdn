@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="">
                                 <table id="file-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center">
                                     <thead>
                                         <tr>
