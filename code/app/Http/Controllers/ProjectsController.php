@@ -292,9 +292,11 @@ class ProjectsController extends Controller
 
     public function view($id)
     {
-        $data = Projects::with('files')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.view', compact('data'));
+        $data = (object) json_decode($project->orders->siinas_data, true);
+
+        return view('projects.view', compact('data', 'project'));
     }
 
     public function verifyAdminSubmit(Request $request, $id)
@@ -416,36 +418,36 @@ class ProjectsController extends Controller
                         'status' => null,
                     ]
                 );
-        
+
                 $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
                 if (!File::isDirectory($folderPath)) {
                     File::makeDirectory($folderPath, 0777, true, true);
                 }
-        
+
                 if (isset($request->hasil_verifikasi[$key])) {
-                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$key], $id, Str::headline($key).'-Draft Laporan Hasil Verifikasi', 'project');
+                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$key], $id, Str::headline($key) . '-Draft Laporan Hasil Verifikasi', 'project');
                 }
                 if (isset($request->form_nilai_tkdn[$key])) {
-                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$key], $id, Str::headline($key).'-Draft Form Penghitungan Nilai TKDN', 'project');
+                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$key], $id, Str::headline($key) . '-Draft Form Penghitungan Nilai TKDN', 'project');
                 }
-                
+
                 if (isset($request->file_name)) {
                     foreach ($request->file_name as $key => $value) {
                         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
                     }
                 }
             }
-    
+
             $project = Projects::find($id);
             $user = User::find($project->qc->qc);
             $admin = User::find(2);
-    
+
             $details = [
                 'from' => auth()->id(),
                 'message' => 'No Dokumen ' . $project->no_berkas . ' Telah Input Nilai TKDN',
                 'actionURL' => route('projects.verify', $request->project_id)
             ];
-    
+
             $user->notify(new ProjectNotification($details));
             $admin->notify(new ProjectNotification($details));
             DB::commit();
@@ -454,7 +456,6 @@ class ProjectsController extends Controller
             DB::rollBack();
             return redirect('projects')->with('success', $th->getMessage());
         }
-
     }
 
     public function submit(Request $request, $id)
@@ -509,20 +510,20 @@ class ProjectsController extends Controller
 
     public function drafSubmit(Request $request, $id)
     {
-        if($request->action == 1){
+        if ($request->action == 1) {
             $project = Projects::with('data', 'files')->find($id);
             $project->stage = 3;
             $project->save();
-    
+
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
             $payload = [
                 "tahap" => 3,
                 "verifikator" => "BKI",
                 "no_berkas" => $project->no_berkas,
             ];
-    
+
             $response = Http::post($endPoint, $payload);
-    
+
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 3;
@@ -534,15 +535,15 @@ class ProjectsController extends Controller
             } else if ($response) {
                 $documentReceipt->siinas_response = (string)$response;
             }
-    
+
             if ($response) {
                 $documentReceipt->siinas_post_at = now();
             }
-    
+
             $documentReceipt->save();
-        }else{
+        } else {
             Tkdn::where('project_id', $id)->update([
-                 'status' => 0
+                'status' => 0
             ]);
         }
 
@@ -566,10 +567,10 @@ class ProjectsController extends Controller
             }
 
             if (isset($request->hasil_persetujuan[$key])) {
-                $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key).'-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
+                $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key) . '-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
             }
             if (isset($request->laporan_hasil_verifikasi[$key])) {
-                $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key). '-Laporan Hasil Verifikasi', 'project');
+                $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key) . '-Laporan Hasil Verifikasi', 'project');
             }
 
             // if (isset($request->file_name)) {
@@ -627,7 +628,7 @@ class ProjectsController extends Controller
             $project = Projects::with('data', 'files')->find($id);
             $project->stage = 4;
             $project->save();
-            
+
             $produk = [];
 
             foreach (json_decode($project->orders->siinas_data)->produk as $value) {
