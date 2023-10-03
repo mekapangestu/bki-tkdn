@@ -57,6 +57,7 @@
             @endif
             <form method="POST" action="{{ route('projects.tkdn-submit', $project->id) }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                 <div class="row">
                     <div class="col-12">
                         <!-- CONTAINER -->
@@ -383,6 +384,22 @@
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
                                                                             <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" placeholder="Enter SPK Number" value="{{ $tkdn?->nilai_tkdn_gabungan }}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{$item->produk}}]" accept="application/pdf">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                        <div class="form-group">
+                                                                            <label for="" class="form-label">Laporan Hasil Verifikasi</label>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{$item->produk}}]" accept="application/pdf">
                                                                         </div>
                                                                     </div>
                                                                 </div>
