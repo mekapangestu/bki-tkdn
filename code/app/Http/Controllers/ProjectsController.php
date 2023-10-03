@@ -796,15 +796,16 @@ class ProjectsController extends Controller
 
         $produk = [];
         foreach (json_decode($project->orders->siinas_data)->produk as $value) {
+            $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->where('project_id', $project->id)->first();
             array_push($produk, [
                 "id_produk" => $value->id_produk,
                 "produk" => $value->produk,
                 "spesifikasi" => "spesifikasi",
                 "kd_hs" => "07096010",
                 "kd_kelompok_barang" => "1",
-                "nilai_tkdn" => $project->tkdn->nilai_tkdn ?? 22,
-                "nilai_tkdn_jasa" => $project->nilai_tkdn_jasa ?? 20,
-                "nilai_tkdn_gabungan" => $project->nilai_tkdn_gabungan ?? 42,
+                "nilai_tkdn" => $tkdn->nilai_tkdn ?? 22,
+                "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa ?? 20,
+                "nilai_tkdn_gabungan" => $tkdn->nilai_tkdn_gabungan ?? 42,
                 "merk" => "bubur",
                 "tipe" => "bubut",
                 "standar" => "bubur",
