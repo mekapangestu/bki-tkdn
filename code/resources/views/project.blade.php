@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
+<style>
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+</style>
     <style>
         .leaflet-sidebar {
             bottom: 30px !important;
@@ -62,9 +71,10 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body ">
-                            <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
+                            <table id="project-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th class="border-bottom-0 filter">NIB</th>
                                         <th class="border-bottom-0 filter">NPWP</th>
                                         <th class="border-bottom-0 filter">No Berkas</th>
@@ -82,7 +92,19 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $item)
-                                        <tr>
+                                        <tr data-child-value="
+                                            Nama Reviewer : {{$item->nm_reviewer}}<br>
+                                            Tanggal Rencana Review : {{$item->tgl_rencana_review}}<br>
+                                            Tanggal Pelaksanaan Review : {{$item->tgl_pelaksanaan_reviu}}<br>
+                                            MOM : {{$item->mom}}<br>
+                                            Catatan : {{$item->catatan}}<br>
+                                            Alasan Tidak Sesuai : {{$item->alasan_tidak_sesuai}}<br>
+                                            Alasan Tolak : {{$item->alasan_tolak}}<br>
+                                            No Tanda Sah : {{$item->no_tanda_sah}}<br>
+                                            Tanggal Tanda Sah : {{$item->tgl_tanda_sah}}<br>
+                                            Tanggal Expire : {{$item->tgl_expire}}<br>
+                                        ">
+                                            <td class="details-control"></td>
                                             <td>{{ $item->nib }}</td>
                                             <td>{{ $item->npwp }}</td>
                                             <td>{{ $item->no_berkas }}</td>
@@ -224,7 +246,33 @@
         </div>
     @endsection
     @section('js')
-        <script src="{{ asset('assets/plugins/leaflet/leaflet.js') }}"></script>
-        <script src='https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/js/leaflet-sidebar.min.js'></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/css/leaflet-sidebar.min.css">
+    <script src="{{ asset('assets/plugins/leaflet/leaflet.js') }}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/js/leaflet-sidebar.min.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/css/leaflet-sidebar.min.css">
+    @endsection
+    @section('custom-js')
+        <script>
+            function format(value) {
+                return '<div style="text-align: left">' + value + '</div>';
+            }
+            $(document).ready(function () {
+                var table = $('#project-datatable').DataTable({});
+
+                // Add event listener for opening and closing details
+                $('#project-datatable').on('click', 'td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+
+                    if (row.child.isShown()) {
+                        // This row is already open - close it
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    } else {
+                        // Open this row
+                        row.child(format(tr.data('child-value'))).show();
+                        tr.addClass('shown');
+                    }
+                });
+            });
+        </script>
     @endsection
