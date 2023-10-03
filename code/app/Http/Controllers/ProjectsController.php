@@ -484,7 +484,7 @@ class ProjectsController extends Controller
                 "status" => $status,
                 "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
                 "url_sptjm" => $path ? asset('storage/' . $path) : '',
-                "tgl_bast" => now()->format('Y-m-d'),
+                "tgl_bast" => $project->bast_date
             ];
 
             $response = Http::post($endPoint, $payload);
