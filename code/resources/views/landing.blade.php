@@ -51,7 +51,7 @@ https://templatemo.com/tm-562-space-dynamic
                             <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                             {{-- <li class="scroll-to-section"><a href="#contact">Message Us</a></li> --}}
                             <li class="scroll-to-section">
-                                <div class="main-red-button"><a href="{{ route('login') }}">Login</a></div>
+                                <div class="main-blue-button"><a href="{{ route('login') }}">Login</a></div>
                             </li>
                         </ul>
                         <a class='menu-trigger'>
@@ -72,16 +72,14 @@ https://templatemo.com/tm-562-space-dynamic
                     <div class="row">
                         <div class="col-lg-6 align-self-center">
                             <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                                <h6>SELAMAT DATANG</h6>
-                                <h5>Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi</h5>
-                                <h2><em>TKDN</em> <span>BKI</span></h2>
-                                <p>Mudah, Cepat, dan Tepat dalam melakukan verifikasi sertifikat anda.</p>
-                                <a class="btn btn-lg btn-primary" href="#about" style="border-radius: 20px">Tentang TKDN</a>
+                                <h2>TRANSFORMASI DIGITAL <span>PERMOHONAN VERIFIKASI</span> <em>SERTIFIKAT TKDN</em></h2>
+                                <h5 style="padding: 20px 0px 30px 0px;">Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi TKDN BKI</h5>
+                                <div class="main-blue-button"><a href="#about" style="border-radius: 20px;">TENTANG TKDN</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing/assets/images/banner.png') }}" alt="team meeting">
+                                <img src="{{ asset('landing/assets/images/file-transfer.svg') }}" alt="team meeting">
                             </div>
                         </div>
                     </div>
@@ -287,7 +285,24 @@ https://templatemo.com/tm-562-space-dynamic
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
+                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
+                    <img src="{{ asset('assets/images/bki-logo-new.png') }}" alt="" style="max-width: 200px">
+                </div>
+                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
+                    <p>© Copyright <?php $year = date('Y');
+                    echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
+
+                        {{-- <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a> --}}
+                    </p>
+                </div>
+                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
+                    <p>© Copyright <?php $year = date('Y');
+                    echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
+
+                        {{-- <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a> --}}
+                    </p>
+                </div>
+                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
                     <p>© Copyright <?php $year = date('Y');
                     echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
 

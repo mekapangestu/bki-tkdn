@@ -783,11 +783,14 @@ class ProjectsController extends Controller
     }
 
     public function detail($id){
-        $project = Projects::with('orders')->find($id);
+        // $project = Projects::with('orders')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        $data = $this->jsonToDebug($project->orders->siinas_data);
+        $data = (object) json_decode($project->orders->siinas_data, true);
 
-        return view('projects.detail', compact('data'));
+        return view('projects.detail', compact('project', 'data'));
+
+        // return view('projects.detail', compact('data'));
     }
 
     public function jsonToDebug($jsonText = '')
