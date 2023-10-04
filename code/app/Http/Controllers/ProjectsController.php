@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\DocumentReceipt;
 use App\Models\Heads;
 use App\Models\ProjectAdditional;
+use App\Models\Upload;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -658,7 +659,8 @@ class ProjectsController extends Controller
                 ]);
             }
 
-            $path = $project->files?->where('label', 'ilike', '%Draf Hasil Persetujuan Penamaan Tanda Sah%')?->first()->path ?? '';
+            $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%-Draf Hasil Persetujuan Penamaan Tanda Sah')->first()->path ?? '';
+
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
             $payload = [
                 "tahap" => "4",
@@ -739,7 +741,8 @@ class ProjectsController extends Controller
         $project->stage = 6;
         $project->save();
 
-        $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
+        // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
+        $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
         $payload = [
             "tahap" => "6",
@@ -815,9 +818,12 @@ class ProjectsController extends Controller
             ]);
         }
 
-        $pathSuratJawaban = $project->internal_files?->where('label', 'Surat Jawaban')?->first()->path ?? '';
-        $pathSuratPenyesuaian = $project->internal_files?->where('label', 'Surat Penyesuaian')?->first()->path ?? '';
-        $pathSuratPendukung = $project->internal_files?->where('label', 'Surat Pendukung')?->first()->path ?? '';
+        // $pathSuratJawaban = $project->internal_files?->where('label', 'Surat Jawaban')?->first()->path ?? '';
+        // $pathSuratPenyesuaian = $project->internal_files?->where('label', 'Surat Penyesuaian')?->first()->path ?? '';
+        // $pathSuratPendukung = $project->internal_files?->where('label', 'Surat Pendukung')?->first()->path ?? '';
+        $pathSuratJawaban = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Jawaban')->first()->path ?? '';
+        $pathSuratPenyesuaian = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Penyesuaian')->first()->path ?? '';
+        $pathSuratPendukung = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pendukung')->first()->path ?? '';
 
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php';
         $payload = [
