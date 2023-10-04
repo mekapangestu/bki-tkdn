@@ -479,7 +479,7 @@ class ProjectsController extends Controller
 
             $project->save();
 
-            $path = $project->files?->where('label', 'SPTJM')?->first()->path ?? '';
+            $path = $project->internal_files?->where('label', 'SPTJM')?->first()->path ?? '';
 
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
             $payload = [
