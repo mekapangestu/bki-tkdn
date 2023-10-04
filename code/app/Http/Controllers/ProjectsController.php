@@ -658,7 +658,7 @@ class ProjectsController extends Controller
                 ]);
             }
 
-            $path = $project->files?->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')?->first()->path ?? '';
+            $path = $project->files?->where('label', 'ilike', '%Draf Hasil Persetujuan Penamaan Tanda Sah%')?->first()->path ?? '';
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
             $payload = [
                 "tahap" => "4",
