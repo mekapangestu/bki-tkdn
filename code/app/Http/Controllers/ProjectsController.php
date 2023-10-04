@@ -317,7 +317,8 @@ class ProjectsController extends Controller
             "status" => $request->action,
             "alasan_tolak" => $request->alasan_tolak ?? '',
             "url_sptjm" => '',
-            "tgl_bast" => now()->format('Y-m-d'),
+            // "tgl_bast" => now()->format('Y-m-d'),
+            "tgl_bast" => '',
         ];
 
         $response = Http::post($endPoint, $payload);

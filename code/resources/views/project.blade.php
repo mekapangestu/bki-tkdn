@@ -184,7 +184,7 @@
                                                     </ul>
                                                 @endif --}}
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if ($item->status == 2 && ($item->status_pemohon == null || $item->status_pemohon == 0))
+                                                            @if ($item->status == 4 && ($item->status_pemohon == null || $item->status_pemohon == 0))
                                                                 <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail-pemohon', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
