@@ -739,7 +739,7 @@ class ProjectsController extends Controller
         $project->stage = 6;
         $project->save();
 
-        $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
+        $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
         $payload = [
             "tahap" => "6",
