@@ -664,7 +664,7 @@ class ProjectsController extends Controller
                 "tahap" => "4",
                 "verifikator" => "BKI",
                 "no_berkas" => $project->no_berkas,
-                "url_draft_persetujuan_penamaan_tanda_sah" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+                "url_draft_persetujuan_penamaan_tanda_sah" => $path ? asset('storage/' . $path) : '',
                 "no_referensi" => "123\/REF\/2023",
                 "no_laporan" => "123\/AWK\/2023",
                 "kbli" => "15340",
@@ -745,7 +745,7 @@ class ProjectsController extends Controller
             "tahap" => "6",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-            "url_surat_pengantar" => $path ?? "http:\/\/116.206.198.97\/surat_pengantar.pdf",
+            "url_surat_pengantar" => $path ? asset('storage/' . $path) : '',
             "url_lhv_ttd" => "http:\/\/116.206.198.97\/lhv_ttd.pdf",
             "nama_asesor" => "Budi"
         ];
@@ -815,7 +815,10 @@ class ProjectsController extends Controller
             ]);
         }
 
-        $path = $project->files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
+        $pathSuratJawaban = $project->internal_files?->where('label', 'Surat Jawaban')?->first()->path ?? '';
+        $pathSuratPenyesuaian = $project->internal_files?->where('label', 'Surat Penyesuaian')?->first()->path ?? '';
+        $pathSuratPendukung = $project->internal_files?->where('label', 'Surat Pendukung')?->first()->path ?? '';
+
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php';
         $payload = [
             "tahap" => "10",
@@ -825,11 +828,11 @@ class ProjectsController extends Controller
             "alasan" => "contoh alasan",
             "no_referensi" => "sdasda",
             "no_laporan" => "asfsdfsd",
-            "url_surat_jawaban" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
-            "url_lhv_penyesuaian" =>  $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+            "url_surat_jawaban" => $pathSuratJawaban ? asset('storage/' . $pathSuratJawaban) : '',
+            "url_lhv_penyesuaian" =>  $pathSuratPenyesuaian ? asset('storage/' . $pathSuratPenyesuaian) : '',
             "url_dok_dukung" => array(
                 0 => array(
-                    "url" => $path ?? "http:\/\/116.206.198.97\/tanda_sah.pdf",
+                    "url" => $pathSuratPendukung ? asset('storage/' . $pathSuratPendukung) : '',
                 )
             ),
             "kbli" => "15340",
