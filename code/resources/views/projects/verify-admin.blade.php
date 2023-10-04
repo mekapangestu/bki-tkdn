@@ -284,7 +284,7 @@
                                     </div>
                                 </div>
                                 {{-- <button type="submit" name="action" value="1" class="btn btn-primary mt-4 mb-0">Terima</button> --}}
-                                <button type="submit" name="action" value="2" onclick="siinasSubmit(2)" class="btn btn-success mt-4 mb-0">Terima</button>
+                                <button type="submit" name="action" value="4" onclick="siinasSubmit(2)" class="btn btn-success mt-4 mb-0">Terima</button>
                                 <button type="submit" name="action" value="0" onclick="siinasSubmit(0)" class="btn btn-danger mt-4 mb-0">Tolak</button>
                                 {{-- <button type="submit" name="action" value="3" class="btn btn-warning mt-4 mb-0">Freeze/Pending</button> --}}
                                 {{-- <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a> --}}
