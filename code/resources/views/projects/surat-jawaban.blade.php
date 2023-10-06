@@ -63,7 +63,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">NIB</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{$data->nib}}" disabled>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$data->nib}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">NPWP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{$data->npwp}}" disabled>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$data->npwp}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Kode Produk</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{$data->kd_produk}}" disabled>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$data->kd_produk}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nama CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{$data->nama_cp}}" disabled>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$data->nama_cp}}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Jabatan CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" placeholder="Enter SPK Number" value="{{$data->jabatan_cp}}" disabled>
+                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$data->jabatan_cp}}" disabled>
                                         </div>
                                     </div>
                                 </div>

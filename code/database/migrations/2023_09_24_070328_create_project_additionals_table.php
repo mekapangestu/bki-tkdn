@@ -16,10 +16,13 @@ class CreateProjectAdditionalsTable extends Migration
         Schema::create('project_additionals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->nullable()->references('id')->on('projects');
-            $table->string('nib')->nullable();
-            $table->string('izin_usaha_industri')->nullable();
-            $table->string('akta_perusahaan')->nullable();
-            $table->string('npwp')->nullable();
+            $table->string('id_produk')->nullable();
+            $table->string('standar')->nullable();
+            $table->string('produsen')->nullable();
+            $table->string('sertifikat_produk')->nullable();
+            $table->string('kd_kelompok_barang')->nullable();
+            $table->string('merk')->nullable();
+            $table->string('tipe')->nullable();
             $table->timestamps();
         });
     }

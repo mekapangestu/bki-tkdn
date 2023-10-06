@@ -46,7 +46,7 @@
                                     <input class="input100 border-start-0 form-control ms-0" type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="text-end pt-4">
-                                    <p class="mb-0"><a href="/forgot-password" class="text-primary ms-1">Forgot Password?</a></p>
+                                    {{-- <p class="mb-0"><a href="/forgot-password" class="text-primary ms-1">Forgot Password?</a></p> --}}
                                 </div>
                                 <div class="container-login100-form-btn">
                                     <button type="submit" class="login100-form-btn btn-primary">

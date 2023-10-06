@@ -111,9 +111,9 @@ class OrdersController extends Controller
                 //     $message->to($request->get('email_cp'));
                 // });
             }
-
+            
             Orders::create([
-                'siinas_data' => json_encode($request->all(), JSON_PRETTY_PRINT),
+                'siinas_data' => $request->all(),
                 "no_berkas" => $request->get('no_berkas'),
                 "nib" => $request->get('nib'),
                 "npwp" => $request->get('npwp'),

@@ -10,4 +10,8 @@ class Orders extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'siinas_data' => 'object',
+    ];
 }

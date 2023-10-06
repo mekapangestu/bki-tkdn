@@ -62,6 +62,11 @@ class Projects extends Model
         return $this->hasMany(DocumentReceipt::class, 'project_id', 'id');
     }
 
+    public function additional()
+    {
+        return $this->hasMany(ProjectAdditional::class, 'project_id', 'id');
+    }
+
     public function statuses()
     {
         return $this->belongsTo(Statuses::class, 'status', 'id');
