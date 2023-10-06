@@ -371,7 +371,13 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" required>
+                                        {{-- <input type="text" class="form-control" id="spk_no" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" required> --}}
+                                        <select class="form-control select2" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" required>
+                                            <option></option>
+                                            @foreach ($kelompok_barang as $item)
+                                                <option>{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">

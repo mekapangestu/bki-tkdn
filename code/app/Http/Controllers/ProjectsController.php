@@ -13,6 +13,7 @@ use App\Models\Asesors;
 use App\Models\Projects;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\KelompokBarang;
 use App\Models\DocumentReceipt;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
@@ -247,7 +248,9 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.verify', compact('project', 'data'));
+        $kelompok_barang = KelompokBarang::all();
+
+        return view('projects.verify', compact('project', 'data', 'kelompok_barang'));
     }
 
     public function verify2($id)
