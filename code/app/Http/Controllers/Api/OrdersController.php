@@ -253,6 +253,7 @@ class OrdersController extends Controller
                 } else {
                     $project->stage = 5;
                 }
+                $project->save();
 
                 $admin = User::find(2);
 
@@ -263,7 +264,7 @@ class OrdersController extends Controller
                 ];
 
                 $admin->notify(new ProjectNotification($details));
-)
+
                 return response()->json([
                     "status" => $request->get('status'),
                     "data" => "ada",
