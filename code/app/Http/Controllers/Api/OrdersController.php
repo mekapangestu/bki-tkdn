@@ -248,21 +248,24 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $project->stage = 5;
-                $project->save();
+                if ($request->get('status') == "0") {
+                    $project->stage = 3;
+                } else {
+                    $project->stage = 5;
+                }
 
                 $admin = User::find(2);
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => 'Submit Tahap 5 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima') . ' Tahap 5 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));
-
+)
                 return response()->json([
-                    "status" => "1",
+                    "status" => $request->get('status'),
                     "data" => "ada",
                     "tahap" => "5",
                     "message" => "ok"
@@ -303,7 +306,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => $request->get('status') == "0" ? 'Menolak':'Menerima'. ' Tahap 7 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak':'Menerima'). ' Tahap 7 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
@@ -348,7 +351,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 8 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 8 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
@@ -395,7 +398,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 9 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima') . ' Tahap 9 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
@@ -444,7 +447,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 11 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 11 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
@@ -493,7 +496,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => $request->get('status') == "0" ? 'Menolak' : 'Menerima' . ' Tahap 12 untuk berkas ' . $project->no_berkas,
+                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 12 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
