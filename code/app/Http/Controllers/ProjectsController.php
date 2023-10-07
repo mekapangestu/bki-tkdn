@@ -392,7 +392,7 @@ class ProjectsController extends Controller
             if (isset($request->sptjm)) {
                 $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'internal');
             }
-
+            
             foreach ($request->standar as $key => $value) {
                 $additional = new ProjectAdditional();
                 $additional->project_id = $id;
@@ -436,8 +436,8 @@ class ProjectsController extends Controller
         DB::beginTransaction();
         try {
 
-            $hasilVerifikasi = PDFMerger::init();
-            $nilaiTkdn = PDFMerger::init();
+            // $hasilVerifikasi = PDFMerger::init();
+            // $nilaiTkdn = PDFMerger::init();
             foreach ($request->id_produk as $key => $id_produk) {
                 Tkdn::updateOrCreate(
                     [
@@ -461,11 +461,11 @@ class ProjectsController extends Controller
 
                 if (isset($request->hasil_verifikasi[$key])) {
                     $this->singleUpload(1, $request->file('hasil_verifikasi')[$key], $id, Str::headline($key) . '-Draft Laporan Hasil Verifikasi', 'project');
-                    $hasilVerifikasi->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
+                    // $hasilVerifikasi->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
                 if (isset($request->form_nilai_tkdn[$key])) {
                     $this->singleUpload(1, $request->file('form_nilai_tkdn')[$key], $id, Str::headline($key) . '-Draft Form Penghitungan Nilai TKDN', 'project');
-                    $nilaiTkdn->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
+                    // $nilaiTkdn->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
 
                 if (isset($request->file_name)) {
@@ -475,45 +475,45 @@ class ProjectsController extends Controller
                 }
 
             }
-            $hasilVerifikasi->merge();
-            $nilaiTkdn->merge();
+            // $hasilVerifikasi->merge();
+            // $nilaiTkdn->merge();
 
-            $hasilVerifikasi->save('storage/files/merged_hasil_verifikasi.pdf');
-            $nilaiTkdn->save('storage/files/merged_nilai_tkdn.pdf');
+            // $hasilVerifikasi->save('storage/files/merged_hasil_verifikasi.pdf');
+            // $nilaiTkdn->save('storage/files/merged_nilai_tkdn.pdf');
 
-            Upload::updateOrCreate(
-                [
-                    'request_id' => $id,
-                    'label' => 'Draft Laporan Hasil Verifikasi',
-                ],
-                [
-                    'request_id' => $id,
-                    'name' => 'merged_hasil_verifikasi.pdf',
-                    'filename' => 'Draft Laporan Hasil Verifikasi',
-                    'path' => 'public/merged_hasil_verifikasi.pdf',
-                    'label' => 'merger',
-                    'order' => '1',
-                    'tag' => 'merger',
-                    'upload_date' => now()
-                ]
-            );
+            // Upload::updateOrCreate(
+            //     [
+            //         'request_id' => $id,
+            //         'label' => 'Draft Laporan Hasil Verifikasi',
+            //     ],
+            //     [
+            //         'request_id' => $id,
+            //         'name' => 'merged_hasil_verifikasi.pdf',
+            //         'filename' => 'Draft Laporan Hasil Verifikasi',
+            //         'path' => 'public/merged_hasil_verifikasi.pdf',
+            //         'label' => 'merger',
+            //         'order' => '1',
+            //         'tag' => 'merger',
+            //         'upload_date' => now()
+            //     ]
+            // );
 
-            Upload::updateOrCreate(
-                [
-                    'request_id' => $id,
-                    'label' => 'Draft Form Penghitungan Nilai TKDN',
-                ],
-                [
-                    'request_id' => $id,
-                    'name' => 'merged_nilai_tkdn.pdf',
-                    'filename' => 'Draft Form Penghitungan Nilai TKDN',
-                    'path' => 'public/merged_nilai_tkdn.pdf',
-                    'label' => 'merger',
-                    'order' => '1',
-                    'tag' => 'merger',
-                    'upload_date' => now()
-                ]
-            );
+            // Upload::updateOrCreate(
+            //     [
+            //         'request_id' => $id,
+            //         'label' => 'Draft Form Penghitungan Nilai TKDN',
+            //     ],
+            //     [
+            //         'request_id' => $id,
+            //         'name' => 'merged_nilai_tkdn.pdf',
+            //         'filename' => 'Draft Form Penghitungan Nilai TKDN',
+            //         'path' => 'public/merged_nilai_tkdn.pdf',
+            //         'label' => 'merger',
+            //         'order' => '1',
+            //         'tag' => 'merger',
+            //         'upload_date' => now()
+            //     ]
+            // );
 
             $project = Projects::find($id);
             $user = User::find($project->qc->qc);
@@ -638,8 +638,8 @@ class ProjectsController extends Controller
         $project->stage = 3;
         $project->save();
 
-        $hasilPersetujuan = PDFMerger::init();
-        $hasilVerifikasi = PDFMerger::init();
+        // $hasilPersetujuan = PDFMerger::init();
+        // $hasilVerifikasi = PDFMerger::init();
 
         foreach ($request->id_produk as $key => $id_produk) {
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
@@ -649,11 +649,11 @@ class ProjectsController extends Controller
 
             if (isset($request->hasil_persetujuan[$key])) {
                 $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key) . '-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
-                $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
+                // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
             }
             if (isset($request->laporan_hasil_verifikasi[$key])) {
                 $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key) . '-Laporan Hasil Verifikasi', 'project');
-                $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
+                // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
             }
 
             // if (isset($request->file_name)) {
@@ -662,45 +662,45 @@ class ProjectsController extends Controller
             //     }
             // }
         }
-        $hasilVerifikasi->merge();
-        $hasilPersetujuan->merge();
+        // $hasilVerifikasi->merge();
+        // $hasilPersetujuan->merge();
 
-        $hasilVerifikasi->save('storage/files/laporan_hasil_verifikasi.pdf');
-        $hasilPersetujuan->save('storage/files/hasil_persetujuan.pdf');
+        // $hasilVerifikasi->save('storage/files/laporan_hasil_verifikasi.pdf');
+        // $hasilPersetujuan->save('storage/files/hasil_persetujuan.pdf');
 
-        Upload::updateOrCreate(
-            [
-                'request_id' => $id,
-                'label' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
-            ],
-            [
-                'request_id' => $id,
-                'name' => 'laporan_hasil_verifikasi.pdf',
-                'filename' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
-                'path' => 'public/laporan_hasil_verifikasi.pdf',
-                'label' => 'merger',
-                'order' => '1',
-                'tag' => 'merger',
-                'upload_date' => now()
-            ]
-        );
+        // Upload::updateOrCreate(
+        //     [
+        //         'request_id' => $id,
+        //         'label' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
+        //     ],
+        //     [
+        //         'request_id' => $id,
+        //         'name' => 'laporan_hasil_verifikasi.pdf',
+        //         'filename' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
+        //         'path' => 'public/laporan_hasil_verifikasi.pdf',
+        //         'label' => 'merger',
+        //         'order' => '1',
+        //         'tag' => 'merger',
+        //         'upload_date' => now()
+        //     ]
+        // );
 
-        Upload::updateOrCreate(
-            [
-                'request_id' => $id,
-                'label' => 'Laporan Hasil Verifikasi',
-            ],
-            [
-                'request_id' => $id,
-                'name' => 'hasil_persetujuan.pdf',
-                'filename' => 'Laporan Hasil Verifikasi',
-                'path' => 'public/hasil_persetujuan.pdf',
-                'label' => 'merger',
-                'order' => '1',
-                'tag' => 'merger',
-                'upload_date' => now()
-            ]
-        );
+        // Upload::updateOrCreate(
+        //     [
+        //         'request_id' => $id,
+        //         'label' => 'Laporan Hasil Verifikasi',
+        //     ],
+        //     [
+        //         'request_id' => $id,
+        //         'name' => 'hasil_persetujuan.pdf',
+        //         'filename' => 'Laporan Hasil Verifikasi',
+        //         'path' => 'public/hasil_persetujuan.pdf',
+        //         'label' => 'merger',
+        //         'order' => '1',
+        //         'tag' => 'merger',
+        //         'upload_date' => now()
+        //     ]
+        // );
 
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
         $payload = [

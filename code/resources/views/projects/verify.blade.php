@@ -67,35 +67,35 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">NIB</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nib }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nib }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">NPWP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->npwp }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->npwp }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Kode Produk</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->kd_produk }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->kd_produk }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nomer Berkas</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_berkas }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->no_berkas }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Alamat Kantor</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_kantor }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->alamat_kantor }}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -103,35 +103,35 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Nama CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nama_cp }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_cp }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">No HP CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_hp_cp }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->no_hp_cp }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Email CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->email_cp }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->email_cp }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Jabatan CP</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->jabatan_cp }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->jabatan_cp }}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="spk_no" class="form-label">Alamat Pabrik</label>
-                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_pabrik }}" disabled>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->alamat_pabrik }}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -353,29 +353,29 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Standar</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="standar[{{$item->id_produk}}]" placeholder="Enter Standar" value="" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="standar[{{$item->id_produk}}]" placeholder="Enter Standar" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Produsen</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="produsen[{{$item->id_produk}}]" placeholder="Enter Produsen" value="" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="produsen[{{$item->id_produk}}]" placeholder="Enter Produsen" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Sertifikat Produk</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="sertifikat_produk[{{$item->id_produk}}]" placeholder="Enter Sertifikat Produk" value="" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{$item->id_produk}}]" placeholder="Enter Sertifikat Produk" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
-                                        {{-- <input type="text" class="form-control" id="spk_no" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" required> --}}
+                                        {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" required> --}}
                                         <select class="form-control select2" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" required>
                                             <option></option>
-                                            @foreach ($kelompok_barang as $item)
-                                                <option>{{$item->name}}</option>
+                                            @foreach ($kelompok_barang as $option)
+                                                <option>{{$option->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -383,13 +383,13 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Merk</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="merk[{{$item->id_produk}}]" placeholder="Enter Merk" value="" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="merk[{{$item->id_produk}}]" placeholder="Enter Merk" value="" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Tipe</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="tipe[{{$item->id_produk}}]" placeholder="Enter Tipe" value="" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="tipe[{{$item->id_produk}}]" placeholder="Enter Tipe" value="" required>
                                     </div>
                                 </div>
                             </div>
@@ -405,37 +405,37 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Judul BAST</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="judul" placeholder="Enter Judul BAST" value="{{ $project->judul }}" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="judul" placeholder="Enter Judul BAST" value="{{ $project->judul }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor BAST</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="bast_no" placeholder="Enter Nomor BAST" value="{{ $project->bast_no }}" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="bast_no" placeholder="Enter Nomor BAST" value="{{ $project->bast_no }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Tanggal BAST</label>
-                                        <input type="text" class="form-control fc-datepicker" id="spk_no" autocomplete="off" name="bast_date" placeholder="Enter Tanggal BAST" value="{{ $project->bast_date }}" required>
+                                        <input type="text" class="form-control fc-datepicker" autocomplete="off" name="bast_date" placeholder="Enter Tanggal BAST" value="{{ $project->bast_date }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Laporan</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->bast_date }}" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->bast_date }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Bidang Usaha</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bast_date }}" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bast_date }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Referensi</label>
-                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->bast_date }}" required>
+                                        <input type="text" class="form-control" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->bast_date }}" required>
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
