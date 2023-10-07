@@ -368,43 +368,44 @@ class ProjectsController extends Controller
     
             $asesor->asesor_status = $request->action;
             $asesor->asesor_note = $request->note;
+            $asesor->save();
             if ($project->status == 0) {
                 $project->status = 2;
                 $project->save();
+            }else{
+        
+                $project->status_pemohon = $request->action;
+                $project->judul = $request->judul;
+                $project->bast_no = $request->bast_no;
+                $project->bast_date = $request->bast_date;
+                $project->save();
+        
+                $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+                if (!File::isDirectory($folderPath)) {
+                    File::makeDirectory($folderPath, 0777, true, true);
+                }
+        
+                if (isset($request->bast)) {
+                    $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'internal');
+                }
+                if (isset($request->sptjm)) {
+                    $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'internal');
+                }
+                
+                foreach ($request->standar as $key => $value) {
+                    $additional = new ProjectAdditional();
+                    $additional->project_id = $id;
+                    $additional->id_produk = $key;
+                    $additional->standar = $value;
+                    $additional->produsen = $request->produsen[$key];
+                    $additional->sertifikat_produk = $request->sertifikat_produk[$key];
+                    $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$key];
+                    $additional->merk = $request->merk[$key];
+                    $additional->tipe = $request->tipe[$key];
+                    $additional->save();
+                }
             }
     
-            $asesor->save();
-    
-            $project->status_pemohon = $request->action;
-            $project->judul = $request->judul;
-            $project->bast_no = $request->bast_no;
-            $project->bast_date = $request->bast_date;
-            $project->save();
-    
-            $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-            if (!File::isDirectory($folderPath)) {
-                File::makeDirectory($folderPath, 0777, true, true);
-            }
-    
-            if (isset($request->bast)) {
-                $this->singleUpload(1, $request->file('bast'), $id, 'BAST', 'internal');
-            }
-            if (isset($request->sptjm)) {
-                $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'internal');
-            }
-            
-            foreach ($request->standar as $key => $value) {
-                $additional = new ProjectAdditional();
-                $additional->project_id = $id;
-                $additional->id_produk = $key;
-                $additional->standar = $value;
-                $additional->produsen = $request->produsen[$key];
-                $additional->sertifikat_produk = $request->sertifikat_produk[$key];
-                $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$key];
-                $additional->merk = $request->merk[$key];
-                $additional->tipe = $request->tipe[$key];
-                $additional->save();
-            }
     
             $user = User::find(2);
     
@@ -539,7 +540,7 @@ class ProjectsController extends Controller
     public function submit(Request $request, $id)
     {
         $status = $request->action;
-
+        
         $project = Projects::with('data', 'files')->find($id);
         $project->status = $status;
         if ($status == 0) {
@@ -634,9 +635,13 @@ class ProjectsController extends Controller
         $project->qc->qc_status = $request->action;
         $project->qc->qc_note = $request->note;
         $project->qc->save();
-
+        
         $project->stage = 3;
         $project->save();
+
+        $project->kepala->kepala_status = null;
+        $project->kepala->save();
+
 
         // $hasilPersetujuan = PDFMerger::init();
         // $hasilVerifikasi = PDFMerger::init();

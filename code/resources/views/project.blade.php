@@ -156,7 +156,7 @@
                                                                 <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li> --}}
                                                             @elseif ($item->stage == 3 && $item->kepala?->kepala_status == 1)
                                                                 <li><a href="{{ route('projects.verify-tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
-                                                            @elseif ($item->data && $item->status == 4 && $item->data->asesor_status == 1)
+                                                            @elseif ($item->data && ($item->status == 4 || $item->status == 2) && $item->data->asesor_status == 1)
                                                                 <li class=""><a href="{{ route('projects.verify-admin2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Verifikasi"><span class="fe fe-edit fs-14"></span> Verifikasi</a></li>
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li> --}}
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 0]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
@@ -200,7 +200,7 @@
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
-                                                        @elseif($item->stage == 1 && $item->status_pemohon == 2)
+                                                        @elseif($item->stage == 1 && ($item->status_pemohon == 2 || $item->status == 0))
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
@@ -216,7 +216,7 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 2 && $item->qc->qc_status != 1 && $item->tkdn)
+                                                        @if (($item->stage == 2 && $item->qc->qc_status != 1 && $item->tkdn) || $item->kepala->kepala_status == '0')
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Review Perhitungan TKDN</a></li>
                                                             </ul>
