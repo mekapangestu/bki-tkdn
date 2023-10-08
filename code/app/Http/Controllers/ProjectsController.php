@@ -823,10 +823,10 @@ class ProjectsController extends Controller
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                     "url_draft_persetujuan_penamaan_tanda_sah" => $path ? asset('storage/' . $path) : '',
-                    "no_referensi" => "123\/REF\/2023",
-                    "no_laporan" => "123\/AWK\/2023",
-                    "kbli" => "15340",
-                    "bidang_usaha" => "15340",
+                    "no_referensi" => "123\/REF\/2023", // dari Assessor
+                    "no_laporan" => "123\/AWK\/2023", // dari Assessor
+                    "kbli" => "15340", // dari Assessor
+                    "bidang_usaha" => "15340", // dari Assessor
                     "produk" => $produk
                 ];
     
@@ -914,8 +914,8 @@ class ProjectsController extends Controller
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "url_surat_pengantar" => $path ? asset('storage/' . $path) : '',
-            "url_lhv_ttd" => "http:\/\/116.206.198.97\/lhv_ttd.pdf",
-            "nama_asesor" => "Budi"
+            "url_lhv_ttd" => "http:\/\/116.206.198.97\/lhv_ttd.pdf", // url file laporan hasil verifikasi
+            "nama_asesor" => "Budi" // Ambil dari assessor
         ];
 
         $response = Http::post($endPoint, $payload);
@@ -1000,9 +1000,9 @@ class ProjectsController extends Controller
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "status" => "1",
-            "alasan" => "contoh alasan",
-            "no_referensi" => "sdasda",
-            "no_laporan" => "asfsdfsd",
+            "alasan" => "contoh alasan", // Alasan dari input
+            "no_referensi" => "sdasda", // // dari submit tahap 4
+            "no_laporan" => "asfsdfsd", // // dari submit tahap 4
             "url_surat_jawaban" => $pathSuratJawaban ? asset('storage/' . $pathSuratJawaban) : '',
             "url_lhv_penyesuaian" =>  $pathSuratPenyesuaian ? asset('storage/' . $pathSuratPenyesuaian) : '',
             "url_dok_dukung" => array(
@@ -1010,8 +1010,8 @@ class ProjectsController extends Controller
                     "url" => $pathSuratPendukung ? asset('storage/' . $pathSuratPendukung) : '',
                 )
             ),
-            "kbli" => "15340",
-            "bidang_usaha" => "Industri Makanan",
+            "kbli" => "15340", // dari produk
+            "bidang_usaha" => "Industri Makanan", // dari submit tahap 4
             "produk" => $produk
         ];
 
