@@ -656,6 +656,7 @@ class ProjectsController extends Controller
         $project->qc->save();
         
         if ($request->action == 1) {
+            $project->status_siinas = 1;
             $project->status = 300;
             $project->stage = 3;
             $project->save();
