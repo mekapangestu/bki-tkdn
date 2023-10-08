@@ -152,7 +152,9 @@
                                     <table class="table table-hover" id="collapseProduk">
                                         @forelse ($data->produk as $item)
                                             <tr>
-                                                <td width="10%" rowspan="2" style="text-align: center; vertical-align: middle; font-size: 20px;"><strong>{{ $loop->iteration }}</strong></td>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk }}</th>
+                                            </tr>
+                                            <tr>
                                                 <td width="30%">ID Produk</td>
                                                 <td width="1%">:</td>
                                                 <td>{{ $item->id_produk }}</td>
@@ -172,6 +174,9 @@
                                 <div class="tab-pane fade" id="collapseMesin" role="tabpanel" aria-labelledby="collapseMesin-tab">
                                     <table class="table table-hover" id="collapseMesin">
                                         @forelse ($data->mesin as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Mesin {{ $loop->iteration }} - {{ $item->merk_tipe ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -206,6 +211,9 @@
                                 <div class="tab-pane fade" id="collapseProduksi" role="tabpanel" aria-labelledby="collapseProduksi-tab">
                                     <table class="table table-hover" id="collapseProduksi">
                                         @forelse ($data->produksi as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -223,6 +231,9 @@
                                 <div class="tab-pane fade" id="collapseKapasitas" role="tabpanel" aria-labelledby="collapseKapasitas-tab">
                                     <table class="table table-hover" id="collapseKapasitas">
                                         @forelse ($data->kapasitas as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -363,29 +374,25 @@
                                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                                 @forelse ($project->orders->siinas_data->produk ?? [] as $item)
                                     <div class="card" style="col-12">
-                                        <div class="card-header">
-                                            <h4>{{ $item->produk }}</h4>
+                                        <div class="card-header" style="text-align: left; vertical-align: middle; background-color: #e25b31; color: #fff">
+                                            <h4><strong>{{ Str::upper($item->produk) }}</strong></h4>
                                         </div>
                                         <div class="card-body">
                                             <input type="hidden" name="id_produk[{{ $item->produk }}]" value="{{ $item->id_produk }}">
                                             <div class="row">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="col-xl-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN</label>
                                                         <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->produk }}]" value="" required>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="col-xl-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
                                                         <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->produk }}]" value="" required>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="col-xl-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
                                                         <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->produk }}]" value="" required>
@@ -393,20 +400,21 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="col-xl-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
                                                         <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf" required>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="col-xl-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
                                                         <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->produk }}]" accept="application/pdf" required>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+
                                             </div>
                                         </div>
                                     </div>

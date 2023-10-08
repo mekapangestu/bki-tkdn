@@ -152,7 +152,9 @@
                                     <table class="table table-hover" id="collapseProduk">
                                         @forelse ($data->produk as $item)
                                             <tr>
-                                                <td width="10%" rowspan="2" style="text-align: center; vertical-align: middle; font-size: 20px;"><strong>{{ $loop->iteration }}</strong></td>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk }}</th>
+                                            </tr>
+                                            <tr>
                                                 <td width="30%">ID Produk</td>
                                                 <td width="1%">:</td>
                                                 <td>{{ $item->id_produk }}</td>
@@ -172,6 +174,9 @@
                                 <div class="tab-pane fade" id="collapseMesin" role="tabpanel" aria-labelledby="collapseMesin-tab">
                                     <table class="table table-hover" id="collapseMesin">
                                         @forelse ($data->mesin as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Mesin {{ $loop->iteration }} - {{ $item->merk_tipe ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -206,6 +211,9 @@
                                 <div class="tab-pane fade" id="collapseProduksi" role="tabpanel" aria-labelledby="collapseProduksi-tab">
                                     <table class="table table-hover" id="collapseProduksi">
                                         @forelse ($data->produksi as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -223,6 +231,9 @@
                                 <div class="tab-pane fade" id="collapseKapasitas" role="tabpanel" aria-labelledby="collapseKapasitas-tab">
                                     <table class="table table-hover" id="collapseKapasitas">
                                         @forelse ($data->kapasitas as $item)
+                                            <tr>
+                                                <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                            </tr>
                                             @foreach ($item as $key => $item)
                                                 <tr>
                                                     <td width="30%">{{ Str::headline($key) }}</td>
@@ -281,44 +292,9 @@
                 <div class="col-12">
                     <form method="POST" action="{{ route('projects.verify-submit', $project->id) }}" enctype="multipart/form-data">
                         @csrf
-                    <div class="card custom-card">
-                        <div class="card-header border-bottom">
-                            <h3 class="card-title">Internal Document</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="">
-                                <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-bottom-0" style="width: 25px">No</th>
-                                            <th class="border-bottom-0">File Name</th>
-                                            <th class="border-bottom-0">Created At</th>
-                                            <th class="border-bottom-0">Updated At</th>
-                                            <th class="border-bottom-0" style="width: 50px">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($project->internal_files as $file)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $file->label }}</td>
-                                                <td>{{ $file->created_at }}</td>
-                                                <td>{{ $file->updated_at }}</td>
-                                                <td>
-                                                    <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                    {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    @forelse ($project->orders->siinas_data->produk ?? [] as $item)
                         <div class="card custom-card">
                             <div class="card-header border-bottom">
-                                <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
+                                <h3 class="card-title">Internal Document</h3>
                             </div>
                             <div class="card-body">
                                 <div class="">
@@ -333,109 +309,144 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($project->files as $file)
-                                                @if (Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $file->label }}</td>
-                                                        <td>{{ $file->created_at }}</td>
-                                                        <td>{{ $file->updated_at }}</td>
-                                                        <td>
-                                                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                            {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                        </td>
-                                                    </tr>
-                                                @endif
+                                            @foreach ($project->internal_files as $file)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $file->label }}</td>
+                                                    <td>{{ $file->created_at }}</td>
+                                                    <td>{{ $file->updated_at }}</td>
+                                                    <td>
+                                                        <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                        {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Standar</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="standar[{{$item->id_produk}}]" placeholder="Enter Standar" value="" >
-                                    </div>
+                            </div>
+                        </div>
+                        @forelse ($project->orders->siinas_data->produk ?? [] as $item)
+                            <div class="card custom-card">
+                                <div class="card-header border-bottom">
+                                    <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
                                 </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Produsen</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="produsen[{{$item->id_produk}}]" placeholder="Enter Produsen" value="" >
+                                <div class="card-body">
+                                    <div class="">
+                                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" style="width: 25px">No</th>
+                                                    <th class="border-bottom-0">File Name</th>
+                                                    <th class="border-bottom-0">Created At</th>
+                                                    <th class="border-bottom-0">Updated At</th>
+                                                    <th class="border-bottom-0" style="width: 50px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($project->files as $file)
+                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $file->label }}</td>
+                                                            <td>{{ $file->created_at }}</td>
+                                                            <td>{{ $file->updated_at }}</td>
+                                                            <td>
+                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Sertifikat Produk</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{$item->id_produk}}]" placeholder="Enter Sertifikat Produk" value="" >
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Standar</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="standar[{{ $item->id_produk }}]" placeholder="Enter Standar" value="">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
-                                        {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
-                                        <select class="form-control select2" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" >
-                                            <option></option>
-                                            @foreach ($kelompok_barang as $option)
-                                                <option>{{$option->name}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Produsen</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="produsen[{{ $item->id_produk }}]" placeholder="Enter Produsen" value="">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Merk</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="merk[{{$item->id_produk}}]" placeholder="Enter Merk" value="" >
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Sertifikat Produk</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{ $item->id_produk }}]" placeholder="Enter Sertifikat Produk" value="">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="spk_no" class="form-label">Tipe</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="tipe[{{$item->id_produk}}]" placeholder="Enter Tipe" value="" >
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
+                                            {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
+                                            <select class="form-control select2" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                <option></option>
+                                                @foreach ($kelompok_barang as $option)
+                                                    <option>{{ $option->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Merk</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="merk[{{ $item->id_produk }}]" placeholder="Enter Merk" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Tipe</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="tipe[{{ $item->id_produk }}]" placeholder="Enter Tipe" value="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <h4>Tidak ada produk</h4>
-                    @endforelse
-                    <div class="card custom-card">
-                        <div class="card-header border-bottom">
-                            <h3 class="card-title">Upload Hasil Verifikasi</h3>
-                        </div>
-                        <div class="card-body">
+                        @empty
+                            <h4>Tidak ada produk</h4>
+                        @endforelse
+                        <div class="card custom-card">
+                            <div class="card-header border-bottom">
+                                <h3 class="card-title">Upload Hasil Verifikasi</h3>
+                            </div>
+                            <div class="card-body">
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Judul BAST</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="judul" placeholder="Enter Judul BAST" value="{{ $project->judul }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="judul" placeholder="Enter Judul BAST" value="{{ $project->judul }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor BAST</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="bast_no" placeholder="Enter Nomor BAST" value="{{ $project->bast_no }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="bast_no" placeholder="Enter Nomor BAST" value="{{ $project->bast_no }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Tanggal BAST</label>
-                                        <input type="text" class="form-control fc-datepicker" autocomplete="off" name="bast_date" placeholder="Enter Tanggal BAST" value="{{ $project->bast_date }}" >
+                                        <input type="text" class="form-control fc-datepicker" autocomplete="off" name="bast_date" placeholder="Enter Tanggal BAST" value="{{ $project->bast_date }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Laporan</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->no_laporan }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->no_laporan }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Bidang Usaha</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bidang_usaha }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bidang_usaha }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Referensi</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->no_referensi }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->no_referensi }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
@@ -469,8 +480,8 @@
                                     <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                                 </div>
+                            </div>
                         </div>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -515,7 +526,7 @@
             $('#action').on('change', function() {
                 if (this.value == 1) {
                     $("input").not(':input[type=search]').attr("required", true);
-                }else{
+                } else {
                     $("input").not(':input[type=search]').removeAttr("required", true);
                 }
             });

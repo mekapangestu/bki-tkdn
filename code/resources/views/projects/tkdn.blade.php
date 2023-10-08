@@ -158,7 +158,9 @@
                                                 <table class="table table-hover" id="collapseProduk">
                                                     @forelse ($data->produk as $item)
                                                         <tr>
-                                                            <td width="10%" rowspan="2" style="text-align: center; vertical-align: middle; font-size: 20px;"><strong>{{ $loop->iteration }}</strong></td>
+                                                            <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk }}</th>
+                                                        </tr>
+                                                        <tr>
                                                             <td width="30%">ID Produk</td>
                                                             <td width="1%">:</td>
                                                             <td>{{ $item->id_produk }}</td>
@@ -178,6 +180,9 @@
                                             <div class="tab-pane fade" id="collapseMesin" role="tabpanel" aria-labelledby="collapseMesin-tab">
                                                 <table class="table table-hover" id="collapseMesin">
                                                     @forelse ($data->mesin as $item)
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Mesin {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                                        </tr>
                                                         @foreach ($item as $key => $item)
                                                             <tr>
                                                                 <td width="30%">{{ Str::headline($key) }}</td>
@@ -212,6 +217,9 @@
                                             <div class="tab-pane fade" id="collapseProduksi" role="tabpanel" aria-labelledby="collapseProduksi-tab">
                                                 <table class="table table-hover" id="collapseProduksi">
                                                     @forelse ($data->produksi as $item)
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                                        </tr>
                                                         @foreach ($item as $key => $item)
                                                             <tr>
                                                                 <td width="30%">{{ Str::headline($key) }}</td>
@@ -229,6 +237,9 @@
                                             <div class="tab-pane fade" id="collapseKapasitas" role="tabpanel" aria-labelledby="collapseKapasitas-tab">
                                                 <table class="table table-hover" id="collapseKapasitas">
                                                     @forelse ($data->kapasitas as $item)
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                                        </tr>
                                                         @foreach ($item as $key => $item)
                                                             <tr>
                                                                 <td width="30%">{{ Str::headline($key) }}</td>
@@ -364,23 +375,19 @@
                                                             @if ($tkdn->id_produk == $item->id_produk)
                                                                 <input type="hidden" name="id_produk[{{ $item->produk }}]" value="{{ $item->id_produk }}">
                                                                 <div class="row">
-                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
                                                                             <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" value="{{ $tkdn?->nilai_tkdn }}" disabled>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
                                                                             <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" value="{{ $tkdn?->nilai_tkdn_jasa }}" disabled>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
                                                                             <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" value="{{ $tkdn?->nilai_tkdn_gabungan }}" disabled>
@@ -388,18 +395,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{$item->produk}}]" accept="application/pdf" required>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/pdf" required>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Laporan Hasil Verifikasi</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{$item->produk}}]" accept="application/pdf" required>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -468,32 +473,32 @@
             if (this.value == 1) {
                 $("input").not(':input[type=search]').attr("required", true);
                 $(".notes").removeAttr("required", true);
-            }else{
+            } else {
                 $(".notes").attr("required", true);
                 $("input").not(':input[type=search]').removeAttr("required", true);
             }
         });
 
-        $("form.swa-confirm").submit(function (e) {
+        $("form.swa-confirm").submit(function(e) {
             e.preventDefault();
             swal({
-                title: "Apakah anda yakin?",
-                text: "Data dan dikirimkan ke SIINAS",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Submit!',
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function(isConfirm) {
-                if (isConfirm) {
-                    $("form.swa-confirm").off("submit").submit();
-                } else {
-                    swal("Cancelled", "", "error");
-                }
-            });
+                    title: "Apakah anda yakin?",
+                    text: "Data dan dikirimkan ke SIINAS",
+                    type: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Submit!',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $("form.swa-confirm").off("submit").submit();
+                    } else {
+                        swal("Cancelled", "", "error");
+                    }
+                });
         })
     </script>
 @endsection

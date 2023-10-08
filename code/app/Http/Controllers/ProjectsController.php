@@ -282,9 +282,11 @@ class ProjectsController extends Controller
 
     public function verifyTkdn($id)
     {
-        $data = Projects::with('files')->find($id);
+        $project = Projects::with('files')->find($id);
 
-        return view('projects.verifyTkdn', compact('data'));
+        $data = $project->orders->siinas_data;
+
+        return view('projects.verifyTkdn', compact('project', 'data'));
     }
 
     public function suratPengantar($id)
