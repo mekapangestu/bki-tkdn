@@ -55,7 +55,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form method="POST" action="{{ route('projects.tkdn-submit', $project->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('projects.tkdn-submit', $project->id) }}" enctype="multipart/form-data" class="swa-confirm">
                 @csrf
                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                 <div class="row">
@@ -391,7 +391,7 @@
                                                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{$item->produk}}]" accept="application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{$item->produk}}]" accept="application/pdf" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -399,7 +399,7 @@
                                                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Laporan Hasil Verifikasi</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{$item->produk}}]" accept="application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{$item->produk}}]" accept="application/pdf" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -430,15 +430,26 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Alasan</label>
-                                            <textarea class="form-control" name="note">{{ $project->data->qc_note }}</textarea>
+                                            <textarea class="form-control notes" name="note">{{ $project->data->qc_note }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Status</label>
+                                            <select class="form-control" name="action" id="action" required>
+                                                <option value="" selected disabled>-- Pilih Status --</option>
+                                                <option value="1">Terima</option>
+                                                <option value="0">Tolak</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="submit" onclick="siinasSubmit(1)" class="btn btn-primary mt-4 mb-0">Submit</button>
+                                    <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -453,42 +464,36 @@
 
 @section('custom-js')
     <script>
-        $(document).ready(function() {
-            var max_fields = 10; //maximum input boxes allowed
-            var wrapper = $(".form-upload"); //Fields wrapper
-            var add_button = $(".add_field_button"); //Add button ID
-
-            var x = 1; //initlal text box count
-            $(add_button).on("click", function(e) { //on add input button click
-                e.preventDefault();
-                if (x < max_fields) { //max input box allowed
-                    x++; //text box increment
-                    $(wrapper).append(`
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">File Name</label>
-                                <div class="row">
-                                    <input type="text" class="form-control col-2" name="file_name[]">
-                                    <br>
-                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
-                                </div>
-                            </div>
-                        </div>
-                    `); //add input box
-                }
-            });
-
-            $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            })
+        $('#action').on('change', function() {
+            if (this.value == 1) {
+                $("input").not(':input[type=search]').attr("required", true);
+                $(".notes").removeAttr("required", true);
+            }else{
+                $(".notes").attr("required", true);
+                $("input").not(':input[type=search]').removeAttr("required", true);
+            }
         });
 
-        // $(function(e) {
-        //     $('.fc-datepicker').datepicker({
-        //         dateFormat: 'yy-mm-dd'
-        //     });
-        // });
+        $("form.swa-confirm").submit(function (e) {
+            e.preventDefault();
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Data dan dikirimkan ke SIINAS",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit!',
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $("form.swa-confirm").off("submit").submit();
+                } else {
+                    swal("Cancelled", "", "error");
+                }
+            });
+       })
     </script>
 @endsection

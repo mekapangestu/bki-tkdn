@@ -185,6 +185,11 @@
                     .appendTo(form);
             }
 
+            if ((status == 0 || $("select[name=action]").val() == 0) && $('.notes').val() == '') {
+                swal("Mohon isi alasan", "", "error");
+                return false;
+            }
+                
             swal({
                     title: "Apakah anda yakin?",
                     text: "Data dan dikirimkan ke SIINAS",

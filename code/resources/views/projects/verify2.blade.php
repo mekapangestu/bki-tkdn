@@ -372,7 +372,7 @@
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->produk }}]" value="">
+                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->produk }}]" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -380,7 +380,7 @@
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->produk }}]" value="">
+                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->produk }}]" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,7 +388,7 @@
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->produk }}]" value="">
+                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->produk }}]" value="" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,7 +396,7 @@
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf">
+                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -404,7 +404,7 @@
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->produk }}]" accept="application/pdf">
+                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->produk }}]" accept="application/pdf" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,7 +449,7 @@
                                 <div class="row">
                                     <input type="text" class="form-control col-2" name="file_name[]">
                                     <br>
-                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf" required>
                                 </div>
                             </div>
                         </div>

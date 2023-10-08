@@ -456,7 +456,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Status</label>
-                                            <select class="form-control" name="action" >
+                                            <select class="form-control" name="action" id="action">
                                                 <option value="" selected disabled>-- Pilih Status --</option>
                                                 <option value="1">Terima</option>
                                                 <option value="0">Tolak</option>
@@ -512,10 +512,12 @@
                 })
             });
 
-            // $(function(e) {
-            //     $('.fc-datepicker').datepicker({
-            //         dateFormat: 'yy-mm-dd'
-            //     });
-            // });
+            $('#action').on('change', function() {
+                if (this.value == 1) {
+                    $("input").not(':input[type=search]').attr("required", true);
+                }else{
+                    $("input").not(':input[type=search]').removeAttr("required", true);
+                }
+            });
         </script>
     @endsection

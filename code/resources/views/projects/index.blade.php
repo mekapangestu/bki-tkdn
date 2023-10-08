@@ -105,7 +105,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                                 <label for="" class="form-label">Asesor</label>
-                                                <select class="form-control select2" name="asesor[]" multiple>
+                                                <select class="form-control select2" name="asesor[]" multiple required>
                                                     @foreach ($user->where('role_id', 3) as $asesor)
                                                         <option value="{{ $asesor->id }}">{{ $asesor->name }}</option>
                                                     @endforeach
@@ -115,7 +115,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                                 <label for="" class="form-label">QC</label>
-                                                <select class="form-control select2" name="qc">
+                                                <select class="form-control select2" name="qc" required>
                                                     @foreach ($user->where('role_id', 6) as $qc)
                                                         <option value="{{ $qc->id }}">{{ $qc->name }}</option>
                                                     @endforeach
@@ -127,7 +127,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Surat Tugas</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_tugas" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_tugas" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" required>
                                         </div>
                                     </div>
                                 </div>

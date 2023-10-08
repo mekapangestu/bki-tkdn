@@ -173,11 +173,12 @@
                                 @endforelse
                                 @role('superadmin|administrator')
                                     <button type="submit" name="action" onclick="siinasSubmit(1)" value="1" class="btn btn-success mt-4 mb-0">Sesuai</button>
+                                    {{-- <button type="submit" name="action" value="0" class="btn btn-primary mt-4 mb-0">Tidak Sesuai</button> --}}
                                 @endrole
                                 @role('kepala-verifikasi')
                                     <button type="submit" name="action" value="1" class="btn btn-success mt-4 mb-0">Sesuai</button>
+                                    <button type="submit" name="action" value="0" class="btn btn-primary mt-4 mb-0">Tidak Sesuai</button>
                                 @endrole
-                                <button type="submit" name="action" onclick="siinasSubmit(0)" value="0" class="btn btn-primary mt-4 mb-0">Tidak Sesuai</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>

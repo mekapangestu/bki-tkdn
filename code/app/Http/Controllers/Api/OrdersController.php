@@ -250,11 +250,14 @@ class OrdersController extends Controller
             if ($project) {
                 if ($request->get('status') == "0") {
                     $project->stage = 3;
+                    $project->kepala->kepala_status = 0;
+                    $project->kepala->save();
                 } else {
                     $project->stage = 5;
                 }
                 $project->save();
-
+                
+                $qc = User::find($project->qc->qc);
                 $admin = User::find(2);
 
                 $details = [
@@ -264,6 +267,7 @@ class OrdersController extends Controller
                 ];
 
                 $admin->notify(new ProjectNotification($details));
+                $qc->notify(new ProjectNotification($details));
 
                 return response()->json([
                     "status" => $request->get('status'),

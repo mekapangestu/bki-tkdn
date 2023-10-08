@@ -27,13 +27,28 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $projects = Projects::all()->count();
+        if (auth()->user()->hasRole('guest')) {
+            return redirect('projects');
+        }
+        $projects = Projects::with('orders')
+                    ->when(auth()->user()->hasRole('guest'), function ($q) {
+                        return $q->where('user_id', '=', auth()->user()->id);
+                    })->count();
+
         $users = User::where('role_id', 5)->count();
         $orders = Orders::all()->count();
-        $acceptstatus = Projects::where('status', null)->count();
-        $accept = Projects::where('status', 1)->count();
-        $denied = Projects::where('status', 0)->count();
-        $freeze = Projects::where('status', 3)->count();
+        $acceptstatus = Projects::where('status', null)->when(auth()->user()->hasRole('guest'), function ($q) {
+            return $q->where('user_id', '=', auth()->user()->id);
+        })->count();
+        $accept = Projects::where('status', 1)->when(auth()->user()->hasRole('guest'), function ($q) {
+            return $q->where('user_id', '=', auth()->user()->id);
+        })->count();
+        $denied = Projects::where('status', 0)->when(auth()->user()->hasRole('guest'), function ($q) {
+            return $q->where('user_id', '=', auth()->user()->id);
+        })->count();
+        $freeze = Projects::where('status', 3)->when(auth()->user()->hasRole('guest'), function ($q) {
+            return $q->where('user_id', '=', auth()->user()->id);
+        })->count();
         return view('dashboard', compact('projects', 'users', 'orders', 'freeze', 'accept', 'denied', 'acceptstatus'));
     }
 

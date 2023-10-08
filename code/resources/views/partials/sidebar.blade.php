@@ -18,12 +18,11 @@
                 <li class="sub-category">
                     <h3>Dashboard</h3>
                 </li>
+                @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi')
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('dashboard') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                 </li>
-                <li class="sub-category">
-                    <h3>Main</h3>
-                </li>
+                @endrole
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Project</span></a>
                 </li>

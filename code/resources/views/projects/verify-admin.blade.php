@@ -278,7 +278,7 @@
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="" class="form-label">Alasan</label>
-                                                <textarea class="form-control" name="alasan_tolak"></textarea>
+                                                <textarea class="form-control notes" name="alasan_tolak"></textarea>
                                             </div>
                                         </div>
                                     </div>

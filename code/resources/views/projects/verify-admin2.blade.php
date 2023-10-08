@@ -391,10 +391,18 @@
                                             <input type="text" class="form-control fc-datepicker" id="spk_no" autocomplete="off" name="bast_date" value="{{ $project->bast_date }}" disabled>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="" class="form-label">Alasan</label>
+                                                <textarea class="form-control notes" name="note"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Status</label>
-                                            <select class="form-control" name="action" required>
+                                            <select class="form-control" name="action" id="action" required>
                                                 <option value="" selected disabled>-- Pilih Status --</option>
                                                 <option value="1">Terima</option>
                                                 <option value="0">Tolak</option>
@@ -450,11 +458,5 @@
                     x--;
                 })
             });
-
-            // $(function(e) {
-            //     $('.fc-datepicker').datepicker({
-            //         dateFormat: 'yy-mm-dd'
-            //     });
-            // });
         </script>
     @endsection
