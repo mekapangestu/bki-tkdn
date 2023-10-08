@@ -908,7 +908,7 @@ class ProjectsController extends Controller
         $project->status = 600;
         $project->stage = 6;
         $project->save();
-
+        
         // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
         $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
         $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Laporan Hasil Verifikasi')->first()->path ?? '';
@@ -919,7 +919,7 @@ class ProjectsController extends Controller
             "no_berkas" => $project->no_berkas,
             "url_surat_pengantar" => $path ? asset('storage/' . $path) : '',
             "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '', // url file laporan hasil verifikasi
-            "nama_asesor" => $project->asesor->firstWhere('asesor_status', 1)->user->name // Ambil dari assessor
+            "nama_asesor" => $project->asesors->firstWhere('asesor_status', 1)->user->name // Ambil dari assessor
         ];
 
         $response = Http::post($endPoint, $payload);
