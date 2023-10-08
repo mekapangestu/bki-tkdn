@@ -17,6 +17,9 @@ class AddBastToProjects extends Migration
             $table->string('judul')->nullable();
             $table->string('bast_no')->nullable();
             $table->string('bast_date')->nullable();
+            $table->string('no_referensi')->nullable();
+            $table->string('no_laporan')->nullable();
+            $table->string('bidang_usaha')->nullable();
         });
     }
 
@@ -31,6 +34,9 @@ class AddBastToProjects extends Migration
             $table->dropColumn('judul');
             $table->dropColumn('bast_no');
             $table->dropColumn('bast_date');
+            $table->dropColumn('no_referensi');
+            $table->dropColumn('no_laporan');
+            $table->dropColumn('bidang_usaha');
         });
     }
 }

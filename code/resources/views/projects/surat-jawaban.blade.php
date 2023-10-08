@@ -153,6 +153,12 @@
                                             <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung" accept="application/pdf" required>
                                         </div>
                                     </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Alasan</label>
+                                            <textarea class="form-control" name="note"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>

@@ -250,7 +250,6 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                
                 $qc = User::find($project->qc->qc);
                 $admin = User::find(2);
                 
@@ -261,12 +260,12 @@ class OrdersController extends Controller
                 ];
 
                 if ($request->get('status') == "0") {
-                    $project->status = 201;
-                    $qc->notify(new ProjectNotification($details));
+                    // $project->status = 201;
+                    // $qc->notify(new ProjectNotification($details));
                 } else {
                     $project->status = 500;
-                    $project->stage = 5;
                 }
+                $project->stage = 5;
                 $project->status_siinas = $request->get('status');
                 $project->save();
 
@@ -307,8 +306,8 @@ class OrdersController extends Controller
                     $project->status = 500;
                 }else{
                     $project->status = 700;
-                    $project->stage = 7;
                 }
+                $project->stage = 7;
                 $project->status_siinas = $request->get('status');
                 $project->save();
 
@@ -453,8 +452,8 @@ class OrdersController extends Controller
                     $project->status = 1000;
                 } else {
                     $project->status = 1100;
-                    $project->stage = 11;
                 }
+                $project->stage = 11;
                 $project->status_siinas = $request->get('status');
                 $project->save();
 
@@ -503,8 +502,9 @@ class OrdersController extends Controller
                     $project->status = 1100;
                 } else {
                     $project->status = 1200;
-                    $project->stage = 12;
                 }
+                $project->status_siinas = $request->get('status');
+                $project->stage = 12;
                 $project->alasan_tolak = $request->get('alasan_tolak');
                 $project->no_tanda_sah = $request->get('no_tanda_sah');
                 $project->tgl_tanda_sah = $request->get('tgl_tanda_sah');

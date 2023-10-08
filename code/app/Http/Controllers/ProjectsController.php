@@ -386,6 +386,9 @@ class ProjectsController extends Controller
                 $project->judul = $request->judul;
                 $project->bast_no = $request->bast_no;
                 $project->bast_date = $request->bast_date;
+                $project->no_laporan = $request->no_laporan;
+                $project->bidang_usaha = $request->bidang_usaha;
+                $project->no_referensi = $request->no_referensi;
                 $project->save();
         
                 $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
@@ -792,12 +795,12 @@ class ProjectsController extends Controller
                 $project->save();
     
                 $produk = [];
-    
+                $kbli = '';
                 foreach ($project->orders->siinas_data->produk as $value) {
                     $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $value->produk);
                     $additional = $project->additional->firstWhere('id_produk', $value->id_produk); 
                     $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
-
+                    $kbli = $produksi->kbli;
                     array_push($produk, [
                         "id_produk" => $value->id_produk,
                         "produk" => $value->produk,
@@ -823,10 +826,10 @@ class ProjectsController extends Controller
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                     "url_draft_persetujuan_penamaan_tanda_sah" => $path ? asset('storage/' . $path) : '',
-                    "no_referensi" => "123\/REF\/2023", // dari Assessor
-                    "no_laporan" => "123\/AWK\/2023", // dari Assessor
-                    "kbli" => "15340", // dari Assessor
-                    "bidang_usaha" => "15340", // dari Assessor
+                    "no_referensi" => $project->no_referensi, // dari Assessor
+                    "no_laporan" => $project->no_laporan, // dari Assessor
+                    "kbli" => $kbli, // dari Assessor
+                    "bidang_usaha" => $project->bidang_usaha, // dari Assessor
                     "produk" => $produk
                 ];
     
@@ -908,14 +911,15 @@ class ProjectsController extends Controller
 
         // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
         $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
+        $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Laporan Hasil Verifikasi')->first()->path ?? '';
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
         $payload = [
             "tahap" => "6",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "url_surat_pengantar" => $path ? asset('storage/' . $path) : '',
-            "url_lhv_ttd" => "http:\/\/116.206.198.97\/lhv_ttd.pdf", // url file laporan hasil verifikasi
-            "nama_asesor" => "Budi" // Ambil dari assessor
+            "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '', // url file laporan hasil verifikasi
+            "nama_asesor" => $project->asesor->firstWhere('asesor_status', 1)->user->name // Ambil dari assessor
         ];
 
         $response = Http::post($endPoint, $payload);
@@ -965,11 +969,12 @@ class ProjectsController extends Controller
         $project->save();
 
         $produk = [];
+        $kbli = '';
         foreach ($project->orders->siinas_data->produk as $value) {
             $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $value->produk);
             $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
             $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
-
+            $kbli = $produksi->kbli;
             array_push($produk, [
                 "id_produk" => $value->id_produk,
                 "produk" => $value->produk,
@@ -1000,9 +1005,9 @@ class ProjectsController extends Controller
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
             "status" => "1",
-            "alasan" => "contoh alasan", // Alasan dari input
-            "no_referensi" => "sdasda", // // dari submit tahap 4
-            "no_laporan" => "asfsdfsd", // // dari submit tahap 4
+            "alasan" => $request->note, // Alasan dari input
+            "no_referensi" => $project->no_referensi, // // dari submit tahap 4
+            "no_laporan" => $project->no_laporan, // // dari submit tahap 4
             "url_surat_jawaban" => $pathSuratJawaban ? asset('storage/' . $pathSuratJawaban) : '',
             "url_lhv_penyesuaian" =>  $pathSuratPenyesuaian ? asset('storage/' . $pathSuratPenyesuaian) : '',
             "url_dok_dukung" => array(
@@ -1010,8 +1015,8 @@ class ProjectsController extends Controller
                     "url" => $pathSuratPendukung ? asset('storage/' . $pathSuratPendukung) : '',
                 )
             ),
-            "kbli" => "15340", // dari produk
-            "bidang_usaha" => "Industri Makanan", // dari submit tahap 4
+            "kbli" => $kbli, // dari produk
+            "bidang_usaha" => $project->bidang_usaha, // dari submit tahap 4
             "produk" => $produk
         ];
 

@@ -423,19 +423,19 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Laporan</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->bast_date }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="no_laporan" placeholder="Enter Nomor Laporan" value="{{ $project->no_laporan }}" >
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Bidang Usaha</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bast_date }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="bidang_usaha" placeholder="Enter Bidang Usaha" value="{{ $project->bidang_usaha }}" >
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="spk_no" class="form-label">Nomor Referensi</label>
-                                        <input type="text" class="form-control" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->bast_date }}" >
+                                        <input type="text" class="form-control" autocomplete="off" name="no_referensi" placeholder="Enter Nomor Referensi" value="{{ $project->no_referensi }}" >
                                     </div>
                                 </div>
                                 <div class="col-xl-12 col-md-12 col-sm-12">

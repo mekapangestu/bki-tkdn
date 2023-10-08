@@ -23,6 +23,9 @@ class CreateProjectAdditionalsTable extends Migration
             $table->string('kd_kelompok_barang')->nullable();
             $table->string('merk')->nullable();
             $table->string('tipe')->nullable();
+            $table->string('no_laporan')->nullable();
+            $table->string('bidang_usaha')->nullable();
+            $table->string('no_referensi')->nullable();
             $table->timestamps();
         });
     }
