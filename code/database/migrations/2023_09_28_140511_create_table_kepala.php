@@ -13,9 +13,9 @@ class CreateTableKepala extends Migration
      */
     public function up()
     {
-        Schema::create('heads', function (Blueprint $table) {
+        Schema::create('kepalas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()->references('id')->on('projects');
+            $table->foreignUuid('project_id')->nullable()->references('id')->on('projects');
             $table->string('kepala_status')->nullable();
             $table->string('kepala_note')->nullable();
             $table->timestamps();

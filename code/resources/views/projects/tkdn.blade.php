@@ -494,6 +494,6 @@
                     swal("Cancelled", "", "error");
                 }
             });
-       })
+        })
     </script>
 @endsection

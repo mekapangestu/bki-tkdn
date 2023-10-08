@@ -15,7 +15,7 @@ class CreateTkdnsTable extends Migration
     {
         Schema::create('tkdns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()->references('id')->on('projects');
+            $table->foreignUuid('project_id')->nullable()->references('id')->on('projects');
             $table->string('nilai_tkdn')->nullable();
             $table->string('nilai_tkdn_jasa')->nullable();
             $table->string('nilai_tkdn_gabungan')->nullable();

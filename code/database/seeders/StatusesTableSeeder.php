@@ -29,7 +29,7 @@ class StatusesTableSeeder extends Seeder
             ),
             1 =>
             array(
-                'id' => 2,
+                'id' => 4,
                 'name' => 'Terima Tidak Lengkap',
                 'created_at' => '2022-11-22 01:50:58',
                 'updated_at' => '2022-11-22 01:52:21',

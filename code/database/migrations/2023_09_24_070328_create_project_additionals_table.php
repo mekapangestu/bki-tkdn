@@ -15,7 +15,7 @@ class CreateProjectAdditionalsTable extends Migration
     {
         Schema::create('project_additionals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()->references('id')->on('projects');
+            $table->foreignUuid('project_id')->nullable()->references('id')->on('projects');
             $table->string('id_produk')->nullable();
             $table->string('standar')->nullable();
             $table->string('produsen')->nullable();

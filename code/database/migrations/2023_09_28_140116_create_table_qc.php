@@ -15,7 +15,7 @@ class CreateTableQc extends Migration
     {
         Schema::create('qcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->nullable()->references('id')->on('projects');
+            $table->foreignUuid('project_id')->nullable()->references('id')->on('projects');
             $table->foreignId('qc')->nullable()->references('id')->on('users');
             $table->string('qc_status')->nullable();
             $table->string('qc_note')->nullable();

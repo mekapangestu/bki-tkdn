@@ -148,25 +148,25 @@
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if ($item->stage == 9)
+                                                            @if ($item->status == 900 && $item->status_siinas == 1)
                                                                 <li class=""><a href="{{ route('projects.surat-jawaban', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Jawaban</a></li>
-                                                            @elseif ($item->stage == 5)
+                                                            @elseif ($item->status == 500)
                                                                 <li class=""><a href="{{ route('projects.surat-pengantar', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Pengantar</a></li>
                                                             {{-- @elseif ($item->stage == 2 && $item->tkdn)
                                                                 <li class=""><a href="{{ route('projects.draf', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf</a></li> --}}
-                                                            @elseif ($item->stage == 3 && $item->kepala?->kepala_status == 1)
+                                                            @elseif ($item->status == 301)
                                                                 <li><a href="{{ route('projects.verify-tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
-                                                            @elseif ($item->data && ($item->status == 4 || $item->status == 2) && $item->asesors->firstWhere('asesor_status', 1))
+                                                            @elseif ($item->status == 104)
                                                                 <li class=""><a href="{{ route('projects.verify-admin2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Verifikasi"><span class="fe fe-edit fs-14"></span> Verifikasi</a></li>
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li> --}}
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 0]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
                                                         <li><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li> --}}
-                                                            @elseif($item->stage == 1 && $item->status == 4 && !$item->data?->count())
+                                                            @elseif($item->status == 101)
                                                                 <li><a href="{{ route('projects.show', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
-                                                            @elseif($item->stage == 1 && $item->status == null)
+                                                            @elseif($item->status == 100)
                                                                 <li><a href="{{ route('projects.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
                                                             @endif
-                                                            @if ($item->url_sertifikat_terbit)
+                                                            @if ($item->status == 1200)
                                                                 <li><a href="{{ url($item->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
@@ -184,7 +184,7 @@
                                                     </ul>
                                                 @endif --}}
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if ($item->status == 4 && ($item->status_pemohon == null || $item->status_pemohon == 0))
+                                                            @if ($item->status == 102)
                                                                 <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail-pemohon', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
@@ -196,19 +196,18 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 2 && (!$item->tkdn->count() || $item->qc->qc_status == '0' ))
+                                                        @if ($item->status == 200)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
-                                                        @elseif($item->stage == 1 && ($item->status_pemohon == 2 || $item->status == 0))
+                                                        @elseif($item->status == 103)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
-                                                        @else
-                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                                <li><a href="{{ route('projects.view', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
-                                                            </ul>
                                                         @endif
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                            <li><a href="{{ route('projects.view', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
+                                                        </ul>
                                                     </div>
                                                 @endrole
                                                 @role('qc-officer')
@@ -216,7 +215,7 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if (($item->stage == 2 && $item->qc->qc_status != 1 && $item->tkdn) || $item->kepala->kepala_status == '0')
+                                                        @if ($item->status == 201)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Review Perhitungan TKDN</a></li>
                                                             </ul>
@@ -231,11 +230,14 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->stage == 3 && $item->kepala->kepala_status == null && $item->qc->qc_status == 1)
+                                                        @if ($item->status == 300)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify-tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
                                                             </ul>
                                                         @endif
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                            <li><a href="{{ route('projects.view', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
+                                                        </ul>
                                                     </div>
                                                 @endrole
                                             </td>

@@ -73,6 +73,7 @@ class OrdersController extends Controller
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
                         "stage" => 1,
+                        "status" => 100,
                     ]);
                 }
             } else {
@@ -103,6 +104,7 @@ class OrdersController extends Controller
                     "alamat_kantor" => $request->get('alamat_kantor'),
                     "alamat_pabrik" => $request->get('alamat_pabrik'),
                     "stage" => 1,
+                    "status" => 100,
                 ]);
                                     
                 // Mail::send('emails.welcome', ['name' => $request->get('nama_cp'), 'email' => $request->get('email_cp'), 'password' => $password], function ($message) use ($request) {
@@ -248,26 +250,27 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                if ($request->get('status') == "0") {
-                    $project->stage = 3;
-                    $project->kepala->kepala_status = 0;
-                    $project->kepala->save();
-                } else {
-                    $project->stage = 5;
-                }
-                $project->save();
                 
                 $qc = User::find($project->qc->qc);
                 $admin = User::find(2);
-
+                
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima') . ' Tahap 5 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
+                if ($request->get('status') == "0") {
+                    $project->status = 201;
+                    $qc->notify(new ProjectNotification($details));
+                } else {
+                    $project->status = 500;
+                    $project->stage = 5;
+                }
+                $project->status_siinas = $request->get('status');
+                $project->save();
+
                 $admin->notify(new ProjectNotification($details));
-                $qc->notify(new ProjectNotification($details));
 
                 return response()->json([
                     "status" => $request->get('status'),
@@ -301,10 +304,12 @@ class OrdersController extends Controller
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
                 if ($request->get('status') == "0") {
-                    $project->stage = 5;
+                    $project->status = 500;
                 }else{
+                    $project->status = 700;
                     $project->stage = 7;
                 }
+                $project->status_siinas = $request->get('status');
                 $project->save();
 
                 $admin = User::find(2);
@@ -348,6 +353,7 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
+                $project->status = 800;
                 $project->stage = 8;
                 $project->nm_reviewer = $request->get('nm_reviewer');
                 $project->tgl_rencana_review = $request->get('tgl_rencana_review');
@@ -356,7 +362,7 @@ class OrdersController extends Controller
 
                 $details = [
                     'from' => 'Siinas',
-                    'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 8 untuk berkas ' . $project->no_berkas,
+                    'message' => 'Submit Tahap 8 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.verify-admin2', $project->id)
                 ];
 
@@ -393,6 +399,8 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
+                $project->status = 900;
+                $project->status_siinas = $request->get('status');
                 $project->stage = 9;
                 $project->tgl_pelaksanaan_reviu = $request->get('tgl_pelaksanaan_reviu');
                 $project->mom = $request->get('mom');
@@ -410,7 +418,7 @@ class OrdersController extends Controller
                 $admin->notify(new ProjectNotification($details));
 
                 return response()->json([
-                    "status" => "1",
+                    "status" => $request->get('status'),
                     "data" => "ada",
                     "tahap" => "9",
                     "message" => "ok"
@@ -442,10 +450,12 @@ class OrdersController extends Controller
             if ($project) {
                 $project->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
                 if ($request->get('status') == "0") {
-                    $project->stage = 10;
+                    $project->status = 1000;
                 } else {
+                    $project->status = 1100;
                     $project->stage = 11;
                 }
+                $project->status_siinas = $request->get('status');
                 $project->save();
 
                 $admin = User::find(2);
@@ -459,9 +469,9 @@ class OrdersController extends Controller
                 $admin->notify(new ProjectNotification($details));
 
                 return response()->json([
-                    "status" => "1",
+                    "status" => $request->get('status'),
                     "data" => "ada",
-                    "tahap" => $project->stage,
+                    "tahap" => "11",
                     "message" => "ok"
                 ]);
             }
@@ -489,7 +499,12 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $project->stage = 12;
+                if ($request->get('status') == "0") {
+                    $project->status = 1100;
+                } else {
+                    $project->status = 1200;
+                    $project->stage = 12;
+                }
                 $project->alasan_tolak = $request->get('alasan_tolak');
                 $project->no_tanda_sah = $request->get('no_tanda_sah');
                 $project->tgl_tanda_sah = $request->get('tgl_tanda_sah');
@@ -508,7 +523,7 @@ class OrdersController extends Controller
                 $admin->notify(new ProjectNotification($details));
 
                 return response()->json([
-                    "status" => "1",
+                    "status" => $request->get('status'),
                     "data" => "ada",
                     "tahap" => "12",
                     "message" => "ok"

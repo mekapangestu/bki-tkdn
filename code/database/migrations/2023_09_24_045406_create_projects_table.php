@@ -14,7 +14,7 @@ class CreateProjectsTable extends Migration
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignId('user_id')->nullable()->references('id')->on('users');
             $table->string('no_berkas')->nullable();
             $table->string('nib')->nullable();
@@ -27,6 +27,7 @@ class CreateProjectsTable extends Migration
             $table->string('alamat_pabrik')->nullable();
             $table->string('status')->nullable();
             $table->string('stage')->nullable();
+            $table->string('status_siinas')->nullable();
             $table->timestamps();
         });
     }

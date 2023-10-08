@@ -6,7 +6,7 @@ use App\Models\Qcs;
 use App\Models\Tkdn;
 use App\Models\User;
 use App\Traits\Util;
-use App\Models\Heads;
+use App\Models\Kepala;
 use App\Models\Orders;
 use App\Models\Upload;
 use App\Models\Asesors;
@@ -101,7 +101,7 @@ class ProjectsController extends Controller
             // }
 
             $projects = Projects::find($request->project_id);
-            $projects->status_pemohon = 2;
+            $projects->status = 103;
             $projects->save();
             foreach ($projects->asesors as $value) {
                 $user = User::find($value->asesor);
@@ -162,6 +162,8 @@ class ProjectsController extends Controller
         DB::beginTransaction();
         try {
             $project = Projects::find($request->project_id);
+            $project->status = 102;
+            $project->save();
 
             foreach ($request->asesor as $value) {
                 $asesor = new Asesors();
@@ -185,9 +187,9 @@ class ProjectsController extends Controller
             $qc->qc = $request->qc;
             $qc->save();
 
-            $qc = new Heads();
-            $qc->project_id = $request->project_id;
-            $qc->save();
+            $kepala = new Kepala();
+            $kepala->project_id = $request->project_id;
+            $kepala->save();
 
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
@@ -311,7 +313,12 @@ class ProjectsController extends Controller
     public function verifyAdminSubmit(Request $request, $id)
     {
         $project = Projects::with('data')->find($id);
-        $project->status = $request->action;
+        if ($request->action == 4) {
+            $project->status = 101;
+        }else{
+            $project->status = 0;
+        }
+        $project->status_siinas = $request->action;
         $project->save();
 
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
@@ -369,12 +376,13 @@ class ProjectsController extends Controller
             $asesor->asesor_status = $request->action;
             $asesor->asesor_note = $request->note;
             $asesor->save();
-            if ($project->status == 0) {
-                $project->status = 2;
+            if ($request->action == 0) {
+                $project->status_siinas = $request->action;
+                $project->status = 102;
                 $project->save();
             }else{
-        
-                $project->status_pemohon = $request->action;
+                $project->status = 104;
+                $project->status_siinas = $request->action;
                 $project->judul = $request->judul;
                 $project->bast_no = $request->bast_no;
                 $project->bast_date = $request->bast_date;
@@ -405,7 +413,6 @@ class ProjectsController extends Controller
                     $additional->save();
                 }
             }
-    
     
             $admin = User::find(2);
             $user = User::find($project->user_id);
@@ -518,9 +525,11 @@ class ProjectsController extends Controller
             //     ]
             // );
             $project = Projects::find($id);
+            $project->status = 201;
+            $project->save();
 
-            $project->qc->qc_status = null;
-            $project->qc->save();
+            // $project->qc->qc_status = null;
+            // $project->qc->save();
 
             $user = User::find($project->qc->qc);
             $admin = User::find(2);
@@ -534,8 +543,8 @@ class ProjectsController extends Controller
             $user->notify(new ProjectNotification($details));
             $admin->notify(new ProjectNotification($details));
             DB::commit();
-            return redirect('projects')->with('success', 'Data Saved Successfully');
 
+            return redirect('projects')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect('projects')->with('success', $th->getMessage());
@@ -547,10 +556,12 @@ class ProjectsController extends Controller
         $status = $request->action;
         
         $project = Projects::with('data', 'files')->find($id);
-        $project->status = $status;
+        $project->status_siinas = $status;
         if ($status == 0) {
+            $project->status = 103;
             $project->save();
         } else {
+            $project->status = 200;
             $project->stage = 2;
 
             $project->save();
@@ -642,11 +653,12 @@ class ProjectsController extends Controller
         $project->qc->save();
         
         if ($request->action == 1) {
+            $project->status = 300;
             $project->stage = 3;
             $project->save();
     
-            $project->kepala->kepala_status = null;
-            $project->kepala->save();
+            // $project->kepala->kepala_status = null;
+            // $project->kepala->save();
     
     
             // $hasilPersetujuan = PDFMerger::init();
@@ -751,6 +763,9 @@ class ProjectsController extends Controller
             $user->notify(new ProjectNotification($details));
             $admin->notify(new ProjectNotification($details));
         }else{
+            $project->status = 200;
+            $project->save();
+
             $asesor = User::find($project->asesors->firstWhere('asesor_status', 1)->asesor);
     
             $details = [
@@ -772,6 +787,7 @@ class ProjectsController extends Controller
         try {
             if (auth()->user()->hasRole('administrator')) {
                 $project = Projects::with('data', 'files', 'additional')->find($id);
+                $project->status = 400;
                 $project->stage = 4;
                 $project->save();
     
@@ -836,9 +852,11 @@ class ProjectsController extends Controller
             } else {
                 $project = Projects::with('data')->find($id);
                 $project->kepala->kepala_status = $request->action;
-    
+                
                 $project->kepala->save();
                 if ($request->action == 1) {
+                    $project->status = 301;
+                    $project->save();
     
                     $admin = User::find(2);
     
@@ -850,6 +868,8 @@ class ProjectsController extends Controller
     
                     $admin->notify(new ProjectNotification($details));
                 } else {
+                    $project->status = 201;
+                    $project->save();
                     $user = User::find($project->qc->qc);
     
                     $details = [
@@ -882,6 +902,7 @@ class ProjectsController extends Controller
         }
 
         $project = Projects::with('data', 'files')->find($id);
+        $project->status = 600;
         $project->stage = 6;
         $project->save();
 
@@ -939,6 +960,7 @@ class ProjectsController extends Controller
         }
 
         $project = Projects::with('data', 'files', 'tkdn')->find($id);
+        $project->status = 1000;
         $project->stage = 10;
         $project->save();
 

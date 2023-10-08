@@ -56,7 +56,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.surat-pengantar-submit', $data->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('projects.surat-pengantar-submit', $data->id) }}" enctype="multipart/form-data" class="swa-confirm">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $data->id }}" readonly>
                                 <div class="row">
@@ -138,11 +138,11 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Surat Pengantar Permohonan Jadwal Review</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pengantar" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pengantar" accept="application/pdf" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" onclick="siinasSubmit()" class="btn btn-primary mt-4 mb-0">Submit</button>
+                                <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                 <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                             </form>
                         </div>
@@ -153,4 +153,29 @@
     </div>
 @endsection
 @section('js')
+@endsection
+@section('custom-js')
+    <script>
+        $("form.swa-confirm").submit(function (e) {
+            e.preventDefault();
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Data dan dikirimkan ke SIINAS",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit!',
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $("form.swa-confirm").off("submit").submit();
+                } else {
+                    swal("Cancelled", "", "error");
+                }
+            });
+        })
+    </script>
 @endsection

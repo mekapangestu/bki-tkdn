@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Status;
+use App\Traits\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Projects extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuid;
 
     protected $guarded = ['id'];
 
@@ -49,7 +50,7 @@ class Projects extends Model
 
     public function kepala()
     {
-        return $this->hasOne(Heads::class, 'project_id', 'id');
+        return $this->hasOne(Kepala::class, 'project_id', 'id');
     }
 
     public function tkdn()
@@ -69,7 +70,7 @@ class Projects extends Model
 
     public function statuses()
     {
-        return $this->belongsTo(Statuses::class, 'status', 'id');
+        return $this->belongsTo(Statuses::class, 'status_siinas', 'id');
     }
 
     public function user()
