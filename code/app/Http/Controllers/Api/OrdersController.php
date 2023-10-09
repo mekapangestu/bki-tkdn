@@ -449,7 +449,7 @@ class OrdersController extends Controller
             if ($project) {
                 $project->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
                 if ($request->get('status') == "0") {
-                    $project->status = 1000;
+                    $project->status = 900;
                 } else {
                     $project->status = 1100;
                 }
