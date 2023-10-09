@@ -103,7 +103,7 @@ https://templatemo.com/tm-562-space-dynamic
                                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                                     <div class="right-text">
                                         <h4>Tentang TKDN</h4>
-                                        <p>Perusahaan di Indonesia umumnya masih perlu mengimpor barang yang dibutuhkan pabrik di Indonesia guna mendukung proses produksi. namun demikian Pemerintah juga berupaya mendorong peningkatan penggunaan produk dalam negeri. Dalam proses impor inilah pemerintah menetapkan peraturan tentang tingkat kandungan dalam negeri (TKDN) yang harus diikuti oleh importir. Perusahaan akan mendapatkan sertifikat TKDN yang dikeluarkan oleh lembaga yang ditunjuk, setelah melakukan inspeksi dan pengujian dari perusahaan inspeksi independen Sucofindo.Sebagai perusahaan milik negara yang bergerak di bidang inspeksi dan pengujian, Sucofindo selama ini melayani pengujian dan sertifikasi TKDN untuk pemerintah maupun industri. Dalam hal keperluan sertifikasi TKDN, KementerianPerindustrian telah menunjuk beberapa lembaga surveyor yang akan menilai dan memverifikasi, salah satunya adalah PT Sucofindo. Dengan importir telah memiliki sertifikat TKDN, pemerintah akan memberikan izin impor untuk mendukung proses produksi pabrik di Indonesia. Dengan adanya ketentuan tentang TKDN, pemerintah ingin tetap memberikan keseimbangan pada perusahaan untuk berproduksi di Indonesia. Produksi perusahaan tetap dapat berlangsung, namun harus memberikan porsi secara proporsional terhadap hasil-hasil produksi dalam negeri. Agar para produsen di Indonesia ikut berkembang.</p>
+                                        <p>Perusahaan di Indonesia umumnya masih perlu mengimpor barang yang dibutuhkan pabrik di Indonesia guna mendukung proses produksi. namun demikian Pemerintah juga berupaya mendorong peningkatan penggunaan produk dalam negeri. Dalam proses impor inilah pemerintah menetapkan peraturan tentang tingkat kandungan dalam negeri (TKDN) yang harus diikuti oleh importir. Perusahaan akan mendapatkan sertifikat TKDN yang dikeluarkan oleh lembaga yang ditunjuk, setelah melakukan inspeksi dan pengujian dari perusahaan inspeksi independen PT. Biro Klasifikasi Indonesia. Sebagai perusahaan milik negara yang bergerak di bidang inspeksi dan pengujian, BKI selama ini melayani pengujian dan sertifikasi TKDN untuk pemerintah maupun industri. Dalam hal keperluan sertifikasi TKDN, Kementerian Perindustrian telah menunjuk beberapa lembaga surveyor yang akan menilai dan memverifikasi, salah satunya adalah PT. Biro Klasifikasi Indonesia. Dengan importir telah memiliki sertifikat TKDN, pemerintah akan memberikan izin impor untuk mendukung proses produksi pabrik di Indonesia. Dengan adanya ketentuan tentang TKDN, pemerintah ingin tetap memberikan keseimbangan pada perusahaan untuk berproduksi di Indonesia. Produksi perusahaan tetap dapat berlangsung, namun harus memberikan porsi secara proporsional terhadap hasil-hasil produksi dalam negeri. Agar para produsen di Indonesia ikut berkembang.</p>
                                     </div>
                                 </div>
                             </div>
@@ -237,10 +237,10 @@ https://templatemo.com/tm-562-space-dynamic
             <div class="row">
                 <div class="col-lg-6 align-self-center wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay="0.25s">
                     <div class="section-heading">
-                        <h2>Feel Free To Send Us a Message About Your Website Needs</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doer ket eismod tempor incididunt ut labore et dolores</p>
+                        <h2>Hubungi Kami Untuk Dapat Mengetahui Lebih Lanjut Terkait Sertifikasi TKDN</h2>
+                        <p>Kami akan  membantu anda dalam menyelesaikan proses verifikasi TKDN produk anda.</p>
                         <div class="phone-info">
-                            <h4>For any enquiry, Call Us: <span><i class="fa fa-phone"></i> <a href="#">010-020-0340</a></span></h4>
+                            <h4>For any enquiry, Call Us: <span><i class="fa fa-phone"></i> <a href="#">+62 21 430 10 17</a></span></h4>
                         </div>
                     </div>
                 </div>
@@ -286,23 +286,9 @@ https://templatemo.com/tm-562-space-dynamic
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <img src="{{ asset('assets/images/bki-logo-new.png') }}" alt="" style="max-width: 200px">
+                    <img src="{{ asset('assets/images/bki-logo-new.png') }}" alt="" style="max-width: 150px; margin-bottom: 50px">
                 </div>
-                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <p>© Copyright <?php $year = date('Y');
-                    echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
-
-                        {{-- <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a> --}}
-                    </p>
-                </div>
-                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <p>© Copyright <?php $year = date('Y');
-                    echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
-
-                        {{-- <br>Develop by : <a rel="nofollow" href="https://tigasatu.co.id">PT. Tiga Satu Cipta Solusi</a> --}}
-                    </p>
-                </div>
-                <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
+                <div class="col-lg-9 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
                     <p>© Copyright <?php $year = date('Y');
                     echo $year; ?> PT. Biro Klasifikasi Indonesia, All Rights Reserved.
 
