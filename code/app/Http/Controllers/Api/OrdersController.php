@@ -537,12 +537,15 @@ class OrdersController extends Controller
                 }
                 $project->status_siinas = $request->get('status');
                 $project->stage = 12;
-                $project->alasan_tolak = $request->get('alasan_tolak');
-                $project->no_tanda_sah = $request->get('no_tanda_sah');
-                $project->tgl_tanda_sah = $request->get('tgl_tanda_sah');
-                $project->tgl_expire = $request->get('tgl_expire');
-                $project->url_sertifikat_terbit = $request->get('url_sertifikat_terbit');
                 $project->save();
+                
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->alasan_tolak = $request->get('alasan_tolak');
+                $meta->no_tanda_sah = $request->get('no_tanda_sah');
+                $meta->tgl_tanda_sah = $request->get('tgl_tanda_sah');
+                $meta->tgl_expire = $request->get('tgl_expire');
+                $meta->url_sertifikat_terbit = $request->get('url_sertifikat_terbit');
+                $meta->save();
 
                 $admin = User::find(2);
 
