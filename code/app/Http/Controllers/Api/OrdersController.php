@@ -59,6 +59,7 @@ class OrdersController extends Controller
                         "no_hp_cp" => $request->get('no_hp_cp'),
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
+                        "nama_perusahaan" => $request->get('nama_perusahaan'),
                     ]);
                 } else {
                     $project = Projects::create([
@@ -72,6 +73,7 @@ class OrdersController extends Controller
                         "no_hp_cp" => $request->get('no_hp_cp'),
                         "alamat_kantor" => $request->get('alamat_kantor'),
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
+                        "nama_perusahaan" => $request->get('nama_perusahaan'),
                         "stage" => 1,
                         "status" => 100,
                     ]);
@@ -103,6 +105,7 @@ class OrdersController extends Controller
                     "no_hp_cp" => $request->get('no_hp_cp'),
                     "alamat_kantor" => $request->get('alamat_kantor'),
                     "alamat_pabrik" => $request->get('alamat_pabrik'),
+                    "nama_perusahaan" => $request->get('nama_perusahaan'),
                     "stage" => 1,
                     "status" => 100,
                 ]);

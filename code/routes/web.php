@@ -16,6 +16,7 @@ use App\Http\Controllers\CoiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\DocumentReceiptController;
+use App\Http\Controllers\WhitelistIpController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('client', ClientController::class)->middleware('role:superadmin');
 
     Route::resource('document-receipt', DocumentReceiptController::class)->middleware('role:superadmin');
+    Route::resource('whitelist-ip', WhitelistIpController::class)->middleware('role:superadmin');
 });
 
 require __DIR__ . '/auth.php';

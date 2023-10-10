@@ -77,6 +77,7 @@
                                         <th></th>
                                         <th class="border-bottom-0 filter">NIB</th>
                                         <th class="border-bottom-0 filter">NPWP</th>
+                                        <th class="border-bottom-0 filter">Nama Perusahaan</th>
                                         <th class="border-bottom-0 filter">No Berkas</th>
                                         <th class="border-bottom-0 filter">Kode Produk</th>
                                         <th class="border-bottom-0 filter">Nama CP</th>
@@ -108,6 +109,7 @@
                                             <td class="details-control"></td>
                                             <td>{{ $item->nib }}</td>
                                             <td>{{ $item->npwp }}</td>
+                                            <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->no_berkas }}</td>
                                             <td>{{ $item->kd_produk }}</td>
                                             <td>{{ $item->nama_cp }}</td>
@@ -200,7 +202,7 @@
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
-                                                        @elseif($item->status == 103)
+                                                        @elseif($item->status == 102)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
