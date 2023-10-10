@@ -19,11 +19,11 @@ class WhiteListIpAddressessMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->whitelistIps = WhitelistIp::findWhitelist();
-        WhitelistIp::updateOrCreate(
-            ['ip' => $request->getClientIp()],
+        WhitelistIp::firstOrCreate(
             ['ip' => $request->getClientIp()]
         );
+
+        $this->whitelistIps = WhitelistIp::findWhitelist();
         if (!in_array($request->getClientIp(), $this->whitelistIps)) {
             return response()->json([
                 "error" => "Server tidak dikenal (". $request->getClientIp(). ")",
