@@ -21,6 +21,7 @@ class CreateProjectMetas extends Migration
             $table->string('tgl_pelaksanaan_reviu')->nullable();
             $table->string('mom')->nullable();
             $table->string('catatan')->nullable();
+            $table->string('alasan')->nullable();
             $table->string('alasan_tidak_sesuai')->nullable();
             $table->string('alasan_tolak')->nullable();
             $table->string('no_tanda_sah')->nullable();

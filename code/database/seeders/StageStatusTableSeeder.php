@@ -25,7 +25,7 @@ class StageStatusTableSeeder extends Seeder
             ['id' => 2 ,'name' => 'LVI telah verifikasi dokumen'],
             ['id' => 3 ,'name' => 'LVI telah verifikasi lapangan'],
             ['id' => 4 ,'name' => 'LVI telah melakukan QC'],
-            ['id' => 5 ,'name' => 'Perusahaan menanggapi QC - Setuju'],
+            ['id' => 5 ,'name' => 'Perusahaan menanggapi QC'],
             ['id' => 6 ,'name' => 'LVI mengirim berkas ke kemenperin'],
             ['id' => 7 ,'name' => 'Pusat P3DN sedang melakukan review'],
             ['id' => 8 ,'name' => 'Penetapan Jadwal Review'],
