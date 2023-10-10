@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ModelHasRolesTableSeeder::class);
         $this->call(StatusesTableSeeder::class);
         $this->call(KelompokBarangTableSeeder::class);
+        $this->call(StageStatusTableSeeder::class);
     }
 }

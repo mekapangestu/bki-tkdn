@@ -357,15 +357,47 @@
                                             <br>
                                             <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
                                             <div class="form-upload-{{ $item->id_produk }}">
-                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                <div class="row">
+                                                <div class="col-2">
                                                     <div class="form-group">
-                                                        <label for="spk_no" class="form-label">File Name</label>
+                                                        <label for="spk_no" class="form-label">Nama Dokumen</label>
                                                         <div class="row">
-                                                            <input type="text" class="form-control col-2" name="file_name[{{ $item->produk }}][]" required>
-                                                            <br>
-                                                            <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/pdf" required>
+                                                            <input type="text" class="form-control" name="file_name[{{ $item->produk }}][]" required>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Nomor Dokumen</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control" name="number[{{ $item->produk }}][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Berlaku Sejak</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->produk }}][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Berlaku Sampai</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->produk }}][]" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Upload Dokumen</label>
+                                                        <div class="row">
+                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/pdf" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                             <a class="add_field_button-{{ $item->id_produk }} btn btn-info">Add File Baru</a><br>

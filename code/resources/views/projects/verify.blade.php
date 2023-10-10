@@ -337,7 +337,10 @@
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0" style="width: 25px">No</th>
-                                                    <th class="border-bottom-0">File Name</th>
+                                                    <th class="border-bottom-0">Nama Dokumen</th>
+                                                    <th class="border-bottom-0">Nomor Dokumen</th>
+                                                    <th class="border-bottom-0">Berlaku Sejak</th>
+                                                    <th class="border-bottom-0">Berlaku Sampai</th>
                                                     <th class="border-bottom-0">Created At</th>
                                                     <th class="border-bottom-0">Updated At</th>
                                                     <th class="border-bottom-0" style="width: 50px">Action</th>
@@ -349,6 +352,9 @@
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $file->label }}</td>
+                                                            <td>{{ $file->number }}</td>
+                                                            <td>{{ $file->valid_since }}</td>
+                                                            <td>{{ $file->valid_until }}</td>
                                                             <td>{{ $file->created_at }}</td>
                                                             <td>{{ $file->updated_at }}</td>
                                                             <td>

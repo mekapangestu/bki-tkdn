@@ -45,7 +45,7 @@ trait Util
         $name = $order . '_' . now()->format('YmdHis') . '_' . auth()->user()->email . '-' . $label . '.' .
             $file->getClientOriginalExtension();
 
-        Upload::updateOrCreate(
+        $upload = Upload::updateOrCreate(
             [
                 'request_id' => $id,
                 'label' => $label,],
@@ -60,6 +60,8 @@ trait Util
                 'upload_date' => now()
             ]
         );
+
+        return $upload;
     }
 
     public function deleteUploadedFile($id, $label)

@@ -73,6 +73,11 @@ class Projects extends Model
         return $this->belongsTo(Statuses::class, 'status_siinas', 'id');
     }
 
+    public function stageStatus()
+    {
+        return $this->belongsTo(StageStatus::class, 'stage', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

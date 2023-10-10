@@ -133,7 +133,7 @@
                                             <td>{{ $item->qc?->statusQc->name ?? '-' }}</td>
                                             <td>{{ $item->qc?->qc_note ?? '-' }}</td>
                                             <td>{{ $item->statuses?->name ?? '-' }}</td>
-                                            <td>{{ $item->stage }}</td>
+                                            <td>{{ $item->stageStatus->name }}</td>
                                             {{-- <td style="text-align: left;">
                                             @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)
                                                 {{$key . ' = ' . json_encode($val)}}<br>

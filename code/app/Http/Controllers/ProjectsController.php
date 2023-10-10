@@ -80,10 +80,17 @@ class ProjectsController extends Controller
                 $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'internal');
             }
 
+            
             foreach ($request->file_name as $k => $files) {
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
-                        $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
+                        $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
+                        
+                        $upload = Upload::find($singleUpload->id);
+                        $upload->number = $request->number[$k][$key];
+                        $upload->valid_since = $request->valid_since[$k][$key];
+                        $upload->valid_until = $request->valid_until[$k][$key];
+                        $upload->save();
                     }
                 }
             }
