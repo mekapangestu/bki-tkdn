@@ -27,6 +27,7 @@ class CreateProjectMetas extends Migration
             $table->string('tgl_tanda_sah')->nullable();
             $table->string('tgl_expire')->nullable();
             $table->string('url_qrcode')->nullable();
+            $table->string('alasan')->nullable();
             $table->string('url_sertifikat_terbit')->nullable();
             $table->timestamps();
         });

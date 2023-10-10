@@ -378,19 +378,19 @@
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" value="{{ $tkdn?->nilai_tkdn }}" disabled>
+                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn" value="{{ $tkdn?->nilai_tkdn }}" readonly>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" value="{{ $tkdn?->nilai_tkdn_jasa }}" disabled>
+                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa" value="{{ $tkdn?->nilai_tkdn_jasa }}" readonly>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" value="{{ $tkdn?->nilai_tkdn_gabungan }}" disabled>
+                                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan" value="{{ $tkdn?->nilai_tkdn_gabungan }}" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -398,13 +398,13 @@
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/pdf" required>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/pdf">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Laporan Hasil Verifikasi</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf" required>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf">
                                                                         </div>
                                                                     </div>
                                                                 </div>

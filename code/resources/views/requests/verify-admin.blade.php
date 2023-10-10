@@ -62,7 +62,7 @@
                             <h3 class="card-title">Data</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.verify-admin-submit', $project->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('requests.verify-admin-submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                                 <div class="row">

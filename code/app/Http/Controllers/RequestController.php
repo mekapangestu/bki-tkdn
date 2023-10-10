@@ -102,7 +102,7 @@ class RequestController extends Controller
         $details = [
             'from' => auth()->id(),
             'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
-            'actionURL' => route('projects.verify', $project->id)
+            'actionURL' => route('requests.index', $project->id)
         ];
 
         $user->notify(new ProjectNotification($details));
@@ -137,7 +137,7 @@ class RequestController extends Controller
                 $details = [
                     'from' => auth()->id(),
                     'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify', $project->id)
+                    'actionURL' => route('requests.index', $project->id)
                 ];
 
                 $user->notify(new ProjectNotification($details));
@@ -154,7 +154,7 @@ class RequestController extends Controller
                 $details = [
                     'from' => auth()->id(),
                     'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify', $project->id)
+                    'actionURL' => route('requests.index', $project->id)
                 ];
 
                 $user->notify(new ProjectNotification($details));
@@ -244,7 +244,7 @@ class RequestController extends Controller
                 $details = [
                     'from' => auth()->id(),
                     'message' => 'Pemohon Dengan No Dokumen ' . $projects->no_berkas . ' Telah Melengkapi Dokumen',
-                    'actionURL' => route('projects.verify', $request->project_id)
+                    'actionURL' => route('requests.index', $request->project_id)
                 ];
 
                 $user->notify(new ProjectNotification($details));

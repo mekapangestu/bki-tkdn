@@ -401,7 +401,7 @@ class ProjectsController extends Controller
             $project->status = 200;
             $project->save();
 
-            $asesor = User::find($project->asesors->firstWhere('asesor_status', 1)->asesor);
+            $asesor = User::find($project->asesors->whereIn('asesor_status', [1, 3])->first()->asesor);
 
             $details = [
                 'from' => auth()->id(),
@@ -551,7 +551,7 @@ class ProjectsController extends Controller
             "no_berkas" => $project->no_berkas,
             "url_surat_pengantar" => $path ? asset('storage/' . $path) : '-',
             "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '-', // url file laporan hasil verifikasi
-            "nama_asesor" => $project->asesors->firstWhere('asesor_status', 1)->user->name // Ambil dari assessor
+            "nama_asesor" => $project->asesors->whereIn('asesor_status', [1, 3])->first()->user->name // Ambil dari assessor
         ];
 
         $response = Http::post($endPoint, $payload);

@@ -80,6 +80,7 @@
                                         <th class="border-bottom-0 filter">Penanggung Jawab</th>
                                         <th class="border-bottom-0 filter">Email</th>
                                         <th class="border-bottom-0 filter">Tanggal Registrasi</th>
+                                        <th class="border-bottom-0 filter">Status</th>
                                         {{-- <th class="border-bottom-0 filter">Last Activity</th> --}}
                                         <th class="border-bottom-0" style="width: 25px">Action</th>
                                     </tr>
@@ -104,6 +105,7 @@
                                             <td>{{ $item->nama_cp }}</td>
                                             <td>{{ $item->user->email }}</td>
                                             <td>{{ $item->created_at }}</td>
+                                            <td>{{ $item->statuses?->name ?? '-' }}</td>
                                             {{-- <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td> --}}
                                             <td>
                                                 @role('superadmin|administrator')

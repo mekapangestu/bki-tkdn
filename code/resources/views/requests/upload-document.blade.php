@@ -434,7 +434,7 @@
                                             <div class="col-xl-12 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="" class="form-label">SPTJM</label>
-                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/pdf" required>
+                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/pdf">
                                                 </div>
                                             </div>
                                         </div>
@@ -447,7 +447,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nama Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="file_name[{{ $item->produk }}][]" required>
+                                                                <input type="text" class="form-control" name="file_name[{{ $item->produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -455,7 +455,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="number[{{ $item->produk }}][]" required>
+                                                                <input type="text" class="form-control" name="number[{{ $item->produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -463,7 +463,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sejak</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->produk }}][]" required>
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -471,7 +471,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sampai</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->produk }}][]" required>
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -479,7 +479,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                             <div class="row">
-                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/pdf" required>
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/pdf">
                                                             </div>
                                                         </div>
                                                     </div>
