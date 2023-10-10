@@ -47,6 +47,7 @@ class OrdersController extends Controller
         DB::beginTransaction();
         try {
             $project = Projects::where('nib', $request->get('nib'))->first();
+            // dd($project);
             if ($project) {
                 $user = User::find($project->user_id);
                 $no_berkas = Projects::where('no_berkas', $request->get('no_berkas'))->first();
@@ -154,7 +155,7 @@ class OrdersController extends Controller
             $details = [
                 'from' => $user->id,
                 'message' => 'Submit Dokumen Baru ' . $project->no_berkas,
-                'actionURL' => route('projects.verify-admin2', $project->id)
+                'actionURL' => route('projects.index', $project->id)
             ];
 
             $admin->notify(new ProjectNotification($details));
@@ -262,7 +263,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima') . ' Tahap 5 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 if ($request->get('status') == "0") {
@@ -331,7 +332,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak':'Menerima'). ' Tahap 7 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));
@@ -380,7 +381,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => 'Submit Tahap 8 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));
@@ -436,7 +437,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima') . ' Tahap 9 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));
@@ -494,7 +495,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 11 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));
@@ -552,7 +553,7 @@ class OrdersController extends Controller
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 12 untuk berkas ' . $project->no_berkas,
-                    'actionURL' => route('projects.verify-admin2', $project->id)
+                    'actionURL' => route('projects.index', $project->id)
                 ];
 
                 $admin->notify(new ProjectNotification($details));

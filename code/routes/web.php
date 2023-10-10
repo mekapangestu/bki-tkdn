@@ -16,6 +16,7 @@ use App\Http\Controllers\CoiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\DocumentReceiptController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\WhitelistIpController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -46,17 +47,27 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/dashboard/detail-project', [DashboardController::class, 'detailProject'])->name('dashboard.detail-project');
     // Route::get('/dashboard/detail-progress/{id}', [DashboardController::class, 'detailProgress'])->name('dashboard.detail-progress');
     
+    // List Permohonan
+    Route::resource('requests', RequestController::class);
+    Route::get('/requests/verify/{id}', [RequestController::class, 'verifyAdmin'])->name('requests.verify-admin');
+    Route::post('/requests/verify/{id}', [RequestController::class, 'verifyAdminSubmit'])->name('requests.verify-admin-submit');
+    Route::get('/requests/select-assessor/{id}', [RequestController::class, 'selectAssessor'])->name('requests.select-assessor');
+    Route::put('/requests/select-assessor/{id}', [RequestController::class, 'selectAssessorSubmit'])->name('requests.select-assessor-submit');
+    Route::get('/requests/upload-documents/{id}', [RequestController::class, 'uploadDocuments'])->name('requests.upload-document');
+    Route::post('/requests/upload-documents', [RequestController::class, 'uploadDocumentsSubmit'])->name('requests.upload-document-submit');
+    Route::get('/requests/detail/{id}', [RequestController::class, 'detail'])->name('requests.detail');
+    Route::get('/requests/assessor-verify/{id}', [RequestController::class, 'assessorVerify'])->name('requests.assessor-verify');
+    Route::post('/requests/assessor-verify/{id}', [RequestController::class, 'assessorVerifySubmit'])->name('requests.assessor-verify-submit');
+
+    Route::get('/requests/verify-admin-final/{id}', [RequestController::class, 'verifyAdminFinal'])->name('requests.verify-admin-final');
+    Route::post('/requests/verify-admin-final/{id}', [RequestController::class, 'verifyAdminFinalSubmit'])->name('requests.verify-admin-final-submit');
+    
+    // Proses Verifikasi
     Route::resource('projects', ProjectsController::class);
-    Route::get('/projects/verify-admin/{id}', [ProjectsController::class, 'verifyAdmin'])->name('projects.verify-admin');
-    Route::get('/projects/verify-admin2/{id}', [ProjectsController::class, 'verifyAdmin2'])->name('projects.verify-admin2');
-    Route::get('/projects/verify/{id}', [ProjectsController::class, 'verify'])->name('projects.verify');
     Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
-    Route::post('/projects/verify-admin/{id}', [ProjectsController::class, 'verifyAdminSubmit'])->name('projects.verify-admin-submit');
-    Route::post('/projects/verify/{id}', [ProjectsController::class, 'verifySubmit'])->name('projects.verify-submit');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
     
-    Route::post('/projects/verify-admin2/{id}', [ProjectsController::class, 'submit'])->name('projects.submit');
     
     Route::get('/projects/draf/{id}', [ProjectsController::class, 'draf'])->name('projects.draf');
     Route::get('/projects/tkdn/{id}', [ProjectsController::class, 'tkdn'])->name('projects.tkdn');
@@ -64,7 +75,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/surat-jawaban/{id}', [ProjectsController::class, 'suratJawaban'])->name('projects.surat-jawaban');
     Route::get('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdn'])->name('projects.verify-tkdn');
     Route::get('/projects/detail/{id}', [ProjectsController::class, 'detail'])->name('projects.detail');
-    Route::get('/projects/detail-pemohon/{id}', [ProjectsController::class, 'detailPemohon'])->name('projects.detail-pemohon');
     Route::get('/projects/view/{id}', [ProjectsController::class, 'view'])->name('projects.view');
     
     Route::post('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdnSubmit'])->name('projects.verify-tkdn-submit');

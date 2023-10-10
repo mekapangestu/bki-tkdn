@@ -18,14 +18,24 @@
                 <li class="sub-category">
                     <h3>Dashboard</h3>
                 </li>
-                @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi')
+                @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi|guest')
                 <li class="slide">
                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('dashboard') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                 </li>
                 @endrole
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Project</span></a>
+                <li class="sub-category">
+                    <h3>Main</h3>
                 </li>
+                @role('superadmin|administrator|assessor|guest')
+                <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Request List</span></a>
+                </li>
+                @endrole
+                @role('superadmin|administrator|qc-officer|kepala-verifikasi|assessor')
+                <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Verification Process</span></a>
+                </li>
+                @endrole
                 @role('superadmin')
                     <li class="sub-category">
                         <h3>Master Data</h3>

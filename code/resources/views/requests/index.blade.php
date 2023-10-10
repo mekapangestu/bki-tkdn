@@ -44,11 +44,11 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">TKDN - Project</h1>
+                <h1 class="page-title">TKDN - Request List</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Project</li>
+                        <li class="breadcrumb-item active" aria-current="page">Requests</li>
                     </ol>
                 </div>
             </div>
@@ -75,19 +75,11 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th class="border-bottom-0 filter">NIB</th>
-                                        <th class="border-bottom-0 filter">NPWP</th>
-                                        <th class="border-bottom-0 filter">Nama Perusahaan</th>
                                         <th class="border-bottom-0 filter">No Berkas</th>
-                                        <th class="border-bottom-0 filter">Kode Produk</th>
-                                        <th class="border-bottom-0 filter">Nama CP</th>
-                                        <th class="border-bottom-0 filter">Jabatan CP</th>
-                                        <th class="border-bottom-0 filter">Status Asesor</th>
-                                        <th class="border-bottom-0 filter">Catatan Asesor</th>
-                                        <th class="border-bottom-0 filter">Status QC</th>
-                                        <th class="border-bottom-0 filter">Catatan QC</th>
-                                        <th class="border-bottom-0 filter">Status</th>
-                                        <th class="border-bottom-0 filter">Tahap</th>
+                                        <th class="border-bottom-0 filter">Nama Perusahaan</th>
+                                        <th class="border-bottom-0 filter">Penanggung Jawab</th>
+                                        <th class="border-bottom-0 filter">Email</th>
+                                        <th class="border-bottom-0 filter">Tanggal Registrasi</th>
                                         {{-- <th class="border-bottom-0 filter">Last Activity</th> --}}
                                         <th class="border-bottom-0" style="width: 25px">Action</th>
                                     </tr>
@@ -107,42 +99,12 @@
                                             Tanggal Expire : {{$item->projectMeta?->tgl_expire}}<br>
                                         ">
                                             <td class="details-control"></td>
-                                            <td>{{ $item->nib }}</td>
-                                            <td>{{ $item->npwp }}</td>
-                                            <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->no_berkas }}</td>
-                                            <td>{{ $item->kd_produk }}</td>
+                                            <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->nama_cp }}</td>
-                                            <td>{{ $item->jabatan_cp }}</td>
+                                            <td>{{ $item->user->email }}</td>
+                                            <td>{{ $item->created_at }}</td>
                                             {{-- <td>{{ $item->data?->statusAsesor->name ?? '-' }}</td> --}}
-                                            <td>
-                                                @forelse ($item->asesors as $asesor)
-                                                    {{ $asesor->user->name . ' : ' . $asesor->statusAsesor?->name ?? '-' }}
-                                                    <br>
-                                                @empty
-                                                    -
-                                                @endforelse
-                                            </td>
-                                            <td>
-                                                @forelse ($item->asesors as $asesor)
-                                                    {{ $asesor->user->name . ' : ' . $asesor->asesor_note ?? '-' }}
-                                                    <br>
-                                                @empty
-                                                    -
-                                                @endforelse
-                                            </td>
-                                            {{-- <td>{{ $item->data?->asesor_note ?? '-' }}</td> --}}
-                                            <td>{{ $item->qc?->statusQc->name ?? '-' }}</td>
-                                            <td>{{ $item->qc?->qc_note ?? '-' }}</td>
-                                            <td>{{ $item->statuses?->name ?? '-' }}</td>
-                                            <td>{{ $item->stageStatus?->name }}</td>
-                                            {{-- <td style="text-align: left;">
-                                            @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)
-                                                {{$key . ' = ' . json_encode($val)}}<br>
-                                            @empty
-                                                -
-                                            @endforelse
-                                        </td> --}}
                                             <td>
                                                 @role('superadmin|administrator')
                                                     <div class="dropdown">
@@ -159,17 +121,17 @@
                                                             @elseif ($item->status == 301)
                                                                 <li><a href="{{ route('projects.verify-tkdn', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Cek Hasil QC & Draft Persetujuan</a></li>
                                                             @elseif ($item->status == 104)
-                                                                <li class=""><a href="{{ route('projects.verify-admin2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Verifikasi"><span class="fe fe-edit fs-14"></span> Verifikasi</a></li>
+                                                                <li class=""><a href="{{ route('requests.verify-admin-final', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Verifikasi"><span class="fe fe-edit fs-14"></span> Verifikasi</a></li>
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 2]) }}" class="btn text-secondary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Diterima"><span class="fe fe-edit fs-14"></span> Terima Tidak Lengkap</a></li> --}}
                                                                 {{-- <li class=""><a href="{{ route('projects.submit', [$item->id, 0]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Ditolak"><span class="fe fe-edit fs-14"></span> Ditolak</a></li>
                                                         <li><a href="{{ route('projects.submit', [$item->id, 3]) }}" class="btn text-warning btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Freeze, Tak Lengkap</a></li> --}}
                                                             @elseif($item->status == 101)
-                                                                <li><a href="{{ route('projects.show', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
+                                                                <li><a href="{{ route('requests.select-assessor', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
                                                             @elseif($item->status == 100)
-                                                                <li><a href="{{ route('projects.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
+                                                                <li><a href="{{ route('requests.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
                                                             @endif
                                                             @if ($item->status == 1200)
-                                                                <li><a href="{{ url($item->projectMeta?->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
+                                                                <li><a href="{{ url($item->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
                                                         </ul>
@@ -187,9 +149,9 @@
                                                 @endif --}}
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                             @if ($item->status == 102 || $item->status == 103)
-                                                                <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
+                                                                <li><a href="{{ route('requests.upload-document', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
-                                                            <li><a href="{{ route('projects.detail-pemohon', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
+                                                            <li><a href="{{ route('requests.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
                                                         </ul>
                                                     </div>
                                                 @endrole
@@ -204,7 +166,7 @@
                                                             </ul>
                                                         @elseif($item->status == 103)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                                <li><a href="{{ route('projects.verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
+                                                                <li><a href="{{ route('requests.assessor-verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
                                                         @endif
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">

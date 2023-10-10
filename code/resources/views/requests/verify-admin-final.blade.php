@@ -381,7 +381,7 @@
                             <h3 class="card-title">Hasil Verifikasi</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('projects.submit', $project->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('requests.verify-admin-final-submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">

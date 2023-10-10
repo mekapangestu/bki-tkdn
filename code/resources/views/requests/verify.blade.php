@@ -290,7 +290,7 @@
             <!-- CONTAINER END -->
             <div class="row">
                 <div class="col-12">
-                    <form method="POST" action="{{ route('projects.verify-submit', $project->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('requests.assessor-verify-submit', $project->id) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card custom-card">
                             <div class="card-header border-bottom">
