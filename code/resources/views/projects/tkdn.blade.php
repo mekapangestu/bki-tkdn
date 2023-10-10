@@ -480,8 +480,9 @@
         });
 
         $("form.swa-confirm").submit(function(e) {
-            e.preventDefault();
-            swal({
+            if ($('#action').val() == 1) {
+                e.preventDefault();
+                swal({
                     title: "Apakah anda yakin?",
                     text: "Data dan dikirimkan ke SIINAS",
                     type: "info",
@@ -499,6 +500,7 @@
                         swal("Cancelled", "", "error");
                     }
                 });
+            }
         })
     </script>
 @endsection
