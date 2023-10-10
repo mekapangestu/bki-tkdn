@@ -587,7 +587,7 @@ class ProjectsController extends Controller
                 "no_berkas" => $project->no_berkas,
                 "status" => $status,
                 "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
-                "url_sptjm" => $path ? asset('storage/' . $path) : '',
+                "url_sptjm" => $path ? asset('storage/' . $path) : '-',
                 "tgl_bast" => $project->bast_date
             ];
 
@@ -835,7 +835,7 @@ class ProjectsController extends Controller
                     "tahap" => "4",
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
-                    "url_draft_persetujuan_penamaan_tanda_sah" => $path ? asset('storage/' . $path) : '',
+                    "url_draft_persetujuan_penamaan_tanda_sah" => $path ? asset('storage/' . $path) : '-',
                     "no_referensi" => $project->no_referensi, // dari Assessor
                     "no_laporan" => $project->no_laporan, // dari Assessor
                     "kbli" => $kbli, // dari Assessor
@@ -927,8 +927,8 @@ class ProjectsController extends Controller
             "tahap" => "6",
             "verifikator" => "BKI",
             "no_berkas" => $project->no_berkas,
-            "url_surat_pengantar" => $path ? asset('storage/' . $path) : '',
-            "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '', // url file laporan hasil verifikasi
+            "url_surat_pengantar" => $path ? asset('storage/' . $path) : '-',
+            "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '-', // url file laporan hasil verifikasi
             "nama_asesor" => $project->asesors->firstWhere('asesor_status', 1)->user->name // Ambil dari assessor
         ];
 
@@ -957,7 +957,8 @@ class ProjectsController extends Controller
 
     public function suratJawabanSubmit(Request $request, $id)
     {
-
+        DB::beginTransaction();
+        try {
         $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
         if (!File::isDirectory($folderPath)) {
             File::makeDirectory($folderPath, 0777, true, true);
@@ -970,7 +971,9 @@ class ProjectsController extends Controller
             $this->singleUpload(1, $request->file('surat_penyesuaian'), $id, 'Surat Penyesuaian', 'internal');
         }
         if (isset($request->surat_pendukung)) {
-            $this->singleUpload(1, $request->file('surat_pendukung'), $id, 'Surat Pendukung', 'internal');
+            foreach ($request->surat_pendukung as $key => $value) {
+                $this->singleUpload(1, $request->file('surat_pendukung')[$key], $id, 'Surat Pendukung-'.$key, 'internal');
+            }
         }
 
         $project = Projects::with('data', 'files', 'tkdn')->find($id);
@@ -1007,8 +1010,13 @@ class ProjectsController extends Controller
         // $pathSuratPendukung = $project->internal_files?->where('label', 'Surat Pendukung')?->first()->path ?? '';
         $pathSuratJawaban = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Jawaban')->first()->path ?? '';
         $pathSuratPenyesuaian = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Penyesuaian')->first()->path ?? '';
-        $pathSuratPendukung = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pendukung')->first()->path ?? '';
-
+        $pathSuratPendukung = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pendukung%')->pluck('path') ?? [];
+        
+        $url_dok_dukung = [];
+        foreach ($pathSuratPendukung as $key => $value) {
+            array_push($url_dok_dukung, ['url' => $value ? asset('storage/' . $value) : '-']);
+        }
+        
         $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap10.php';
         $payload = [
             "tahap" => "10",
@@ -1018,13 +1026,9 @@ class ProjectsController extends Controller
             "alasan" => $request->note, // Alasan dari input
             "no_referensi" => $project->no_referensi, // // dari submit tahap 4
             "no_laporan" => $project->no_laporan, // // dari submit tahap 4
-            "url_surat_jawaban" => $pathSuratJawaban ? asset('storage/' . $pathSuratJawaban) : '',
-            "url_lhv_penyesuaian" =>  $pathSuratPenyesuaian ? asset('storage/' . $pathSuratPenyesuaian) : '',
-            "url_dok_dukung" => array(
-                0 => array(
-                    "url" => $pathSuratPendukung ? asset('storage/' . $pathSuratPendukung) : '',
-                )
-            ),
+            "url_surat_jawaban" => $pathSuratJawaban ? asset('storage/' . $pathSuratJawaban) : '-',
+            "url_lhv_penyesuaian" =>  $pathSuratPenyesuaian ? asset('storage/' . $pathSuratPenyesuaian) : '-',
+            "url_dok_dukung" => $url_dok_dukung,
             "kbli" => $kbli, // dari produk
             "bidang_usaha" => $project->bidang_usaha, // dari submit tahap 4
             "produk" => $produk
@@ -1047,10 +1051,16 @@ class ProjectsController extends Controller
         if ($response) {
             $documentReceipt->siinas_post_at = now();
         }
-
+        
         $documentReceipt->save();
 
+        DB::commit();
         return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
+        }
+
     }
 
     public function detail($id)

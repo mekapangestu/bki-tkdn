@@ -147,12 +147,18 @@
                                             <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_penyesuaian" accept="application/pdf" required>
                                         </div>
                                     </div>
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="" class="form-label">Surat Pendukung</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung" accept="application/pdf" required>
+                                    <div class="form-upload">
+                                        <div class="surat-pendukung">
+                                            <div class="form-group">
+                                                <label for="" class="form-label">Surat Pendukung</label>
+                                                <div class="d-flex justify-content-between">
+                                                    <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/pdf" required>
+                                                    <a href="#" class="btn btn-danger remove_field col-1" style="width:100px">Remove</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <a class="add_field_button btn btn-info col-2" style="margin-left: 12px;">Add Surat Pendukung</a><br>
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Alasan</label>
@@ -195,5 +201,45 @@
                 }
             });
         })
-    </script>
-@endsection
+
+            $(document).ready(function() {
+                var max_fields = 10; //maximum input boxes allowed
+                var wrapper = $(".form-upload"); //Fields wrapper
+                var add_button = $(".add_field_button"); //Add button ID
+
+                var x = 1; //initlal text box count
+                $(add_button).on("click", function(e) { //on add input button click
+                    $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                    // e.preventDefault();
+                    // if (x < max_fields) { //max input box allowed
+                    //     x++; //text box increment
+                    //     $(this).prev().append(`
+            //         <div class="col-xl-12 col-md-12 col-sm-12">
+            //             <div class="form-group">
+            //                 <label for="spk_no" class="form-label">File Name</label>
+            //                 <div class="row">
+            //                     <input type="text" class="form-control col-2" name="file_name[]">
+            //                     <br>
+            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     `); //add input box
+                    // }
+                });
+
+                $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+                    e.preventDefault();
+                    console.log($(this).parents('div.surat-pendukung'))
+                    $(this).parents('div.surat-pendukung').remove();
+                    x--;
+                })
+            });
+
+            // $(function(e) {
+            //     $('.fc-datepicker').datepicker({
+            //         dateFormat: 'yy-mm-dd'
+            //     });
+            // });
+        </script>
+    @endsection
