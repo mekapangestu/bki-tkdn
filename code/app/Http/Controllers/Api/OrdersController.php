@@ -170,20 +170,20 @@ class OrdersController extends Controller
             ]);
         } catch (\Throwable $throwable) {
             DB::rollback();
-            return response()->json([
-                "status" => 0,
-                "data" => "tidak ada",
-                "tahap" => "1",
-                "message" => "error: nomor berkas tidak dapat dibaca",
-                "url" => null,
-            ]);
             // return response()->json([
             //     "status" => 0,
             //     "data" => "tidak ada",
             //     "tahap" => "1",
-            //     "message" => "error: " . $throwable->getMessage(),
+            //     "message" => "error: nomor berkas tidak dapat dibaca",
             //     "url" => null,
             // ]);
+            return response()->json([
+                "status" => 0,
+                "data" => "tidak ada",
+                "tahap" => "1",
+                "message" => "error: " . $throwable->getMessage(),
+                "url" => null,
+            ]);
         }
     }
 
