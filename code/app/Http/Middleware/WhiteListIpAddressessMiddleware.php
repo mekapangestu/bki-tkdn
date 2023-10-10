@@ -20,16 +20,29 @@ class WhiteListIpAddressessMiddleware
     public function handle(Request $request, Closure $next)
     {
         WhitelistIp::firstOrCreate(
-            ['ip' => $request->getClientIp()]
+            ['ip' => $this->getOriginalClientIp()]
         );
 
-        $this->whitelistIps = WhitelistIp::findWhitelist();
-        if (!in_array($request->getClientIp(), $this->whitelistIps)) {
+        $this->whitelistIps = WhitelistIp::whitelistIps();
+        if (!in_array($this->getOriginalClientIp(), $this->whitelistIps)) {
             return response()->json([
-                "error" => "Server tidak dikenal (". $request->getClientIp(). ")",
+                "error" => "Server tidak dikenal (". $this->getOriginalClientIp(). ")",
             ], 401);
         }
 
         return $next($request);
+    }
+
+    function getOriginalClientIp(Request $request = null): string
+    {
+        $request = $request ?? request();
+        $xForwardedFor = $request->header('x-forwarded-for');
+        if (empty($xForwardedFor)) {
+            $ip = $request->ip();
+        } else {
+            $ips = is_array($xForwardedFor) ? $xForwardedFor : explode(', ', $xForwardedFor);
+            $ip = $ips[0];
+        }
+        return $ip;
     }
 }

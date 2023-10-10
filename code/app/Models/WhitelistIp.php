@@ -11,7 +11,7 @@ class WhitelistIp extends Model
 
     protected $guarded = ['id'];
 
-    public function scopeFindWhitelist($query)
+    public function scopeWhitelistIps($query)
     {
         return $query->where('status', true)->pluck('ip')->all();
     }
