@@ -70,7 +70,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Data</h3>
                         </div>
-                        <div class="card-body ">
+                        <div class="card-body table-responsive">
                             <table id="project-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
                                 <thead>
                                     <tr>
@@ -150,7 +150,7 @@
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if ($item->status == 900 && $item->status_siinas == 0)
+                                                            @if ($item->status == 1000 && $item->status_siinas == 0)
                                                                 <li class=""><a href="{{ route('projects.surat-jawaban', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Jawaban</a></li>
                                                             @elseif ($item->status == 500)
                                                                 <li class=""><a href="{{ route('projects.surat-pengantar', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> Upload Surat Pengantar</a></li>

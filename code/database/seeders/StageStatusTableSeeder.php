@@ -27,7 +27,12 @@ class StageStatusTableSeeder extends Seeder
             ['id' => 4 ,'name' => 'LVI telah melakukan QC'],
             ['id' => 5 ,'name' => 'Perusahaan menanggapi QC - Setuju'],
             ['id' => 6 ,'name' => 'LVI mengirim berkas ke kemenperin'],
-            ['id' => 7 ,'name' => 'Pusat P3DN sedang melakukan review']
+            ['id' => 7 ,'name' => 'Pusat P3DN sedang melakukan review'],
+            ['id' => 8 ,'name' => 'Penetapan Jadwal Review'],
+            ['id' => 9 ,'name' => 'Review Dokumen LVI & Kemenperin'],
+            ['id' => 10 ,'name' => 'LVI Menjawab Rekomendasi Hasil Review'],
+            ['id' => 11 ,'name' => 'Kemenperin Memeriksa Jawaban dan Hasil Review'],
+            ['id' => 12 ,'name' => 'Penerbitan Sertifikat'],
         ]);
     }
 }

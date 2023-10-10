@@ -54,6 +54,14 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Data</h3>
+                            <div class="card-options">
+                                <div class="btn-group" style="margin-right: 8px">
+                                    <a class="btn btn-primary" data-bs-target="#addIp" data-bs-toggle="modal">
+                                        <li class="fa fa-plus"></li>
+                                        Add IP
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable" style="width:100%">
@@ -91,6 +99,31 @@
                 </div>
             </div>
         <!-- CONTAINER END -->
+    </div>
+    <div class="modal fade" id="addIp">
+        <div class="modal-dialog" role="document">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('whitelist-ip.store') }}">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Add IP</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                        @csrf
+                        <div class="col-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="file" class="form-label">IP</label>
+                                    <input class="form-control" type="text" autocomplete="off" name="ip" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Submit</button> <a class="btn btn-light" data-bs-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 @section('js')

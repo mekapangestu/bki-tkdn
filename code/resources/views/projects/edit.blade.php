@@ -404,6 +404,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-1">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">&nbsp;</label>
+                                                        <div class="row">
+                                                            <a href="#" class="btn btn-danger remove_field" style="width:100px">Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                             <a class="add_field_button-{{ $item->id_produk }} btn btn-info">Add File Baru</a><br>
@@ -459,7 +467,7 @@
 
                 $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
                     e.preventDefault();
-                    $(this).parent('div').remove();
+                    $(this).parents('div.d-flex').remove();
                     x--;
                 })
             });

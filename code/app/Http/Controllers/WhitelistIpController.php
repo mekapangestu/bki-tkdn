@@ -37,7 +37,11 @@ class WhitelistIpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $whitelist = new WhitelistIp();
+        $whitelist->ip = $request->ip;
+        $whitelist->save();
+
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     /**
@@ -69,9 +73,9 @@ class WhitelistIpController extends Controller
      * @param  \App\Models\WhitelistIp  $whitelistip
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WhitelistIp $whitelistip)
+    public function update(Request $request, $id)
     {
-        $whitelistip = $whitelistip->first();
+        $whitelistip = WhitelistIp::find($id);
         $whitelistip->status = !$whitelistip->status;
         $whitelistip->save();
 

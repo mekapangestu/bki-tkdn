@@ -416,7 +416,11 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $project->status = 900;
+                if ($request->get('status') == "0") {
+                    $project->status = 1000;
+                } else {
+                    $project->status = 900;
+                }
                 $project->status_siinas = $request->get('status');
                 $project->stage = 9;
                 $project->save();
@@ -468,9 +472,8 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $project->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
                 if ($request->get('status') == "0") {
-                    $project->status = 900;
+                    $project->status = 1000;
                 } else {
                     $project->status = 1100;
                 }
@@ -479,11 +482,11 @@ class OrdersController extends Controller
                 $project->save();
 
                 $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
-                $meta->alasan = $request->get('alasan');
-                $meta->no_tanda_sah = $request->get('no_tanda_sah');
-                $meta->tgl_tanda_sah = $request->get('tgl_tanda_sah');
-                $meta->tgl_expire = $request->get('tgl_expire');
-                $meta->url_qrcode = $request->get('url_qrcode');
+                $meta->alasan_tidak_sesuai = $request->get('alasan_tidak_sesuai');
+                // $meta->no_tanda_sah = $request->get('no_tanda_sah');
+                // $meta->tgl_tanda_sah = $request->get('tgl_tanda_sah');
+                // $meta->tgl_expire = $request->get('tgl_expire');
+                // $meta->url_qrcode = $request->get('url_qrcode');
                 $meta->save();
 
                 $admin = User::find(2);
