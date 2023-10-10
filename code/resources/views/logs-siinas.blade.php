@@ -59,8 +59,10 @@
                             <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable">
                                 <thead>
                                     <tr>
+                                        <th class="border-bottom-0 filter">No</th>
                                         <th class="border-bottom-0 filter">Project ID</th>
                                         <th class="border-bottom-0 filter">Stage</th>
+                                        <th class="border-bottom-0 filter">IP</th>
                                         <th class="border-bottom-0 filter">End Point</th>
                                         <th class="border-bottom-0 filter">Payload</th>
                                         <th class="border-bottom-0 filter">Response</th>
@@ -71,8 +73,10 @@
                                 <tbody>
                                     @foreach ($data as $item)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->project?->no_berkas }}</td>
                                         <td>{{ $item->stage }}</td>
+                                        <td>{{ $item->ip }}</td>
                                         <td>{{ $item->end_point }}</td>
                                         <td>{{ $item->payload }}</td>
                                         <td>{{ $item->siinas_response }}</td>

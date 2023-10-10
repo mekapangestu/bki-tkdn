@@ -134,6 +134,7 @@ class OrdersController extends Controller
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 1;
+            $documentReceipt->ip = $request->getClientIp();
             $documentReceipt->payload = json_encode($request->all());
             $documentReceipt->end_point = url('api/v1/permohonan');
             $documentReceipt->siinas_response = json_encode([
@@ -202,6 +203,7 @@ class OrdersController extends Controller
         $documentReceipt = new DocumentReceipt();
         $documentReceipt->project_id = Projects::where('no_berkas', (int)$request->get('no_berkas'))->first()?->id;
         $documentReceipt->stage = $request->tahap;
+        $documentReceipt->ip = $request->getClientIp();
         $documentReceipt->end_point = url('api/v1/permohonan');
         $documentReceipt->payload = json_encode($request->all());
 
