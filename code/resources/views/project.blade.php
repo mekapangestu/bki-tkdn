@@ -95,16 +95,16 @@
                                 <tbody>
                                     @foreach ($data as $item)
                                         <tr data-child-value="
-                                            Nama Reviewer : {{$item->nm_reviewer}}<br>
-                                            Tanggal Rencana Review : {{$item->tgl_rencana_review}}<br>
-                                            Tanggal Pelaksanaan Review : {{$item->tgl_pelaksanaan_reviu}}<br>
-                                            MOM : {{$item->mom}}<br>
-                                            Catatan : {{$item->catatan}}<br>
-                                            Alasan Tidak Sesuai : {{$item->alasan_tidak_sesuai}}<br>
-                                            Alasan Tolak : {{$item->alasan_tolak}}<br>
-                                            No Tanda Sah : {{$item->no_tanda_sah}}<br>
-                                            Tanggal Tanda Sah : {{$item->tgl_tanda_sah}}<br>
-                                            Tanggal Expire : {{$item->tgl_expire}}<br>
+                                            Nama Reviewer : {{$item->projectMeta?->nm_reviewer}}<br>
+                                            Tanggal Rencana Review : {{$item->projectMeta?->tgl_rencana_review}}<br>
+                                            Tanggal Pelaksanaan Review : {{$item->projectMeta?->tgl_pelaksanaan_reviu}}<br>
+                                            MOM : {{$item->projectMeta?->mom}}<br>
+                                            Catatan : {{$item->projectMeta?->catatan}}<br>
+                                            Alasan Tidak Sesuai : {{$item->projectMeta?->alasan_tidak_sesuai}}<br>
+                                            Alasan Tolak : {{$item->projectMeta?->alasan_tolak}}<br>
+                                            No Tanda Sah : {{$item->projectMeta?->no_tanda_sah}}<br>
+                                            Tanggal Tanda Sah : {{$item->projectMeta?->tgl_tanda_sah}}<br>
+                                            Tanggal Expire : {{$item->projectMeta?->tgl_expire}}<br>
                                         ">
                                             <td class="details-control"></td>
                                             <td>{{ $item->nib }}</td>

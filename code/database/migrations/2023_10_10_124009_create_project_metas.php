@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnTahap1112ToProjectsTable extends Migration
+class CreateProjectMetas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,22 @@ class AddColumnTahap1112ToProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::table('projects', function (Blueprint $table) {
+        Schema::create('project_metas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('project_id')->nullable()->references('id')->on('projects');
+            $table->string('nm_reviewer')->nullable();
+            $table->string('tgl_rencana_review')->nullable();
+            $table->string('tgl_pelaksanaan_reviu')->nullable();
+            $table->string('mom')->nullable();
+            $table->string('catatan')->nullable();
             $table->string('alasan_tidak_sesuai')->nullable();
             $table->string('alasan_tolak')->nullable();
             $table->string('no_tanda_sah')->nullable();
             $table->string('tgl_tanda_sah')->nullable();
             $table->string('tgl_expire')->nullable();
+            $table->string('url_qrcode')->nullable();
             $table->string('url_sertifikat_terbit')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -30,13 +39,6 @@ class AddColumnTahap1112ToProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn('alasan_tidak_sesuai');
-            $table->dropColumn('alasan_tolak');
-            $table->dropColumn('no_tanda_sah');
-            $table->dropColumn('tgl_tanda_sah');
-            $table->dropColumn('tgl_expire');
-            $table->dropColumn('url_sertifikat_terbit');
-        });
+        Schema::dropIfExists('project_metas');
     }
 }

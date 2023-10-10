@@ -302,7 +302,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="border-bottom-0" style="width: 25px">No</th>
-                                                <th class="border-bottom-0">File Name</th>
+                                                <th class="border-bottom-0">Nama Dokumen</th>
+                                                <th class="border-bottom-0">Nomor Dokumen</th>
+                                                <th class="border-bottom-0">Berlaku Sejak</th>
+                                                <th class="border-bottom-0">Berlaku Sampai</th>
                                                 <th class="border-bottom-0">Created At</th>
                                                 <th class="border-bottom-0">Updated At</th>
                                                 <th class="border-bottom-0" style="width: 50px">Action</th>
@@ -314,6 +317,9 @@
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
+                                                        <td>{{ $file->number }}</td>
+                                                        <td>{{ $file->valid_since }}</td>
+                                                        <td>{{ $file->valid_until }}</td>
                                                         <td>{{ $file->created_at }}</td>
                                                         <td>{{ $file->updated_at }}</td>
                                                         <td>
@@ -357,7 +363,7 @@
                                             <br>
                                             <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
                                             <div class="form-upload-{{ $item->id_produk }}">
-                                                <div class="row">
+                                                <div class="d-flex justify-content-between">
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nama Dokumen</label>
@@ -429,6 +435,10 @@
                 var x = 1; //initlal text box count
                 $(add_button).on("click", function(e) { //on add input button click
                     $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                    $('.fc-datepicker').bootstrapdatepicker({
+                        format: "yyyy-mm-dd",
+                        viewMode: "date",
+                    });
                     // e.preventDefault();
                     // if (x < max_fields) { //max input box allowed
                     //     x++; //text box increment

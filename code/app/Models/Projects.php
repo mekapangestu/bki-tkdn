@@ -68,6 +68,11 @@ class Projects extends Model
         return $this->hasMany(ProjectAdditional::class, 'project_id', 'id');
     }
 
+    public function projectMeta()
+    {
+        return $this->hasOne(ProjectMeta::class, 'project_id', 'id');
+    }
+
     public function statuses()
     {
         return $this->belongsTo(Statuses::class, 'status_siinas', 'id');

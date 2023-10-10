@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Orders;
 use App\Models\Projects;
+use App\Models\ProjectMeta;
 use Illuminate\Http\Request;
 use App\Models\DocumentReceipt;
 use Illuminate\Support\Facades\DB;
@@ -270,9 +271,14 @@ class OrdersController extends Controller
                 } else {
                     $project->status = 500;
                 }
+
                 $project->stage = 5;
                 $project->status_siinas = $request->get('status');
                 $project->save();
+
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->alasan_tolak = $request->get('alasan_tolak');
+                $meta->save();
 
                 $admin->notify(new ProjectNotification($details));
 
@@ -315,6 +321,10 @@ class OrdersController extends Controller
                 $project->stage = 7;
                 $project->status_siinas = $request->get('status');
                 $project->save();
+
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->alasan = $request->get('alasan');
+                $meta->save();
 
                 $admin = User::find(2);
 
@@ -359,10 +369,13 @@ class OrdersController extends Controller
             if ($project) {
                 $project->status = 800;
                 $project->stage = 8;
-                $project->nm_reviewer = $request->get('nm_reviewer');
-                $project->tgl_rencana_review = $request->get('tgl_rencana_review');
                 $project->save();
                 $admin = User::find(2);
+                
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->nm_reviewer = $request->get('nm_reviewer');
+                $meta->tgl_rencana_review = $request->get('tgl_rencana_review');
+                $meta->save();
 
                 $details = [
                     'from' => 'Siinas',
@@ -406,10 +419,13 @@ class OrdersController extends Controller
                 $project->status = 900;
                 $project->status_siinas = $request->get('status');
                 $project->stage = 9;
-                $project->tgl_pelaksanaan_reviu = $request->get('tgl_pelaksanaan_reviu');
-                $project->mom = $request->get('mom');
-                $project->catatan = $request->get('catatan');
                 $project->save();
+                
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->tgl_pelaksanaan_reviu = $request->get('tgl_pelaksanaan_reviu');
+                $meta->mom = $request->get('mom');
+                $meta->catatan = $request->get('catatan');
+                $meta->save();
 
                 $admin = User::find(2);
 
@@ -461,6 +477,14 @@ class OrdersController extends Controller
                 $project->stage = 11;
                 $project->status_siinas = $request->get('status');
                 $project->save();
+
+                $meta = ProjectMeta::firstOrNew(['project_id' => $project->id]);
+                $meta->alasan = $request->get('alasan');
+                $meta->no_tanda_sah = $request->get('no_tanda_sah');
+                $meta->tgl_tanda_sah = $request->get('tgl_tanda_sah');
+                $meta->tgl_expire = $request->get('tgl_expire');
+                $meta->url_qrcode = $request->get('url_qrcode');
+                $meta->save();
 
                 $admin = User::find(2);
 
