@@ -76,9 +76,9 @@
                                                 @csrf
                                                 @method("PUT")
                                                 @if ($item->status)
-                                                    <button type="submit" class="btn btn-danger">Disallow</button>
+                                                    <button type="submit" class="btn btn-success">Allow</button>
                                                 @else
-                                                    <button type="submit" class="btn btn-danger">Allow</button>
+                                                    <button type="submit" class="btn btn-danger">Disallow</button>
                                                 @endif
                                             </form>
                                         </td>
