@@ -135,7 +135,7 @@
                                             <td>{{ $item->qc?->statusQc->name ?? '-' }}</td>
                                             <td>{{ $item->qc?->qc_note ?? '-' }}</td>
                                             <td>{{ $item->statuses?->name ?? '-' }}</td>
-                                            <td>{{ $item->stageStatus->name }}</td>
+                                            <td>{{ $item->stageStatus?->name }}</td>
                                             {{-- <td style="text-align: left;">
                                             @forelse (json_decode($item->logs?->last()?->payload ?? '[]') as $key => $val)
                                                 {{$key . ' = ' . json_encode($val)}}<br>
@@ -169,7 +169,7 @@
                                                                 <li><a href="{{ route('projects.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
                                                             @endif
                                                             @if ($item->status == 1200)
-                                                                <li><a href="{{ url($item->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
+                                                                <li><a href="{{ url($item->projectMeta?->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
                                                         </ul>
