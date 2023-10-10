@@ -108,7 +108,7 @@ class ProjectsController extends Controller
             // }
 
             $projects = Projects::find($request->project_id);
-            $projects->status = 103;
+            // $projects->status = 103;
             $projects->save();
             foreach ($projects->asesors as $value) {
                 $user = User::find($value->asesor);
