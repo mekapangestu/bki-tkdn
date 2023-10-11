@@ -16,10 +16,10 @@
     <link href="{{ asset('landing/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{ asset('landing/assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/templatemo-space-dynamic.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/assets/css/font-awesome.min.css') }}">
     <!--
     
 TemplateMo 562 Space Dynamic
@@ -72,8 +72,10 @@ https://templatemo.com/tm-562-space-dynamic
                     <div class="row">
                         <div class="col-lg-6 align-self-center">
                             <div class="left-content header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
-                                <h2>TRANSFORMASI DIGITAL <span>PERMOHONAN VERIFIKASI</span> <em>SERTIFIKAT TKDN</em></h2>
-                                <h5 style="padding: 20px 0px 30px 0px;">Lebih Mudah Verifikasi Sertifikat TKDN Anda Dengan Aplikasi TKDN BKI</h5>
+                                <h2><em>TK</em><span>D</span>N <em>BKI</em></h2>
+                                <h2><em>DIGITALISASI PROSES</em></h2>
+                                <h2><em>SERTIFIKASI</em><em> TK</em><span>D</span>N</h2>
+                                <h5 style="padding: 20px 0px 30px 0px;">Proses Sertifikasi TKDN <br> <br>Menjadi Lebih <strong>CEPAT</strong>, <strong>AKUNTABEL</strong>, dan <strong>TRANSPARAN</strong></h5>
                                 <div class="main-blue-button"><a href="#about" style="border-radius: 20px;">TENTANG TKDN</a></div>
                             </div>
                         </div>
@@ -102,8 +104,11 @@ https://templatemo.com/tm-562-space-dynamic
                             <div class="col-lg-12">
                                 <div class="item wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                                     <div class="right-text">
-                                        <h4>Tentang TKDN</h4>
-                                        <p>Perusahaan di Indonesia umumnya masih perlu mengimpor barang yang dibutuhkan pabrik di Indonesia guna mendukung proses produksi. namun demikian Pemerintah juga berupaya mendorong peningkatan penggunaan produk dalam negeri. Dalam proses impor inilah pemerintah menetapkan peraturan tentang tingkat kandungan dalam negeri (TKDN) yang harus diikuti oleh importir. Perusahaan akan mendapatkan sertifikat TKDN yang dikeluarkan oleh lembaga yang ditunjuk, setelah melakukan inspeksi dan pengujian dari perusahaan inspeksi independen PT. Biro Klasifikasi Indonesia. Sebagai perusahaan milik negara yang bergerak di bidang inspeksi dan pengujian, BKI selama ini melayani pengujian dan sertifikasi TKDN untuk pemerintah maupun industri. Dalam hal keperluan sertifikasi TKDN, Kementerian Perindustrian telah menunjuk beberapa lembaga surveyor yang akan menilai dan memverifikasi, salah satunya adalah PT. Biro Klasifikasi Indonesia. Dengan importir telah memiliki sertifikat TKDN, pemerintah akan memberikan izin impor untuk mendukung proses produksi pabrik di Indonesia. Dengan adanya ketentuan tentang TKDN, pemerintah ingin tetap memberikan keseimbangan pada perusahaan untuk berproduksi di Indonesia. Produksi perusahaan tetap dapat berlangsung, namun harus memberikan porsi secara proporsional terhadap hasil-hasil produksi dalam negeri. Agar para produsen di Indonesia ikut berkembang.</p>
+                                        <h4>Tentang Kami</h4>
+                                        <p>PT Biro Klasifikasi Indonesia (Persero) merupakan Induk Holding Perusahaan Jasa Survey BUMN di Indonesia yang berdiri sejak 01 Juli 1964. Dengan semangat “Pertumbuhan berkelanjutan melalui akselerasi transformasi bisnis” PT BKI sebagai salah satu Lembaga Verifikasi Independen yang di tunjuk oleh Kementerian Perindustrian Republik Indonesia menghadirkan layanan TKDN BKI. Dengan mengadopsi dan mengedepankan nilai-nilai utama <strong>AKHLAK</strong> (Amanah, Kompeten, Harmonis, Loyal, Adaptif dan Kolaboratif) secara utuh dan konsistensi, digitalisasi proses sertifikasi TKDN menjadikan layanan TKDN BKI menjadi lebih <strong>CEPAT, AKUNTABEL, dan TRANSPARAN</strong>. <br>
+                                            PT Biro Klasifikasi Indonesia (Persero) didukung sumber daya manusia yang kompeten dan jaringan cabang yang tersebar diseluruh Indonesia menetapkan standard layanan sertifikasi TKDN yang bermutu tinggi. 34 Cabang PT Biro Klasifikasi Indonesia (Persero) hadir di seluruh wilayah Indonesia untuk memberikan layanan ke seluruh pelosok penjuru negeri.<br>
+                                            Dengan Sertifikasi TKDN akan meningkatkan kapabilitas dan kemandirian industri di Indonesia untuk dapat menjadi tuan Rumah di negeri sendiri. Peningkatan Penggunaan Produk Dalam Negeri akan meningkatkan pertumbuhan ekonomi nasional. Hilirisasi Industri dengan mengolah sumber daya alam Indonesia yang berlimpah untuk meningkatkan kemapuan dan kemandirian ekonomi Indonesia.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -236,12 +241,17 @@ https://templatemo.com/tm-562-space-dynamic
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 align-self-center wow fadeInLeft" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                    <div class="section-heading">
-                        <h2>Hubungi Kami Untuk Dapat Mengetahui Lebih Lanjut Terkait Sertifikasi TKDN</h2>
-                        <p>Kami akan  membantu anda dalam menyelesaikan proses verifikasi TKDN produk anda.</p>
-                        <div class="phone-info">
-                            <h4>For any enquiry, Call Us: <span><i class="fa fa-phone"></i> <a href="#">+62 21 430 10 17</a></span></h4>
-                        </div>
+                    <div class="section-heading text-white">
+                        <h4>Kontak Kami :</h4>
+                        <h2>PT. Biro Klasifikasi Indonesia (PERSERO)</h2><br>
+                        <h4>Alamat :</h4>
+                        <p style="margin-top: 0px;">Departemen Operasi Bisnis Komersil, PMU Verifikasi & Validasi,
+                            Gedung Kantor Pusat Lt. 5, PT Biro Klasifikasi Indonesia (Persero)
+                            Jl. Yos Sudarso No.38-40, Tanjung Priok, Jakarta Utara - INDONESIA
+                        </p><br>
+                        <i class="fa fa-phone" aria-hidden="true"></i> &nbsp; +62 21 4301017 ext 8888<br>
+                        <i class="fa fa-envelope" aria-hidden="true"></i> &nbsp; tkdn@bki.co.id<br>
+                        <i class="fa fa-whatsapp" aria-hidden="true"></i> &nbsp; 0812 9500 1964; 0812 6600 1964<br>
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.25s">
@@ -286,7 +296,7 @@ https://templatemo.com/tm-562-space-dynamic
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
-                    <img src="{{ asset('assets/images/bki-logo-new.png') }}" alt="" style="max-width: 150px; margin-bottom: 50px">
+                    <img src="{{ asset('assets/images/bki-logo-new.png') }}" alt="" style="max-width: 150px; margin-bottom: 30px">
                 </div>
                 <div class="col-lg-9 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.25s">
                     <p>© Copyright <?php $year = date('Y');
