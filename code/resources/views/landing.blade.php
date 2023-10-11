@@ -38,7 +38,7 @@ https://templatemo.com/tm-562-space-dynamic
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="/" class="logo">
                             <img src="{{ asset('landing/assets/images/tkdn-bki.png') }}" style="max-height: 50px" alt="">
                         </a>
                         <!-- ***** Logo End ***** -->

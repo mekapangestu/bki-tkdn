@@ -44,7 +44,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">TKDN - Project</h1>
+                <h1 class="page-title">TKDN - Verification Process</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -77,7 +77,7 @@
                                         <th></th>
                                         <th class="border-bottom-0 filter">No Berkas</th>
                                         <th class="border-bottom-0 filter">Nama Perusahaan</th>
-                                        <th class="border-bottom-0 filter">Status Asesor</th>
+                                        <th class="border-bottom-0 filter">Status Assessor</th>
                                         <th class="border-bottom-0 filter">Status QC</th>
                                         <th class="border-bottom-0 filter">Status</th>
                                         <th class="border-bottom-0 filter">Tahap</th>
