@@ -80,7 +80,12 @@
                                                 <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->npwp }}" disabled>
                                             </div>
                                         </div>
-
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">Nama Perusahaan</label>
+                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_perusahaan }}" disabled>
+                                        </div>
+                                    </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Kode Produk</label>

@@ -49,6 +49,9 @@ class ProjectsController extends Controller
             })
             ->whereIn('stage', [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
             ->get();
+        if (auth()->user()->hasRole('guest')) {
+            return redirect('requests');
+        }
 
         return view('projects.index', compact('data'));
     }

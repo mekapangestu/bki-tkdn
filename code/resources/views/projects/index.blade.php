@@ -169,7 +169,7 @@
                                                             @if ($item->status == 102)
                                                                 <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
-                                                            <li><a href="{{ route('projects.detail-pemohon', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
+                                                            <li><a href="{{ route('requests.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>
                                                         </ul>
                                                     </div>
                                                 @endrole

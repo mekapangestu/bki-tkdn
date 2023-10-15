@@ -83,7 +83,12 @@
                                                         <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->npwp }}" disabled>
                                                     </div>
                                                 </div>
-
+                                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Nama Perusahaan</label>
+                                                        <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_perusahaan }}" disabled>
+                                                    </div>
+                                                </div>
                                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode Produk</label>
@@ -367,6 +372,34 @@
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
+                                                        <h5>Foto Produk</h5>
+                                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0" style="width: 25px">No</th>
+                                                    <th class="border-bottom-0">Nama File</th>
+                                                    <th class="border-bottom-0">Created At</th>
+                                                    <th class="border-bottom-0">Updated At</th>
+                                                    <th class="border-bottom-0" style="width: 50px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($project->foto as $file)
+                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $file->label }}</td>
+                                                            <td>{{ $file->created_at }}</td>
+                                                            <td>{{ $file->updated_at }}</td>
+                                                            <td>
+                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                                     </div>
                                                 </div>
                                                 <div class="row">

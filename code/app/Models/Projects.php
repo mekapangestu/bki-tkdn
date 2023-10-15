@@ -18,6 +18,11 @@ class Projects extends Model
         return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'project');
     }
 
+    public function foto()
+    {
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'foto');
+    }
+
     public function internal_files()
     {
         return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'internal');
