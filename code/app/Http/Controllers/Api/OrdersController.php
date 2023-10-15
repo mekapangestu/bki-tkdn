@@ -534,7 +534,7 @@ class OrdersController extends Controller
                 if ($request->get('status') == "0") {
                     $project->status = 1100;
                 } else {
-                    $project->status = 1200;
+                    $project->status = 1210;
                 }
                 $project->status_siinas = $request->get('status');
                 $project->stage = 12;

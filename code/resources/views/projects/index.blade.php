@@ -145,8 +145,10 @@
                                                                 <li><a href="{{ route('projects.show', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
                                                             @elseif($item->status == 100)
                                                                 <li><a href="{{ route('projects.verify-admin', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> View Data</a></li>
+                                                            @elseif($item->status == 1100)
+                                                                <li><a href="{{ route('projects.lunas', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Input Tanggal Pelunasan</a></li>
                                                             @endif
-                                                            @if ($item->status == 1200)
+                                                            @if ($item->status == 1210)
                                                                 <li><a href="{{ url($item->projectMeta->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                             @endif
                                                             <li><a href="{{ route('projects.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>

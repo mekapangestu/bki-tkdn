@@ -70,7 +70,7 @@
                                         <th class="border-bottom-0 filter">No</th>
                                         <th class="border-bottom-0 filter">IP</th>
                                         <th class="border-bottom-0 filter">Last Access</th>
-                                        <th class="border-bottom-0 filter">Action</th>
+                                        <th class="border-bottom-0 filter">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,9 +84,9 @@
                                                 @csrf
                                                 @method("PUT")
                                                 @if ($item->status)
-                                                    <button type="submit" class="btn btn-success">Allow</button>
+                                                    <button type="submit" class="btn btn-success">Allowed</button>
                                                 @else
-                                                    <button type="submit" class="btn btn-danger">Disallow</button>
+                                                    <button type="submit" class="btn btn-danger">Disallowed</button>
                                                 @endif
                                             </form>
                                         </td>

@@ -121,6 +121,13 @@ class ProjectsController extends Controller
         return view('projects.view', compact('data', 'project'));
     }
 
+    public function lunas($id)
+    {
+        $data = Projects::with('files')->find($id);
+
+        return view('projects.lunas', compact('data'));
+    }
+
     public function drafSubmit(Request $request, $id)
     {
         if ($request->action == 1) {
@@ -654,6 +661,56 @@ class ProjectsController extends Controller
                 "kbli" => $kbli, // dari produk
                 "bidang_usaha" => $project->bidang_usaha, // dari submit tahap 4
                 "produk" => $produk
+            ];
+
+            $response = Http::post($endPoint, $payload);
+
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 10;
+            $documentReceipt->end_point = $endPoint;
+            $documentReceipt->payload = json_encode($payload);
+            if (is_array($response)) {
+                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+            } else if ($response) {
+                $documentReceipt->siinas_response = (string)$response;
+            }
+
+            if ($response) {
+                $documentReceipt->siinas_post_at = now();
+            }
+
+            $documentReceipt->save();
+
+            DB::commit();
+            return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
+        }
+    }
+
+    public function lunasSubmit(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $project = Projects::with('data', 'files', 'tkdn')->find($id);
+            $project->status = 1200;
+            $project->stage = 12;
+            $project->save();
+
+            $project->ProjectMeta->tgl_pelunasan = $request->tgl_pelunasan;
+            $project->ProjectMeta->save();
+
+            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap12.php';
+            $payload = [
+                "tahap" => "12",
+                "verifikator" => "BKI",
+                "no_berkas" => $project->no_berkas,
+                "status" => "1",
+                "lunas" => "1",
+                "tgl_pelunasan" => $request->tgl_pelunasan,
             ];
 
             $response = Http::post($endPoint, $payload);

@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantarSubmit'])->name('projects.surat-pengantar-submit');
     Route::post('/projects/surat-jawaban/{id}', [ProjectsController::class, 'suratjawabanSubmit'])->name('projects.surat-jawaban-submit');
 
+    Route::get('/projects/pelunasan/{id}', [ProjectsController::class, 'lunas'])->name('projects.lunas');
+    Route::post('/projects/pelunasan/{id}', [ProjectsController::class, 'lunasSubmit'])->name('projects.lunas-submit');
+
     Route::get('/projects/repost/{id}', [DocumentReceiptController::class, 'rePost'])->name('repost');
 
     Route::resource('user', UserController::class)->middleware('role:superadmin');
