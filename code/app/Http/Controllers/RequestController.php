@@ -57,58 +57,64 @@ class RequestController extends Controller
 
     public function verifyAdminSubmit(Request $request, $id)
     {
-        $project = Projects::with('data')->find($id);
-        if ($request->action == 4) {
-            $project->status = 101;
-        } else {
-            $project->status = 0;
+        DB::beginTransaction();
+        try {
+            $project = Projects::with('data')->find($id);
+            if ($request->action == 4) {
+                $project->status = 101;
+            } else {
+                $project->status = 0;
+            }
+            $project->status_siinas = $request->action;
+            $project->save();
+    
+            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
+            $payload = [
+                "tahap" => 2,
+                "verifikator" => "BKI",
+                "no_berkas" => $project->no_berkas,
+                "status" => $request->action,
+                "alasan_tolak" => $request->alasan_tolak ?? '',
+                "url_sptjm" => '',
+                // "tgl_bast" => now()->format('Y-m-d'),
+                "tgl_bast" => '',
+            ];
+    
+            $response = Http::post($endPoint, $payload);
+    
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 2;
+            $documentReceipt->payload = json_encode($payload);
+            $documentReceipt->end_point = $endPoint;
+            if (is_array($response)) {
+                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+            } else if ($response) {
+                $documentReceipt->siinas_response = (string)$response;
+            }
+    
+            if ($response) {
+                $documentReceipt->siinas_post_at = now();
+            }
+    
+            $documentReceipt->save();
+    
+            $user = User::find($project->user_id);
+    
+            $details = [
+                'from' => auth()->id(),
+                'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
+                'actionURL' => route('requests.index', $project->id)
+            ];
+    
+            $user->notify(new ProjectNotification($details));
+            DB::commit();
+            return redirect('requests')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('requests')->with('success', $th->getMessage());
         }
-        $project->status_siinas = $request->action;
-        $project->save();
-
-        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
-        $payload = [
-            "tahap" => 2,
-            "verifikator" => "BKI",
-            "no_berkas" => $project->no_berkas,
-            "status" => $request->action,
-            "alasan_tolak" => $request->alasan_tolak ?? '',
-            "url_sptjm" => '',
-            // "tgl_bast" => now()->format('Y-m-d'),
-            "tgl_bast" => '',
-        ];
-
-        $response = Http::post($endPoint, $payload);
-
-        $documentReceipt = new DocumentReceipt();
-        $documentReceipt->project_id = $project->id;
-        $documentReceipt->stage = 2;
-        $documentReceipt->payload = json_encode($payload);
-        $documentReceipt->end_point = $endPoint;
-        if (is_array($response)) {
-            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-        } else if ($response) {
-            $documentReceipt->siinas_response = (string)$response;
-        }
-
-        if ($response) {
-            $documentReceipt->siinas_post_at = now();
-        }
-
-        $documentReceipt->save();
-
-        $user = User::find($project->user_id);
-
-        $details = [
-            'from' => auth()->id(),
-            'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
-            'actionURL' => route('requests.index', $project->id)
-        ];
-
-        $user->notify(new ProjectNotification($details));
-
-        return redirect('requests')->with('success', 'Data Saved Successfully');
     }
 
     public function selectAssessor($id)
@@ -199,6 +205,7 @@ class RequestController extends Controller
 
     public function uploadDocumentsSubmit(Request $request)
     {
+        DB::beginTransaction();
         try {
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
@@ -251,9 +258,10 @@ class RequestController extends Controller
 
                 $user->notify(new ProjectNotification($details));
             }
-
+            DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect('requests')->with('error', $e->getMessage());
         }
     }

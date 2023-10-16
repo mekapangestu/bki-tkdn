@@ -133,44 +133,50 @@ class ProjectsController extends Controller
 
     public function drafSubmit(Request $request, $id)
     {
-        if ($request->action == 1) {
-            $project = Projects::with('data', 'files')->find($id);
-            $project->stage = 3;
-            $project->save();
-
-            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
-            $payload = [
-                "tahap" => 3,
-                "verifikator" => "BKI",
-                "no_berkas" => $project->no_berkas,
-            ];
-
-            $response = Http::post($endPoint, $payload);
-
-            $documentReceipt = new DocumentReceipt();
-            $documentReceipt->project_id = $project->id;
-            $documentReceipt->stage = 3;
-            $documentReceipt->end_point = $endPoint;
-            $documentReceipt->payload = json_encode($payload);
-            if (is_array($response)) {
-                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-            } else if ($response) {
-                $documentReceipt->siinas_response = (string)$response;
+        DB::beginTransaction();
+        try {
+            if ($request->action == 1) {
+                $project = Projects::with('data', 'files')->find($id);
+                $project->stage = 3;
+                $project->save();
+    
+                $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
+                $payload = [
+                    "tahap" => 3,
+                    "verifikator" => "BKI",
+                    "no_berkas" => $project->no_berkas,
+                ];
+    
+                $response = Http::post($endPoint, $payload);
+    
+                $documentReceipt = new DocumentReceipt();
+                $documentReceipt->project_id = $project->id;
+                $documentReceipt->stage = 3;
+                $documentReceipt->end_point = $endPoint;
+                $documentReceipt->payload = json_encode($payload);
+                if (is_array($response)) {
+                    $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                    $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+                } else if ($response) {
+                    $documentReceipt->siinas_response = (string)$response;
+                }
+    
+                if ($response) {
+                    $documentReceipt->siinas_post_at = now();
+                }
+    
+                $documentReceipt->save();
+            } else {
+                Tkdn::where('project_id', $id)->update([
+                    'status' => 0
+                ]);
             }
-
-            if ($response) {
-                $documentReceipt->siinas_post_at = now();
-            }
-
-            $documentReceipt->save();
-        } else {
-            Tkdn::where('project_id', $id)->update([
-                'status' => 0
-            ]);
+            DB::commit();
+            return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
         }
-
-        return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
     public function verify2Submit(Request $request, $id)
@@ -291,139 +297,145 @@ class ProjectsController extends Controller
 
     public function tkdnSubmit(Request $request, $id)
     {
-        $project = Projects::find($id);
-        $project->qc->qc_status = $request->action;
-        $project->qc->qc_note = $request->note;
-        $project->qc->save();
-
-        if ($request->action == 1) {
-            $project->status_siinas = 1;
-            $project->status = 300;
-            $project->stage = 3;
-            $project->save();
-
-            // $project->kepala->kepala_status = null;
-            // $project->kepala->save();
-
-
-            // $hasilPersetujuan = PDFMerger::init();
-            // $hasilVerifikasi = PDFMerger::init();
-
-            foreach ($request->id_produk as $key => $id_produk) {
-                $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-                if (!File::isDirectory($folderPath)) {
-                    File::makeDirectory($folderPath, 0777, true, true);
+        DB::beginTransaction();
+        try {
+            $project = Projects::find($id);
+            $project->qc->qc_status = $request->action;
+            $project->qc->qc_note = $request->note;
+            $project->qc->save();
+    
+            if ($request->action == 1) {
+                $project->status_siinas = 1;
+                $project->status = 300;
+                $project->stage = 3;
+                $project->save();
+    
+                // $project->kepala->kepala_status = null;
+                // $project->kepala->save();
+    
+    
+                // $hasilPersetujuan = PDFMerger::init();
+                // $hasilVerifikasi = PDFMerger::init();
+    
+                foreach ($request->id_produk as $key => $id_produk) {
+                    $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+                    if (!File::isDirectory($folderPath)) {
+                        File::makeDirectory($folderPath, 0777, true, true);
+                    }
+    
+                    if (isset($request->hasil_persetujuan[$key])) {
+                        $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key) . '-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
+                        // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
+                    }
+                    if (isset($request->laporan_hasil_verifikasi[$key])) {
+                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key) . '-Laporan Hasil Verifikasi', 'project');
+                        // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
+                    }
+    
+                    // if (isset($request->file_name)) {
+                    //     foreach ($request->file_name as $key => $value) {
+                    //         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+                    //     }
+                    // }
                 }
-
-                if (isset($request->hasil_persetujuan[$key])) {
-                    $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key) . '-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
-                    // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
+                // $hasilVerifikasi->merge();
+                // $hasilPersetujuan->merge();
+    
+                // $hasilVerifikasi->save('storage/files/laporan_hasil_verifikasi.pdf');
+                // $hasilPersetujuan->save('storage/files/hasil_persetujuan.pdf');
+    
+                // Upload::updateOrCreate(
+                //     [
+                //         'request_id' => $id,
+                //         'label' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
+                //     ],
+                //     [
+                //         'request_id' => $id,
+                //         'name' => 'laporan_hasil_verifikasi.pdf',
+                //         'filename' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
+                //         'path' => 'public/laporan_hasil_verifikasi.pdf',
+                //         'label' => 'merger',
+                //         'order' => '1',
+                //         'tag' => 'merger',
+                //         'upload_date' => now()
+                //     ]
+                // );
+    
+                // Upload::updateOrCreate(
+                //     [
+                //         'request_id' => $id,
+                //         'label' => 'Laporan Hasil Verifikasi',
+                //     ],
+                //     [
+                //         'request_id' => $id,
+                //         'name' => 'hasil_persetujuan.pdf',
+                //         'filename' => 'Laporan Hasil Verifikasi',
+                //         'path' => 'public/hasil_persetujuan.pdf',
+                //         'label' => 'merger',
+                //         'order' => '1',
+                //         'tag' => 'merger',
+                //         'upload_date' => now()
+                //     ]
+                // );
+    
+                $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
+                $payload = [
+                    "tahap" => 3,
+                    "verifikator" => "BKI",
+                    "no_berkas" => $project->no_berkas,
+                ];
+    
+                $response = Http::post($endPoint, $payload);
+    
+                $documentReceipt = new DocumentReceipt();
+                $documentReceipt->project_id = $project->id;
+                $documentReceipt->stage = 3;
+                $documentReceipt->end_point = $endPoint;
+                $documentReceipt->payload = json_encode($payload);
+                if (is_array($response)) {
+                    $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                    $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+                } else if ($response) {
+                    $documentReceipt->siinas_response = (string)$response;
                 }
-                if (isset($request->laporan_hasil_verifikasi[$key])) {
-                    $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key) . '-Laporan Hasil Verifikasi', 'project');
-                    // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
+    
+                if ($response) {
+                    $documentReceipt->siinas_post_at = now();
                 }
-
-                // if (isset($request->file_name)) {
-                //     foreach ($request->file_name as $key => $value) {
-                //         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
-                //     }
-                // }
+    
+                $documentReceipt->save();
+                $user = User::find(4);
+                $admin = User::find(2);
+    
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Review No Dokumen ' . $project->no_berkas,
+                    'actionURL' => route('projects.index', $request->project_id)
+                ];
+    
+                $user->notify(new ProjectNotification($details));
+                $admin->notify(new ProjectNotification($details));
+            } else {
+                $project->status = 200;
+                $project->save();
+    
+                $asesor = User::find($project->asesors->whereIn('asesor_status', [1, 3])->first()->asesor);
+    
+                $details = [
+                    'from' => auth()->id(),
+                    'message' => 'Draft TKDN ' . $project->no_berkas . ' ditolak',
+                    'actionURL' => route('projects.index', $request->project_id)
+                ];
+    
+                $asesor->notify(new ProjectNotification($details));
             }
-            // $hasilVerifikasi->merge();
-            // $hasilPersetujuan->merge();
-
-            // $hasilVerifikasi->save('storage/files/laporan_hasil_verifikasi.pdf');
-            // $hasilPersetujuan->save('storage/files/hasil_persetujuan.pdf');
-
-            // Upload::updateOrCreate(
-            //     [
-            //         'request_id' => $id,
-            //         'label' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
-            //     ],
-            //     [
-            //         'request_id' => $id,
-            //         'name' => 'laporan_hasil_verifikasi.pdf',
-            //         'filename' => 'Draf Hasil Persetujuan Penamaan Tanda Sah',
-            //         'path' => 'public/laporan_hasil_verifikasi.pdf',
-            //         'label' => 'merger',
-            //         'order' => '1',
-            //         'tag' => 'merger',
-            //         'upload_date' => now()
-            //     ]
-            // );
-
-            // Upload::updateOrCreate(
-            //     [
-            //         'request_id' => $id,
-            //         'label' => 'Laporan Hasil Verifikasi',
-            //     ],
-            //     [
-            //         'request_id' => $id,
-            //         'name' => 'hasil_persetujuan.pdf',
-            //         'filename' => 'Laporan Hasil Verifikasi',
-            //         'path' => 'public/hasil_persetujuan.pdf',
-            //         'label' => 'merger',
-            //         'order' => '1',
-            //         'tag' => 'merger',
-            //         'upload_date' => now()
-            //     ]
-            // );
-
-            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
-            $payload = [
-                "tahap" => 3,
-                "verifikator" => "BKI",
-                "no_berkas" => $project->no_berkas,
-            ];
-
-            $response = Http::post($endPoint, $payload);
-
-            $documentReceipt = new DocumentReceipt();
-            $documentReceipt->project_id = $project->id;
-            $documentReceipt->stage = 3;
-            $documentReceipt->end_point = $endPoint;
-            $documentReceipt->payload = json_encode($payload);
-            if (is_array($response)) {
-                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-            } else if ($response) {
-                $documentReceipt->siinas_response = (string)$response;
-            }
-
-            if ($response) {
-                $documentReceipt->siinas_post_at = now();
-            }
-
-            $documentReceipt->save();
-            $user = User::find(4);
-            $admin = User::find(2);
-
-            $details = [
-                'from' => auth()->id(),
-                'message' => 'Review No Dokumen ' . $project->no_berkas,
-                'actionURL' => route('projects.index', $request->project_id)
-            ];
-
-            $user->notify(new ProjectNotification($details));
-            $admin->notify(new ProjectNotification($details));
-        } else {
-            $project->status = 200;
-            $project->save();
-
-            $asesor = User::find($project->asesors->whereIn('asesor_status', [1, 3])->first()->asesor);
-
-            $details = [
-                'from' => auth()->id(),
-                'message' => 'Draft TKDN ' . $project->no_berkas . ' ditolak',
-                'actionURL' => route('projects.index', $request->project_id)
-            ];
-
-            $asesor->notify(new ProjectNotification($details));
+    
+            DB::commit();
+            return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
         }
-
-
-        return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
     public function verifyTkdnSubmit(Request $request, $id)
@@ -539,54 +551,60 @@ class ProjectsController extends Controller
 
     public function suratPengantarSubmit(Request $request, $id)
     {
-        $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
-        if (!File::isDirectory($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
+        DB::beginTransaction();
+        try {
+            $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
+            if (!File::isDirectory($folderPath)) {
+                File::makeDirectory($folderPath, 0777, true, true);
+            }
+    
+            if (isset($request->surat_pengantar)) {
+                $this->singleUpload(1, $request->file('surat_pengantar'), $id, 'Surat Pengantar Permohonan Jadwal Review', 'internal');
+            }
+    
+            $project = Projects::with('data', 'files')->find($id);
+            $project->status = 600;
+            $project->stage = 6;
+            $project->save();
+    
+            // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
+            $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
+            $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Laporan Hasil Verifikasi')->first()->path ?? '';
+            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
+            $payload = [
+                "tahap" => "6",
+                "verifikator" => "BKI",
+                "no_berkas" => $project->no_berkas,
+                "url_surat_pengantar" => $path ? asset('storage/' . $path) : '-',
+                "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '-', // url file laporan hasil verifikasi
+                "nama_asesor" => $project->asesors->whereIn('asesor_status', [1, 3])->first()->user->name // Ambil dari assessor
+            ];
+    
+            $response = Http::post($endPoint, $payload);
+    
+            $documentReceipt = new DocumentReceipt();
+            $documentReceipt->project_id = $project->id;
+            $documentReceipt->stage = 6;
+            $documentReceipt->end_point = $endPoint;
+            $documentReceipt->payload = json_encode($payload);
+            if (is_array($response)) {
+                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+            } else if ($response) {
+                $documentReceipt->siinas_response = (string)$response;
+            }
+    
+            if ($response) {
+                $documentReceipt->siinas_post_at = now();
+            }
+    
+            $documentReceipt->save();
+            DB::commit();
+            return redirect('projects')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('projects')->with('success', $th->getMessage());
         }
-
-        if (isset($request->surat_pengantar)) {
-            $this->singleUpload(1, $request->file('surat_pengantar'), $id, 'Surat Pengantar Permohonan Jadwal Review', 'internal');
-        }
-
-        $project = Projects::with('data', 'files')->find($id);
-        $project->status = 600;
-        $project->stage = 6;
-        $project->save();
-
-        // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
-        $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
-        $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Laporan Hasil Verifikasi')->first()->path ?? '';
-        $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
-        $payload = [
-            "tahap" => "6",
-            "verifikator" => "BKI",
-            "no_berkas" => $project->no_berkas,
-            "url_surat_pengantar" => $path ? asset('storage/' . $path) : '-',
-            "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '-', // url file laporan hasil verifikasi
-            "nama_asesor" => $project->asesors->whereIn('asesor_status', [1, 3])->first()->user->name // Ambil dari assessor
-        ];
-
-        $response = Http::post($endPoint, $payload);
-
-        $documentReceipt = new DocumentReceipt();
-        $documentReceipt->project_id = $project->id;
-        $documentReceipt->stage = 6;
-        $documentReceipt->end_point = $endPoint;
-        $documentReceipt->payload = json_encode($payload);
-        if (is_array($response)) {
-            $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-            $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-        } else if ($response) {
-            $documentReceipt->siinas_response = (string)$response;
-        }
-
-        if ($response) {
-            $documentReceipt->siinas_post_at = now();
-        }
-
-        $documentReceipt->save();
-
-        return redirect('projects')->with('success', 'Data Saved Successfully');
     }
 
     public function suratJawabanSubmit(Request $request, $id)
