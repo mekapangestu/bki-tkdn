@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Asesors;
-use App\Models\DocumentReceipt;
-use App\Models\KelompokBarang;
-use App\Models\Kepala;
-use App\Models\ProjectAdditional;
-use App\Models\Projects;
 use App\Models\Qcs;
-use App\Models\Upload;
 use App\Models\User;
-use App\Notifications\ProjectNotification;
 use App\Traits\Util;
-use Illuminate\Http\Request;
+use App\Models\Kepala;
+use App\Models\Upload;
+use App\Models\Asesors;
+use App\Models\Projects;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\KelompokBarang;
+use App\Models\DocumentReceipt;
+use App\Models\ProjectAdditional;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\ProjectNotification;
 
 class RequestController extends Controller
 {
@@ -173,7 +174,7 @@ class RequestController extends Controller
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
 
-            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
+            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => substr(md5($project->user->email), 0, 8)], function ($message) use ($project) {
                 $message->from('no-reply@site.com', "Site name");
                 $message->subject("Informasi Akun Aplikasi TKDN BKI");
                 $message->to($project->user->email);
