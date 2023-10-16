@@ -16,6 +16,9 @@
             @endif --}}
             <div class="container-login100">
                 <div class="wrap-login100 p-6">
+                    @if($errors->any())
+                        {!! implode('', $errors->all('<div>:message</div>')) !!}
+                    @endif
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
                         <!-- Password Reset Token -->

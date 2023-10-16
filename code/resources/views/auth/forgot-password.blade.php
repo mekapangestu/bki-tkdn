@@ -16,6 +16,7 @@
             <div class="container-login100">
                 <div class="wrap-login100 p-6">
                     <form class="login100-form validate-form" method="POST" action="{{ route('password.email') }}">
+                        @csrf
                         <span class="login100-form-title pb-5">
                             Forgot Password
                         </span>
