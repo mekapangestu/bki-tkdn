@@ -8,7 +8,7 @@
             <!-- CONTAINER OPEN -->
             <div class="col col-login mx-auto">
                 <div class="text-center">
-                    <a href="/"><img src="{{ asset('assets/images/brand/logo-white.png') }}" class="header-brand-img m-0" alt=""></a>
+                    <a><img src="{{ asset('assets/images/tkdn-bki.png') }}" style="width: 100px" class="header-brand-img" alt=""></a>
                 </div>
             </div>
 

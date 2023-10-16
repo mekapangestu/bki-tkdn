@@ -1,48 +1,62 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.auth')
+@section('title', 'Reset Password')
+@section('content')
+    <!-- PAGE -->
+    <div class="page">
+        <div class="">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
-
-            <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
+            <!-- CONTAINER OPEN -->
+            <div class="col col-login mx-auto mt-7">
+                <div class="text-center">
+                    <a><img src="{{ asset('assets/images/bki-small-transparant.png') }}" style="width: 100px" class="header-brand-img" alt=""></a>
+                </div>
             </div>
+            {{-- @if ($errors->any())
+                {!! implode('', $errors->all('<div>:message</div>')) !!}
+            @endif --}}
+            <div class="container-login100">
+                <div class="wrap-login100 p-6">
+                    <form method="POST" action="{{ route('password.update') }}">
+                        @csrf
+                        <!-- Password Reset Token -->
+                        <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                        <span class="login100-form-title">
+                            Reset Password
+                        </span>
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
+                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                <i class="zmdi zmdi-email" aria-hidden="true"></i>
+                            </a>
+                            <input class="input100 border-start-0 ms-0 form-control" type="email" name="email" placeholder="Email" password_confirmation>
+                        </div>
+                        <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                <i class="zmdi zmdi-eye" aria-hidden="true"></i>
+                            </a>
+                            <input class="input100 border-start-0 ms-0 form-control" type="password" name="password" placeholder="Password">
+                        </div>
+                        <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                <i class="zmdi zmdi-eye" aria-hidden="true"></i>
+                            </a>
+                            <input class="input100 border-start-0 ms-0 form-control" type="password" name="password_confirmation" placeholder="Password Confirmation">
+                        </div>
+    
+                        <div class="container-login100-form-btn">
+                            <button type="submit" class="login100-form-btn btn-primary">
+                                Submit
+                            </button>
+                        </div>
+                        <div class="text-center pt-3">
+                            <p class="text-dark mb-0">Already have account?<a href="{{ route('login') }}" class="text-primary ms-1">Sign In</a></p>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+            <!-- CONTAINER CLOSED -->
+        </div>
+    </div>
+    <!-- END PAGE -->
+@endsection
