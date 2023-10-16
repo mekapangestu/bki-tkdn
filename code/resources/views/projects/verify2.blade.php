@@ -403,40 +403,97 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id_produk[{{ $item->produk }}]" value="{{ $item->id_produk }}">
                                             <div class="row">
-                                                <div class="col-xl-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->produk }}]" value="" required>
+                                                <div class="col-8">
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-md-4 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="spk_no" class="form-label">Detail Produksi</label>
+                                                                <select class="form-control produksi" name="status">
+                                                                    @foreach ($project->orders->siinas_data->produksi as $opt)
+                                                                        <option value="" selected disabled>Pilih Detail Produksi</option>
+                                                                        <option value="{{$opt->produk}}">{{$opt->produk}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-md-4 col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="spk_no" class="form-label">Nilai TKDN</label>
+                                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->produk }}]" value="" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-md-4 col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
+                                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->produk }}]" value="" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-md-4 col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
+                                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->produk }}]" value="" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-4 col-md-4 col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-md-4 col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->produk }}]" value="" required>
-                                                    </div>
+                                                <div class="col-4">
+                                                    @foreach ($project->orders->siinas_data->produksi as $val)
+                                                    <table class="table invisible" id="{{Str::slug($item->produk.'-'.$val->produk)}}">
+                                                        <tr>
+                                                            <td>kbli</td>
+                                                            <td>{{$val->kbli}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>kd_hs</td>
+                                                            <td>{{$val->kd_hs}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>jumlah</td>
+                                                            <td>{{$val->jumlah}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>produk</td>
+                                                            <td>{{$val->produk}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>satuan</td>
+                                                            <td>{{$val->satuan}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>spesifikasi</td>
+                                                            <td>{{$val->spesifikasi}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>tujuan_produksi</td>
+                                                            <td>{{$val->tujuan_produksi}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>jumlah_ekspor_persen</td>
+                                                            <td>{{$val->jumlah_ekspor_persen}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>negara_tujuan_ekspor</td>
+                                                            <td>{{$val->negara_tujuan_ekspor}}</td>
+                                                        </tr>
+                                                    </table>
+                                                    @endforeach
                                                 </div>
-                                                <div class="col-xl-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->produk }}]" value="" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
 
                                             </div>
                                         </div>
