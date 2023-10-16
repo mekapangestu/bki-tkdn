@@ -537,6 +537,7 @@
                                                 <option value="1">Terima</option>
                                                 <option value="0">Tolak</option>
                                                 <option value="3">Freeze/Pending</option>
+                                                <option value="2">Pengembalian Dokumen</option>
                                             </select>
                                         </div>
                                     </div>
