@@ -54,52 +54,52 @@ class LoginRequest extends FormRequest
             //user not exist or wrong email/password
             $data = $this->only('email', 'password');
             //check user on bki
-            $response = Http::withoutVerifying()->post(env('API_BKI', null), [
-                'email' => $data['email'],
-                'sandi' => hash('sha512', $data['password']),
-                'app' => '7ba8e7c470fd011fbdd12868ba277343',
-            ]);
+            // $response = Http::withoutVerifying()->post(env('API_BKI', null), [
+            //     'email' => $data['email'],
+            //     'sandi' => hash('sha512', $data['password']),
+            //     'app' => '7ba8e7c470fd011fbdd12868ba277343',
+            // ]);
 
-            if ($response->status() == 200) {
-                $response = json_decode($response->body());
-                if ($response->status == 'success') {
-                    //find user existing
-                    $user = User::where('email', $response->email)->first();
-                    if (!$user) {
-                        //create user if not exist
-                        $user = new User();
-                        $user->name = $response->nama;
-                        $user->contact = 0;
-                        $user->email = $response->email;
+            // if ($response->status() == 200) {
+            //     $response = json_decode($response->body());
+            //     if ($response->status == 'success') {
+            //         //find user existing
+            //         $user = User::where('email', $response->email)->first();
+            //         if (!$user) {
+            //             //create user if not exist
+            //             $user = new User();
+            //             $user->name = $response->nama;
+            //             $user->contact = 0;
+            //             $user->email = $response->email;
 
-                        $role = Role::find(8);
-                        $user->assignRole($role->name);
-                        $user->role_id = 8;
+            //             $role = Role::find(8);
+            //             $user->assignRole($role->name);
+            //             $user->role_id = 8;
 
-                        $user->status = "active";
-                        $user->password = bcrypt(time());
+            //             $user->status = "active";
+            //             $user->password = bcrypt(time());
 
-                        $user->save();
+            //             $user->save();
 
-                        $userDetail = new UserDetail();
-                        $userDetail->user_id = $user->id;
-                        // $userDetail->category = "";
-                        $userDetail->expired_date = $response->expired;
-                        $userDetail->nup = $response->nup;
-                        $userDetail->jabatan = $response->jabatan;
-                        $userDetail->kode_departemen = $response->kodeDepartemen;
-                        $userDetail->sign = $response->sign;
-                        $userDetail->photo = $response->photo;
-                        $userDetail->save();
+            //             $userDetail = new UserDetail();
+            //             $userDetail->user_id = $user->id;
+            //             // $userDetail->category = "";
+            //             $userDetail->expired_date = $response->expired;
+            //             $userDetail->nup = $response->nup;
+            //             $userDetail->jabatan = $response->jabatan;
+            //             $userDetail->kode_departemen = $response->kodeDepartemen;
+            //             $userDetail->sign = $response->sign;
+            //             $userDetail->photo = $response->photo;
+            //             $userDetail->save();
 
-                        // dd($userDetail);
+            //             // dd($userDetail);
 
-                        event(new Registered($user));
-                    }
+            //             event(new Registered($user));
+            //         }
 
-                    Auth::login($user);
-                }
-            }
+            //         Auth::login($user);
+            //     }
+            // }
 
             RateLimiter::hit($this->throttleKey());
 
