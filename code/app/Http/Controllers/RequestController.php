@@ -218,9 +218,9 @@ class RequestController extends Controller
 
 
             foreach ($request->file_name as $k => $files) {
+                $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, Str::headline($k) . '-Foto', 'foto');
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
-                        $this->singleUpload(1, $request->file('foto')[$k][$key], $request->project_id, Str::headline($k) . '- Foto', 'foto');
                         $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
 
                         $upload = Upload::find($singleUpload->id);

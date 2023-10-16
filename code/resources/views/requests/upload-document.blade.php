@@ -464,6 +464,14 @@
                                         @forelse ($project->orders->siinas_data->produk ?? [] as $item)
                                             <br>
                                             <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="spk_no" class="form-label">Upload Foto Produk</label>
+                                                    <div class="row">
+                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->produk }}]" accept="image/*">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-upload-{{ $item->id_produk }}">
                                                 <div class="d-flex justify-content-between">
                                                     <div class="col-2">
@@ -482,7 +490,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-1">
+                                                    <div class="col-2">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sejak</label>
                                                             <div class="row">
@@ -490,7 +498,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-1">
+                                                    <div class="col-2">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sampai</label>
                                                             <div class="row">
@@ -503,14 +511,6 @@
                                                             <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                             <div class="row">
                                                                 <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <div class="form-group">
-                                                            <label for="spk_no" class="form-label">Upload Foto Produk</label>
-                                                            <div class="row">
-                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->produk }}][]" accept="image/*">
                                                             </div>
                                                         </div>
                                                     </div>
