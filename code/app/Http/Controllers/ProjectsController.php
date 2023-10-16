@@ -443,6 +443,7 @@ class ProjectsController extends Controller
                     $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                     $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                     $kbli = $produksi->kbli;
+                    $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('label','ilike', $value->produk.'%')->first()->path ?? '';
                     array_push($produk, [
                         "id_produk" => $value->id_produk,
                         "produk" => $value->produk,
@@ -456,7 +457,8 @@ class ProjectsController extends Controller
                         "tipe" =>  $additional->tipe,
                         "standar" =>  $additional->standar,
                         "sertifikat_produk" =>  $additional->sertifikat_produk,
-                        "produsen" =>  $additional->produsen
+                        "produsen" =>  $additional->produsen,
+                        "foto_produk" => $path ? asset('storage/' . $path) : '-'
                     ]);
                 }
 
@@ -620,6 +622,7 @@ class ProjectsController extends Controller
                 $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                 $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                 $kbli = $produksi->kbli;
+                $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('label', 'ilike', $value->produk . '%')->first()->path ?? '';
                 array_push($produk, [
                     "id_produk" => $value->id_produk,
                     "produk" => $value->produk,
@@ -633,7 +636,8 @@ class ProjectsController extends Controller
                     "tipe" =>  $additional->tipe,
                     "standar" =>  $additional->standar,
                     "sertifikat_produk" =>  $additional->sertifikat_produk,
-                    "produsen" =>  $additional->produsen
+                    "produsen" =>  $additional->produsen,
+                    "foto_produk" => $path ? asset('storage/' . $path) : '-'
                 ]);
             }
 

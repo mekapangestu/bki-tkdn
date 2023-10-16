@@ -365,53 +365,59 @@ class RequestController extends Controller
 
     public function verifyAdminFinalSubmit(Request $request, $id)
     {
-        $status = $request->action;
+        DB::beginTransaction();
+        try {
+            $status = $request->action;
+    
+            $project = Projects::with('data', 'files')->find($id);
+            $project->status_siinas = $status;
+            if ($status == 0) {
+                $project->status = 103;
+                $project->save();
+            } else {
+                $project->status = 200;
+                $project->stage = 2;
+    
+                $project->save();
+    
+                $path = $project->internal_files?->where('label', 'SPTJM')?->first()->path ?? '';
 
-        $project = Projects::with('data', 'files')->find($id);
-        $project->status_siinas = $status;
-        if ($status == 0) {
-            $project->status = 103;
-            $project->save();
-        } else {
-            $project->status = 200;
-            $project->stage = 2;
-
-            $project->save();
-
-            $path = $project->internal_files?->where('label', 'SPTJM')?->first()->path ?? '';
-
-            $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
-            $payload = [
-                "tahap" => 2,
-                "verifikator" => "BKI",
-                "no_berkas" => $project->no_berkas,
-                "status" => $status,
-                "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
-                "url_sptjm" => $path ? asset('storage/' . $path) : '-',
-                "tgl_bast" => $project->bast_date
-            ];
-
-            $response = Http::post($endPoint, $payload);
-
-            $documentReceipt = new DocumentReceipt();
-            $documentReceipt->project_id = $project->id;
-            $documentReceipt->stage = 2;
-            $documentReceipt->payload = json_encode($payload);
-            $documentReceipt->end_point = $endPoint;
-            if (is_array($response)) {
-                $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
-                $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
-            } else if ($response) {
-                $documentReceipt->siinas_response = (string)$response;
+                $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
+                $payload = [
+                    "tahap" => 2,
+                    "verifikator" => "BKI",
+                    "no_berkas" => $project->no_berkas,
+                    "status" => $status,
+                    "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
+                    "url_sptjm" => $path ? asset('storage/' . $path) : '-',
+                    "tgl_bast" => $project->bast_date
+                ];
+    
+                $response = Http::post($endPoint, $payload);
+    
+                $documentReceipt = new DocumentReceipt();
+                $documentReceipt->project_id = $project->id;
+                $documentReceipt->stage = 2;
+                $documentReceipt->payload = json_encode($payload);
+                $documentReceipt->end_point = $endPoint;
+                if (is_array($response)) {
+                    $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
+                    $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
+                } else if ($response) {
+                    $documentReceipt->siinas_response = (string)$response;
+                }
+    
+                if ($response) {
+                    $documentReceipt->siinas_post_at = now();
+                }
+    
+                $documentReceipt->save();
             }
-
-            if ($response) {
-                $documentReceipt->siinas_post_at = now();
-            }
-
-            $documentReceipt->save();
+            DB::commit();
+            return redirect('requests')->with('success', 'Data Saved Successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('requests')->with('success', $th->getMessage());
         }
-
-        return redirect('requests')->with('success', 'Data Saved Successfully');
     }
 }
