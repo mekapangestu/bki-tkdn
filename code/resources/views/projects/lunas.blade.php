@@ -144,7 +144,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Tanggal Pelunasan</label>
-                                            <input class="form-control fc-datepicker" type="text" autocomplete="off" name="tgl_pelunasan" accept="application/pdf" required>
+                                            <input class="form-control fc-datepicker" type="text" autocomplete="off" name="tgl_pelunasan" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                         </div>
                                     </div>
                                 </div>

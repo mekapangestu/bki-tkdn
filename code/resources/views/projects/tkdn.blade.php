@@ -372,38 +372,10 @@
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
-                                                        <h5>Foto Produk</h5>
-                                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
-                                            <thead>
-                                                <tr>
-                                                    <th class="border-bottom-0" style="width: 25px">No</th>
-                                                    <th class="border-bottom-0">Nama File</th>
-                                                    <th class="border-bottom-0">Created At</th>
-                                                    <th class="border-bottom-0">Updated At</th>
-                                                    <th class="border-bottom-0" style="width: 50px">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($project->foto as $file)
-                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $file->label }}</td>
-                                                            <td>{{ $file->created_at }}</td>
-                                                            <td>{{ $file->updated_at }}</td>
-                                                            <td>
-                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-8">
                                                         @forelse ($project->tkdn as $tkdn)
                                                             @if ($tkdn->id_produk == $item->id_produk)
                                                                 <input type="hidden" name="id_produk[{{ $item->produk }}]" value="{{ $item->id_produk }}">
@@ -431,19 +403,39 @@
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Laporan Hasil Verifikasi</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endif
                                                         @empty
                                                         @endforelse
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="card custom-card">
+                                                            <div class="card-header border-bottom">
+                                                                <h3 class="card-title">Foto Produk</h3>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="lightgallery list-unstyled row">
+                                                                    @foreach ($project->foto as $file)
+                                                                        @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                                            <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
+                                                                                <a href="javascript:void(0)">
+                                                                                    <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
+                                                                                </a>
+                                                                            </li>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

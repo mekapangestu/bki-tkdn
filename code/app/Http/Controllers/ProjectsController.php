@@ -699,7 +699,7 @@ class ProjectsController extends Controller
         DB::beginTransaction();
         try {
             $project = Projects::with('data', 'files', 'tkdn')->find($id);
-            $project->status = 1200;
+            $project->status = 1210;
             $project->stage = 12;
             $project->save();
 

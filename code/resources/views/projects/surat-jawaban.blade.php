@@ -144,13 +144,13 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Surat Jawaban</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_jawaban" accept="application/pdf" required>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_jawaban" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Surat Penyesuaian</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_penyesuaian" accept="application/pdf" required>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_penyesuaian" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                         </div>
                                     </div>
                                     <div class="form-upload">
@@ -158,7 +158,7 @@
                                             <div class="form-group">
                                                 <label for="" class="form-label">Surat Pendukung</label>
                                                 <div class="d-flex justify-content-between">
-                                                    <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/pdf" required>
+                                                    <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                                     <a href="#" class="btn btn-danger remove_field col-1" style="width:100px">Remove</a>
                                                 </div>
                                             </div>
@@ -226,7 +226,7 @@
             //                 <div class="row">
             //                     <input type="text" class="form-control col-2" name="file_name[]">
             //                     <br>
-            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/pdf">
+            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
             //                 </div>
             //             </div>
             //         </div>

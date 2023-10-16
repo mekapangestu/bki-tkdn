@@ -144,7 +144,7 @@
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Surat Pengantar Permohonan Jadwal Review</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pengantar" accept="application/pdf" required>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_pengantar" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                         </div>
                                     </div>
                                 </div>

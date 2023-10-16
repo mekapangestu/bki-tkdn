@@ -171,6 +171,9 @@
 
     <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
+    <script src="{{ asset('assets/plugins/gallery/lightgallery.js') }}"></script>
+    <script src="{{ asset('assets/plugins/gallery/lightgallery-1.js') }}"></script>
+    
     <script type="text/javascript">
         Chart.defaults.global.defaultFontColor = "#000";
 

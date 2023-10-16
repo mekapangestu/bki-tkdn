@@ -140,7 +140,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="" class="form-label">Sertifikat Keahlian</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="cert_skill" accept="application/pdf">
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="cert_skill" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                         </div>
                                     </div>
                                     <div class="col-6">

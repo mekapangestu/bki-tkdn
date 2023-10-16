@@ -369,7 +369,18 @@
                                             </tbody>
                                         </table>
                                         <h5>Foto Produk</h5>
-                                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
+                                            <ul class="lightgallery list-unstyled row">
+                                                @foreach ($project->foto as $file)
+                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                        <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
+                                                            <a href="javascript:void(0)">
+                                                                <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
+                                                            </a>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        {{-- <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0" style="width: 25px">No</th>
@@ -389,13 +400,12 @@
                                                             <td>{{ $file->updated_at }}</td>
                                                             <td>
                                                                 <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
                                                             </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
                                             </tbody>
-                                        </table>
+                                        </table> --}}
                                     </div>
                                 </div>
                             </div>
