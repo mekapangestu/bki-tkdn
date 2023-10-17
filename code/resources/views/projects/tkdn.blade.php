@@ -412,6 +412,12 @@
                                                                             <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-xl-4 col-md-4 col-sm-4">
+                                                                        <div class="form-group">
+                                                                            <label for="" class="form-label">Form Perhitungan Nilai TKDN</label>
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_perhitungan_nilai_tkdn[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             @endif
                                                         @empty

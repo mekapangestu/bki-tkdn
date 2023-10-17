@@ -589,12 +589,12 @@
                 })
             });
 
-            $('#action').on('change', function() {
-                if (this.value == 1) {
-                    $("input").not(':input[type=search]').attr("required", true);
-                } else {
-                    $("input").not(':input[type=search]').removeAttr("required", true);
-                }
-            });
+            // $('#action').on('change', function() {
+            //     if (this.value == 1) {
+            //         $("input").not(':input[type=search]').attr("required", true);
+            //     } else {
+            //         $("input").not(':input[type=search]').removeAttr("required", true);
+            //     }
+            // });
         </script>
     @endsection

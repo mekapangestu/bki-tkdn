@@ -553,7 +553,10 @@
 
             var x = 1; //initlal text box count
             $(add_button).on("click", function(e) { //on add input button click
-                $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                // $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                let clone = $(this).prev().find('div').first().clone()
+                clone.find('input').val('')
+                clone.appendTo($(this).prev())
                 $('.fc-datepicker').bootstrapdatepicker({
                     format: "yyyy-mm-dd",
                     viewMode: "date",

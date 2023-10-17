@@ -205,7 +205,7 @@ class ProjectsController extends Controller
                         'nilai_tkdn' => $request->nilai_tkdn[$key],
                         'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa[$key],
                         'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan[$key],
-                        'status' => null,
+                        'status' => $request->status,
                     ]
                 );
 
@@ -332,6 +332,10 @@ class ProjectsController extends Controller
                         // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
                     }
     
+                    if (isset($request->form_perhitungan_nilai_tkdn[$key])) {
+                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, Str::headline($key) . '-Form Perhitungan Nilai TKDN', 'project');
+                    }
+    
                     // if (isset($request->file_name)) {
                     //     foreach ($request->file_name as $key => $value) {
                     //         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
@@ -451,7 +455,8 @@ class ProjectsController extends Controller
                 $produk = [];
                 $kbli = '';
                 foreach ($project->orders->siinas_data->produk as $value) {
-                    $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $value->produk);
+                    $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
+
                     $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                     $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                     $kbli = $produksi->kbli;
@@ -461,15 +466,15 @@ class ProjectsController extends Controller
                         "produk" => $value->produk,
                         "spesifikasi" => $produksi->spesifikasi,
                         "kd_hs" => $produksi->kd_hs,
-                        "kd_kelompok_barang" => $additional->kd_kelompok_barang,
+                        "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                         "nilai_tkdn" => $tkdn->nilai_tkdn,
                         "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,
                         "nilai_tkdn_gabungan" => $tkdn->nilai_tkdn_gabungan,
-                        "merk" =>  $additional->merk,
-                        "tipe" =>  $additional->tipe,
-                        "standar" =>  $additional->standar,
-                        "sertifikat_produk" =>  $additional->sertifikat_produk,
-                        "produsen" =>  $additional->produsen,
+                        "merk" =>  $additional->merk ?? '-',
+                        "tipe" =>  $additional->tipe ?? '-',
+                        "standar" =>  $additional->standar ?? '-',
+                        "sertifikat_produk" =>  $additional->sertifikat_produk ?? '-',
+                        "produsen" =>  $additional->produsen ?? '-',
                         "foto_produk" => $path ? asset('storage/' . $path) : '-'
                     ]);
                 }
@@ -636,7 +641,8 @@ class ProjectsController extends Controller
             $produk = [];
             $kbli = '';
             foreach ($project->orders->siinas_data->produk as $value) {
-                $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $value->produk);
+                $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
+
                 $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                 $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                 $kbli = $produksi->kbli;
@@ -646,15 +652,15 @@ class ProjectsController extends Controller
                     "produk" => $value->produk,
                     "spesifikasi" => $produksi->spesifikasi,
                     "kd_hs" => $produksi->kd_hs,
-                    "kd_kelompok_barang" => $additional->kd_kelompok_barang,
+                    "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                     "nilai_tkdn" => $tkdn->nilai_tkdn,
                     "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,
                     "nilai_tkdn_gabungan" => $tkdn->nilai_tkdn_gabungan,
-                    "merk" =>  $additional->merk,
-                    "tipe" =>  $additional->tipe,
-                    "standar" =>  $additional->standar,
-                    "sertifikat_produk" =>  $additional->sertifikat_produk,
-                    "produsen" =>  $additional->produsen,
+                    "merk" =>  $additional->merk ?? '-',
+                    "tipe" =>  $additional->tipe ?? '-',
+                    "standar" =>  $additional->standar ?? '-',
+                    "sertifikat_produk" =>  $additional->sertifikat_produk ?? '-',
+                    "produsen" =>  $additional->produsen ?? '-',
                     "foto_produk" => $path ? asset('storage/' . $path) : '-'
                 ]);
             }
