@@ -1,0 +1,25 @@
+.introduction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.why-us {
+    background-color: #133e64;
+    color: #fff;
+    width: 80%;
+}
+
+.why-us p {
+    background-color: #133e64;
+    color: #fff !important;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.fill img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

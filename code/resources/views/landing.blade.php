@@ -16,10 +16,11 @@
     <link href="{{ asset('landing/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ asset('landing/assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/templatemo-space-dynamic.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('landing/assets/css/owl.css') }}">
-    <link rel="stylesheet" href="{{ asset('landing/assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('landing/assets/css/index.css') }}">
     <!--
     
 TemplateMo 562 Space Dynamic
@@ -76,7 +77,7 @@ https://templatemo.com/tm-562-space-dynamic
                                 <h2><em>DIGITALISASI PROSES</em></h2>
                                 <h2><em>SERTIFIKASI</em><em> TK</em><span>D</span>N</h2>
                                 <h5 style="padding: 20px 0px 30px 0px;">Proses Sertifikasi TKDN <br> <br>Menjadi Lebih <strong>CEPAT</strong>, <strong>AKUNTABEL</strong>, dan <strong>TRANSPARAN</strong></h5>
-                                <div class="main-blue-button"><a href="#about" style="border-radius: 20px;">TENTANG TKDN</a></div>
+                                <div class="main-blue-button"><a href="#about" style="border-radius: 20px;">TENTANG KAMI</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -84,6 +85,32 @@ https://templatemo.com/tm-562-space-dynamic
                                 <img src="{{ asset('landing/assets/images/file-transfer.svg') }}" alt="team meeting">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="introduction">
+        <div class="why-us">
+            <div class="row">
+                <div class="col-xl-8 col-md-12 col-sm-12" style="padding: 30px">
+                    <h2>TKDN BKI CEPAT, AKUNTABEL & TRANSPARAN</h2>
+                    <h5>Kenapa harus BKI?</h5>
+                    <p>
+                        PT Biro Klasifikasi Indonesia (Persero) merupakan Induk Holding Perusahaan Jasa Survey BUMN di Indonesia yang berdiri sejak 01 Juli 1964. Dengan semangat “Pertumbuhan berkelanjutan melalui akselerasi transformasi bisnis” PT BKI sebagai salah satu Lembaga Verifikasi Independen yang di tunjuk oleh Kementerian Perindustrian Republik Indonesia menghadirkan layanan TKDN BKI. Dengan mengadopsi dan mengedepankan nilai-nilai utama AKHLAK (Amanah, Kompeten, Harmonis, Loyal, Adaptif dan Kolaboratif) secara utuh dan konsistensi, digitalisasi proses sertifikasi TKDN menjadikan layanan TKDN BKI menjadi lebih CEPAT, AKUNTABEL, dan TRANSPARAN.
+                        PT Biro Klasifikasi Indonesia (Persero) didukung sumber daya manusia yang kompeten dan jaringan cabang yang tersebar diseluruh Indonesia menetapkan standard layanan sertifikasi TKDN yang bermutu tinggi. 34 Cabang PT Biro Klasifikasi Indonesia (Persero) hadir di seluruh wilayah Indonesia untuk memberikan layanan ke seluruh pelosok penjuru negeri.
+                    </p>
+                    <br>
+                    <h5>Manfaat TKDN?</h5>
+                    <p>
+                        Dengan Sertifikasi TKDN akan meningkatkan kapabilitas dan kemandirian industri di Indonesia untuk dapat menjadi tuan Rumah di negeri sendiri. Peningkatan Penggunaan Produk Dalam Negeri akan meningkatkan pertumbuhan ekonomi nasional. Hilirisasi Industri dengan mengolah sumber daya alam Indonesia yang berlimpah untuk meningkatkan kemapuan dan kemandirian ekonomi Indonesia.
+                    </p>
+
+                </div>
+                <div class="col-xl-4 col-md-12 col-sm-12">
+                    <div class="fill">
+                        <img src="{{ asset('landing/assets/images/environmental-pollution-industry-exterior-daylight.jpg') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -309,12 +336,12 @@ https://templatemo.com/tm-562-space-dynamic
         </div>
     </footer>
     <!-- Scripts -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('landing/assets/js/owl-carousel.js"></script>
-    <script src="{{ asset('landing/assets/js/animation.js"></script>
-    <script src="{{ asset('landing/assets/js/imagesloaded.js"></script>
-    <script src="{{ asset('landing/assets/js/templatemo-custom.js"></script>
+    <script src="{{ asset('landing/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('landing/assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ asset('landing/assets/js/animation.js') }}"></script>
+    <script src="{{ asset('landing/assets/js/imagesloaded.js') }}"></script>
+    <script src="{{ asset('landing/assets/js/templatemo-custom.js') }}"></script>
 
 </body>
 
