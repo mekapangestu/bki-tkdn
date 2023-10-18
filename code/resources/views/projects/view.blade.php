@@ -348,7 +348,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($project->files as $file)
-                                                @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                @if ($item->id_produk == $file->id_produk)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
@@ -370,7 +370,7 @@
                                                 <div class="card-body">
                                                     <ul class="lightgallery list-unstyled row">
                                                         @foreach ($project->foto as $file)
-                                                            @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                            @if ($item->id_produk == $file->id_produk)
                                                                 <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
                                                                     <a href="javascript:void(0)">
                                                                         <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">

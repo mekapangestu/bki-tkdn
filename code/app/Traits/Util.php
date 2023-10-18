@@ -40,15 +40,12 @@ trait Util
         }
     }
 
-    public function singleUpload($order, $file, $id, $label, $folderName)
+    public function singleUpload($order, $file, $id, $label, $folderName, $id_produk = null)
     {
         $name = $order . '_' . now()->format('YmdHis') . '_' . auth()->user()->email . '-' . $label . '.' .
             $file->getClientOriginalExtension();
 
-        $upload = Upload::updateOrCreate(
-            [
-                'request_id' => $id,
-                'label' => $label,],
+        $upload = Upload::create(
             [
                 'request_id' => $id,
                 'name' => $file->getClientOriginalName(),
@@ -57,7 +54,8 @@ trait Util
                 'label' => $label,
                 'order' => $order,
                 'tag' => $folderName,
-                'upload_date' => now()
+                'upload_date' => now(),
+                'id_produk' => $id_produk
             ]
         );
 
