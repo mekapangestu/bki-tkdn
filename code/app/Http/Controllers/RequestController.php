@@ -339,6 +339,9 @@ class RequestController extends Controller
                     $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$key];
                     $additional->merk = $request->merk[$key];
                     $additional->tipe = $request->tipe[$key];
+                    $additional->kd_hs = $request->kd_hs[$key];
+                    $additional->spesifikasi = $request->spesifikasi[$key];
+                    $additional->kbli = $request->kbli[$key];
                     $additional->save();
                 }
             }
