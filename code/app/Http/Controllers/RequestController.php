@@ -180,7 +180,7 @@ class RequestController extends Controller
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
 
-            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => substr(md5($project->user->email), 0, 8)], function ($message) use ($project) {
+            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
                 $message->from('no-reply@site.com', "Site name");
                 $message->subject("Informasi Akun Aplikasi TKDN BKI");
                 $message->to($project->user->email);

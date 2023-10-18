@@ -91,7 +91,8 @@ class OrdersController extends Controller
                 $user->role_id = 5;
                 
                 $user->status = "active";
-                $password = substr(md5($request->get('email_cp')), 0, 8);
+                // $password = substr(md5($request->get('email_cp')), 0, 8);
+                $password = 'password';
                 $user->password = bcrypt($password);
 
                 $user->save();
