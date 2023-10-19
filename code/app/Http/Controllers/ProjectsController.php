@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ProjectNotification;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 
 class ProjectsController extends Controller
@@ -48,13 +49,69 @@ class ProjectsController extends Controller
             ->when(auth()->user()->hasRole('guest'), function ($q) {
                 return $q->where('user_id', '=', auth()->user()->id);
             })
-            ->whereIn('stage', [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+            ->whereIn('stage', [2, 3, 4])
             ->get();
-        // if (auth()->user()->hasRole('guest')) {
-        //     return redirect('requests');
-        // }
 
-        return view('projects.index', compact('data'));
+        $title = "Proses Verifikasi";
+
+        return view('projects.index', compact('data', 'title'));
+    }
+
+    public function persetujuanPemohonList()
+    {
+        $data = Projects::with('statuses', 'logs')
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->whereIn('stage', [5])
+            ->get();
+
+        $title = "Persetujuan Pemohon";
+
+        return view('projects.index', compact('data', 'title'));
+    }
+
+    public function TrackingReviewList()
+    {
+        $data = Projects::with('statuses', 'logs')
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->whereIn('stage', [6, 7, 8, 9, 10, 11])
+            ->get();
+
+        $title = "Tracking Review";
+
+        return view('projects.index', compact('data', 'title'));
+    }
+
+    public function sertifikatTerbitList()
+    {
+        $data = Projects::with('statuses', 'logs')
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->whereIn('stage', [12])
+            ->get();
+
+        $title = "Sertifikat Terbit";
+
+        return view('projects.index', compact('data', 'title'));
     }
 
     /**
@@ -76,7 +133,9 @@ class ProjectsController extends Controller
 
         $kelompok_barang = KelompokBarang::all();
 
-        return view('projects.verify2', compact('project', 'data', 'kelompok_barang'));
+        $title = "Upload Draft";
+
+        return view('projects.verify2', compact('project', 'data', 'kelompok_barang', 'title'));
     }
 
     public function draf($id)
@@ -92,7 +151,9 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.tkdn', compact('project', 'data'));
+        $title = "QC Perhitungan TKDN";
+
+        return view('projects.tkdn', compact('project', 'data', 'title'));
     }
 
     public function verifyTkdn($id)
@@ -101,21 +162,27 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.verifyTkdn', compact('project', 'data'));
+        $title = "Approval Hasil Perhitungan TKDN";
+
+        return view('projects.verifyTkdn', compact('project', 'data', 'title'));
     }
 
     public function suratPengantar($id)
     {
         $data = Projects::with('files')->find($id);
 
-        return view('projects.surat-pengantar', compact('data'));
+        $title = "Upload Surat Pengantar";
+
+        return view('projects.surat-pengantar', compact('data', 'title'));
     }
 
     public function suratJawaban($id)
     {
         $data = Projects::with('files')->find($id);
 
-        return view('projects.surat-jawaban', compact('data'));
+        $title = "Upload Surat Jawaban";
+
+        return view('projects.surat-jawaban', compact('data', 'title'));
     }
 
     public function view($id)
@@ -124,14 +191,18 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.view', compact('data', 'project'));
+        $title = "View Data";
+
+        return view('projects.view', compact('data', 'project', 'title'));
     }
 
     public function lunas($id)
     {
         $data = Projects::with('files')->find($id);
 
-        return view('projects.lunas', compact('data'));
+        $title = "Input Tanggal Pelunasan";
+
+        return view('projects.lunas', compact('data', 'title'));
     }
 
     public function drafSubmit(Request $request, $id)
@@ -142,16 +213,16 @@ class ProjectsController extends Controller
                 $project = Projects::with('data', 'files')->find($id);
                 $project->stage = 3;
                 $project->save();
-    
+
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
                 $payload = [
                     "tahap" => 3,
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                 ];
-    
+
                 $response = Http::post($endPoint, $payload);
-    
+
                 $documentReceipt = new DocumentReceipt();
                 $documentReceipt->project_id = $project->id;
                 $documentReceipt->stage = 3;
@@ -163,11 +234,11 @@ class ProjectsController extends Controller
                 } else if ($response) {
                     $documentReceipt->siinas_response = (string)$response;
                 }
-    
+
                 if ($response) {
                     $documentReceipt->siinas_post_at = now();
                 }
-    
+
                 $documentReceipt->save();
             } else {
                 Tkdn::where('project_id', $id)->update([
@@ -327,39 +398,39 @@ class ProjectsController extends Controller
             $project->qc->qc_status = $request->action;
             $project->qc->qc_note = $request->note;
             $project->qc->save();
-    
+
             if ($request->action == 1) {
                 $project->status_siinas = 1;
                 $project->status = 300;
                 $project->stage = 3;
                 $project->save();
-    
+
                 // $project->kepala->kepala_status = null;
                 // $project->kepala->save();
-    
-    
+
+
                 // $hasilPersetujuan = PDFMerger::init();
                 // $hasilVerifikasi = PDFMerger::init();
-    
+
                 foreach ($request->id_produk as $key => $id_produk) {
                     $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
                     if (!File::isDirectory($folderPath)) {
                         File::makeDirectory($folderPath, 0777, true, true);
                     }
-    
+
                     if (isset($request->hasil_persetujuan[$key])) {
                         $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project', $id_produk);
                         // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
                     }
                     if (isset($request->laporan_hasil_verifikasi[$key])) {
-                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, 'Laporan Hasil Verifikasi','project', $id_produk);
+                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, 'Laporan Hasil Verifikasi', 'project', $id_produk);
                         // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
                     }
-    
+
                     if (isset($request->form_perhitungan_nilai_tkdn[$key])) {
-                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, 'Form Perhitungan Nilai TKDN','project', $id_produk);
+                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, 'Form Perhitungan Nilai TKDN', 'project', $id_produk);
                     }
-    
+
                     // if (isset($request->file_name)) {
                     //     foreach ($request->file_name as $key => $value) {
                     //         $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
@@ -368,10 +439,10 @@ class ProjectsController extends Controller
                 }
                 // $hasilVerifikasi->merge();
                 // $hasilPersetujuan->merge();
-    
+
                 // $hasilVerifikasi->save('storage/files/laporan_hasil_verifikasi.pdf');
                 // $hasilPersetujuan->save('storage/files/hasil_persetujuan.pdf');
-    
+
                 // Upload::updateOrCreate(
                 //     [
                 //         'request_id' => $id,
@@ -388,7 +459,7 @@ class ProjectsController extends Controller
                 //         'upload_date' => now()
                 //     ]
                 // );
-    
+
                 // Upload::updateOrCreate(
                 //     [
                 //         'request_id' => $id,
@@ -405,16 +476,16 @@ class ProjectsController extends Controller
                 //         'upload_date' => now()
                 //     ]
                 // );
-    
+
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap3.php';
                 $payload = [
                     "tahap" => 3,
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                 ];
-    
+
                 $response = Http::post($endPoint, $payload);
-    
+
                 $documentReceipt = new DocumentReceipt();
                 $documentReceipt->project_id = $project->id;
                 $documentReceipt->stage = 3;
@@ -426,35 +497,35 @@ class ProjectsController extends Controller
                 } else if ($response) {
                     $documentReceipt->siinas_response = (string)$response;
                 }
-    
+
                 if ($response) {
                     $documentReceipt->siinas_post_at = now();
                 }
-    
+
                 $documentReceipt->save();
                 $user = User::find(4);
                 $admin = User::find(2);
-    
+
                 $details = [
                     'from' => auth()->id(),
                     'message' => 'Review No Dokumen ' . $project->no_berkas,
                     'actionURL' => route('projects.index', $request->project_id)
                 ];
-    
+
                 $user->notify(new ProjectNotification($details));
                 $admin->notify(new ProjectNotification($details));
             } else {
                 $project->status = 200;
                 $project->save();
-    
+
                 $asesor = User::find($project->asesors->whereIn('asesor_status', [1, 3])->first()->asesor);
-    
+
                 $details = [
                     'from' => auth()->id(),
                     'message' => 'Draft TKDN ' . $project->no_berkas . ' ditolak',
                     'actionURL' => route('projects.index', $request->project_id)
                 ];
-    
+
                 $asesor->notify(new ProjectNotification($details));
             }
 
@@ -490,13 +561,13 @@ class ProjectsController extends Controller
 
                     $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                     $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
-                    $kbli = $produksi->kbli;
+                    $kbli = $additional->kbli;
                     $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
                     array_push($produk, [
                         "id_produk" => $value->id_produk,
                         "produk" => $value->produk,
-                        "spesifikasi" => $produksi->spesifikasi,
-                        "kd_hs" => $produksi->kd_hs,
+                        "spesifikasi" => $additional->spesifikasi,
+                        "kd_hs" => $additional->kd_hs,
                         "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                         "nilai_tkdn" => $tkdn->nilai_tkdn,
                         "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,
@@ -600,16 +671,16 @@ class ProjectsController extends Controller
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
             }
-    
+
             if (isset($request->surat_pengantar)) {
                 $this->singleUpload(1, $request->file('surat_pengantar'), $id, 'Surat Pengantar Permohonan Jadwal Review', 'internal');
             }
-    
+
             $project = Projects::with('data', 'files')->find($id);
             $project->status = 600;
             $project->stage = 6;
             $project->save();
-    
+
             // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
             $path = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
             $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Laporan Hasil Verifikasi')->first()->path ?? '';
@@ -622,9 +693,9 @@ class ProjectsController extends Controller
                 "url_lhv_ttd" => $lhv ? asset('storage/' . $lhv) : '-', // url file laporan hasil verifikasi
                 "nama_asesor" => $project->asesors->whereIn('asesor_status', [1, 3])->first()->user->name // Ambil dari assessor
             ];
-    
+
             $response = Http::post($endPoint, $payload);
-    
+
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 6;
@@ -636,12 +707,20 @@ class ProjectsController extends Controller
             } else if ($response) {
                 $documentReceipt->siinas_response = (string)$response;
             }
-    
+
             if ($response) {
                 $documentReceipt->siinas_post_at = now();
             }
-    
+
             $documentReceipt->save();
+
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->get('note');
+            $log->status = $project->stageStatus->name;
+            $log->save();
+
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {
@@ -683,13 +762,13 @@ class ProjectsController extends Controller
 
                 $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                 $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
-                $kbli = $produksi->kbli;
+                $kbli = $additional->kbli;
                 $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
                 array_push($produk, [
                     "id_produk" => $value->id_produk,
                     "produk" => $value->produk,
-                    "spesifikasi" => $produksi->spesifikasi,
-                    "kd_hs" => $produksi->kd_hs,
+                    "spesifikasi" => $additional->spesifikasi,
+                    "kd_hs" => $additional->kd_hs,
                     "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                     "nilai_tkdn" => $tkdn->nilai_tkdn,
                     "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,
@@ -751,6 +830,13 @@ class ProjectsController extends Controller
             }
 
             $documentReceipt->save();
+
+            $log = new Log();
+            $log->project_id = $project->id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->get('note');
+            $log->status = $project->stageStatus->name;
+            $log->save();
 
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
@@ -817,7 +903,22 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.detail', compact('project', 'data'));
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+        // dd($qc);
+
+        $title = "Detail";
+
+        return view('projects.detail', compact('project', 'data', 'title', 'assessor', 'qc'));
 
         // return view('projects.detail', compact('data'));
     }

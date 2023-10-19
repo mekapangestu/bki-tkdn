@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', $title)
 @section('content')
 <style>
     .leaflet-sidebar{
@@ -29,11 +29,11 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Dashboard</h1>
+                <h1 class="page-title">IP Whitelist</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">IP Whitelist</li>
                     </ol>
                 </div>
             </div>

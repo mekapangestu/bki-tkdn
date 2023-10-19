@@ -291,6 +291,13 @@ class OrdersController extends Controller
                 $meta->alasan_tolak = $request->get('alasan_tolak');
                 $meta->save();
 
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = auth()->user()->name;
+                $log->notes = $request->get('alasan_tolak');
+                $log->status = $project->stageStatus->name;
+                $log->save();
+
                 $admin->notify(new ProjectNotification($details));
 
                 return response()->json([
@@ -347,6 +354,13 @@ class OrdersController extends Controller
 
                 $admin->notify(new ProjectNotification($details));
 
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = 'Siinas';
+                $log->notes = $request->get('alasan');
+                $log->status = $project->stageStatus->name;
+                $log->save();
+
                 return response()->json([
                     "status" => $request->get('status'),
                     "data" => "ada",
@@ -395,6 +409,13 @@ class OrdersController extends Controller
                 ];
 
                 $admin->notify(new ProjectNotification($details));
+
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = 'Siinas';
+                $log->notes = $request->get('alasan');
+                $log->status = $project->stageStatus->name;
+                $log->save();
 
                 return response()->json([
                     "status" => "1",
@@ -451,6 +472,13 @@ class OrdersController extends Controller
                 ];
 
                 $admin->notify(new ProjectNotification($details));
+
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = 'Siinas';
+                $log->notes = $request->get('alasan');
+                $log->status = $project->stageStatus->name;
+                $log->save();
 
                 return response()->json([
                     "status" => $request->get('status'),
@@ -510,6 +538,13 @@ class OrdersController extends Controller
 
                 $admin->notify(new ProjectNotification($details));
 
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = 'Siinas';
+                $log->notes = $request->get('alasan_tidak_sesuai');
+                $log->status = $project->stageStatus->name;
+                $log->save();
+
                 return response()->json([
                     "status" => $request->get('status'),
                     "data" => "ada",
@@ -557,31 +592,39 @@ class OrdersController extends Controller
                 $meta->tgl_expire = $request->get('tgl_expire');
                 $meta->url_sertifikat_terbit = $request->get('url_sertifikat_terbit');
                 $meta->save();
-
+                
                 $admin = User::find(2);
                 $user = User::find($project->user_id);
-
+                
                 $details = [
                     'from' => 'Siinas',
                     'message' => ($request->get('status') == "0" ? 'Menolak' : 'Menerima'). ' Tahap 12 untuk berkas ' . $project->no_berkas,
                     'actionURL' => route('projects.index', $project->id)
                 ];
-
-                $project = [
+                
+                $admin->notify(new ProjectNotification($details));
+                $user->notify(new ProjectNotification($details));
+                
+                $details = [
                     'body' => 'Hi ' . $user->name . ', Sertifikat TKDN anda telah terbit',
                     'line' => 'Mohon segera melakukan pembayaran.',
                     'actionText' => 'Lihat Sertifikat',
                     'actionURL' => $request->get('url_sertifikat_terbit')
                 ];
 
-                Mail::send('emails.notify', $project, function ($message) use ($user) {
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
                     $message->from('no-reply@site.com', "Permohonan TKDN");
                     $message->subject("Sertifikat TKDN");
                     $message->to($user->email);
                 });
 
-                $admin->notify(new ProjectNotification($details));
-                // $user->notify(new ProjectEmailNotification($project));
+
+                $log = new Log();
+                $log->project_id = $project->id;
+                $log->causer = 'Siinas';
+                $log->notes = $request->get('alasan_tolak');
+                $log->status = $project->stageStatus->name;
+                $log->save();
 
                 return response()->json([
                     "status" => $request->get('status'),

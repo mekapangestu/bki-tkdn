@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Profile')
+@section('title', $title)
 @section('content')
     <style>
         .datepicker {
@@ -116,12 +116,12 @@
                                             <input type="text" class="form-control" id="contact" name="contact" value="{{ $user->contact ?? '' }}" placeholder="Contact number">
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    {{-- <div class="col-6">
                                         <div class="form-group">
                                             <label for="exampleInputnumber">Position</label>
                                             <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{ $detail->jabatan ?? '' }}" placeholder="Position">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     {{-- <div class="col-6">
                                         <div class="form-group">
                                             <label for="type" class="form-label">Type</label>
@@ -197,54 +197,6 @@
                             </div>
                         </div>
                     </div> --}}
-                    @role('marketing-admin|marketing-admin|operation-admin|inspektor|manager|koordinator|kepala-produksi')
-                        <div class="card">
-                            {{-- @method('PUT') --}}
-                            <div class="card-header">
-                                <h3 class="card-title">Daftar Sertifikasi Keahlian</h3>
-                                <div class="card-options">
-                                    @role('superadmin|marketing-admin|operation-admin|manager|inspektor|kepala-produksi')
-                                        <div class="btn-group" style="margin-right: 8px">
-                                            <a class="btn btn-success text-white" data-bs-target="#tambahSertifikasi" data-bs-toggle="modal">
-                                                <li class="fa fa-plus"></li>
-                                                Tambah
-                                            </a>
-                                        </div>
-                                    @endrole
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <?php $i = 1; ?>
-                                @forelse ($cert as $data)
-                                    <div class="row pb-6" style="display: flex; align-items: center; justify-content: center;">
-                                        <div class="col-1">
-                                            <h1 style="font-weight: bolder; text-align: center"><?= $i ?></h1>
-                                        </div>
-                                        <div class="col-7">
-                                            <h5 style="font-weight: bold">{{ $data->cert_title }}</h5>
-                                            <h6 style="font-style: italic">{{ $data->description }}</h6>
-                                            <span style="font-weight: 700">{{ $data->expired_date }}</span>
-                                        </div>
-                                        <div class="col-4" style="text-align: right; vertical-align: middle">
-                                            <form method="POST" action="{{ route('delete.cert', $data->id) }}">
-                                                <a class="btn btn-success text-white" data-bs-target="#ubahSertifikasi-{{ $data->id }}" data-bs-toggle="modal">
-                                                    <li class="fa fa-edit"></li>
-                                                </a>
-                                                <a class="btn btn-danger text-white" data-bs-target="#tambahSertifikasi" data-bs-toggle="modal">
-                                                    <li class="fa fa-trash"></li>
-                                                </a>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <?php $i++; ?>
-                                @empty
-                                    <div class="row pb-6" style="display: flex; align-items: center; justify-content: center;">
-                                        <h3>-No Data-</h3>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-                    @endrole
                 </div>
             </div>
             <!-- ROW-1 CLOSED -->
@@ -252,75 +204,6 @@
         </div>
         <!--CONTAINER CLOSED -->
     </div>
-
-    @role('marketing-admin|marketing-admin|operation-admin|inspektor|manager|koordinator|kepala-produksi')
-        <div class="modal fade" id="tambahSertifikasi">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content modal-content-demo">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Tambah Sertifikasi</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addCert" method="POST" action="{{ route('store.cert') }}" class="from-prevent-multiple-submits">
-                            @csrf
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="exampleInputname">Certification Title</label>
-                                    <input type="text" class="form-control" id="cert_title" name="cert_title" placeholder="Nama Sertifikat" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputname">Description</label>
-                                    <textarea class="form-control" id="description" name="description" placeholder="Deskripsi" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="expired_date" class="form-label">Expired Date</label>
-                                    <input type="text" class="form-control fc-datepicker" id="expired_date" name="expired_date" placeholder="Enter Expired Date" required>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary from-prevent-multiple-submits" form="addCert">Submit</button> <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @foreach ($cert as $data)
-            <div class="modal fade" id="ubahSertifikasi-{{ $data->id }}">
-                <div class="modal-dialog" role="sertifikasi">
-                    <div class="modal-content modal-content-demo">
-                        <div class="modal-header">
-                            <h6 class="modal-title">Edit Sertifikasi</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editCert" method="POST" action="{{ route('update.cert', $data->id) }}">
-                                @csrf
-                                @method('PUT')
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputname">Nama Sertifikat</label>
-                                        <input type="text" class="form-control" id="cert_title" name="cert_title" placeholder="Nama Sertifikat" value="{{ $data->cert_title }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputname">Deskripsi</label>
-                                        <textarea class="form-control" id="description" name="description" placeholder="Deskripsi">{{ $data->description }}</textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="expired_date" class="form-label">Expired Date</label>
-                                        <input type="text" class="form-control fc-datepicker" id="expired_date" autocomplete="off" name="expired_date" placeholder="Enter Expired Date" value="{{ $data->expired_date }}">
-                                    </div>
-                                </div>
-                        </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" form="editCert">Submit</button> <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endrole
 
 @endsection
 @section('custom-js')

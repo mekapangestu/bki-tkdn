@@ -34,10 +34,10 @@ class UserController extends Controller
         if(is_null($detail)){
             $detail = new UserDetail();
         }
-        $type = Category::all();
-        $cert = Certification::where('user_id', Auth::user()->id)->get();
+
+        $title = "Profile";
         // dd($detail);
-        return view('admin.profile', compact('user', 'type', 'detail', 'cert'));
+        return view('admin.profile', compact('user', 'detail', 'title'));
     }
 
     public function updateProfile(Request $request, $id){
@@ -92,7 +92,9 @@ class UserController extends Controller
         $list = User::all();
         $roles = Role::all();
 
-        return view('admin.users.index', compact('list', 'roles'));
+        $title = "User Management";
+
+        return view('admin.users.index', compact('list', 'roles', 'title'));
     }
 
     public function create()
@@ -187,93 +189,5 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return redirect('user')->with('error', $e->getMessage());
         }
-    }
-
-    public function storeCertification(Request $request){
-        try {
-            $cert = new Certification();
-    
-            $cert->cert_title = $request->cert_title;
-            $cert->description = $request->description;
-            $cert->expired_date = $request->expired_date;
-            $cert->user_id = Auth::user()->id;
-
-            $cert->save();
-
-            return redirect('profile')->with('success', 'Certification has been created');
-        } catch (\Exception $e) {
-            return redirect('profile')->with('error', $e->getMessage());
-        }
-    }
-
-    public function updateCertification(Request $request){
-        try {
-            $cert = Certification::find($request->id);
-    
-            $cert->cert_title = $request->cert_title;
-            $cert->description = $request->description;
-            $cert->expired_date = $request->expired_date;
-            $cert->user_id = Auth::user()->id;
-
-            $cert->update();
-
-            return redirect('profile')->with('success', 'Certification has been updated');
-        } catch (\Exception $e) {
-            return redirect('profile')->with('error', $e->getMessage());
-        }
-    }
-
-    public function deleteCertification(Request $request){
-        try {
-            $cert = Certification::find($request->id);
-
-            $cert->delete();
-
-            return redirect('profile')->with('success', 'Certification has been deleted');
-        } catch (\Exception $e) {
-            return redirect('profile')->with('error', $e->getMessage());
-        }
-    }
-
-
-    public function getDetail($id, Request $request)
-    {
-        if ($request->ajax()) {
-            $data = User::with('detail')->find($id);
-
-            return response()->json($data, 200);    
-        }
-    }
-
-    public function previewUser($name){
-        $user = User::where('name', $name)->firstOrFail();
-        $cert = Certification::where('user_id', $user->id)->get();
-        // dd($user);
-        return response()->json([
-            'user' => $user,
-            'cert' => $cert
-        ]);
-    }
-
-    public function viewUserSign($id){
-        $id = Hashids::decode($id);
-        abort_unless($id, 404);
-
-        $user = User::findOrFail($id[0]);
-        $details = UserDetail::where('user_id', $user->id);
-        return view('preview-user', compact('user'));
-        
-    }
-    
-    public function viewApproverSign($id){
-        $id = Hashids::decode($id);
-        abort_unless($id, 404);
-
-        $user = User::findOrFail($id[0]);
-        $coi = Coi::findOrFail($id[1]);
-        // dd($coi);
-        $details = UserDetail::where('user_id', $user->id)->first();
-        // dd($details);
-        return view('preview-approver', compact('user', 'id', 'coi', 'details'));
     }
 }

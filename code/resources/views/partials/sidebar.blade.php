@@ -19,22 +19,27 @@
                     <h3>Dashboard</h3>
                 </li>
                 @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi|guest')
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('dashboard') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
-                </li>
-                @endrole
-                <li class="sub-category">
-                    <h3>Main</h3>
-                </li>
-                @role('superadmin|administrator|assessor|guest')
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Request List</span></a>
-                </li>
-                @endrole
-                @role('superadmin|administrator|qc-officer|kepala-verifikasi|assessor')
-                <li class="slide">
-                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Verification Process</span></a>
-                </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('dashboard') }}"><i class="side-menu__icon lnr lnr-pie-chart"></i><span class="side-menu__label">Dashboard</span></a>
+                    </li>
+                    <li class="sub-category">
+                        <h3>Main</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index') }}"><i class="side-menu__icon fe fe-layers"></i><span class="side-menu__label">List Permohonan</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-clipboard"></i><span class="side-menu__label">Proses Verifikasi</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.persetujuan') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Persetujuan Pemohon</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.tracking') }}"><i class="side-menu__icon fe fe-search"></i><span class="side-menu__label">Tracking Review</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.terbit') }}"><i class="side-menu__icon fe fe-file-text"></i><span class="side-menu__label">Sertifikat Terbit</span></a>
+                    </li>
                 @endrole
                 @role('superadmin')
                     <li class="sub-category">
@@ -47,10 +52,10 @@
                         <a class="side-menu__item has-link" href="{{ route('role.index') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Role Mgt.</span></a>
                     </li>
                     <li>
-                        <a class="side-menu__item has-link" href="{{ route('document-receipt.index') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Logs</span></a>
+                        <a class="side-menu__item has-link" href="{{ route('logs.index') }}"><i class="side-menu__icon fe fe-list"></i><span class="side-menu__label">Logs</span></a>
                     </li>
                     <li>
-                        <a class="side-menu__item has-link" href="{{ route('whitelist-ip.index') }}"><i class="side-menu__icon fe fe-user-check"></i><span class="side-menu__label">Whitelist IP</span></a>
+                        <a class="side-menu__item has-link" href="{{ route('whitelist-ip.index') }}"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Whitelist IP</span></a>
                     </li>
                 @endrole
             </ul>

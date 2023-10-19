@@ -16,7 +16,9 @@ class WhitelistIpController extends Controller
     {
         $data = WhitelistIp::all();
 
-        return view('whitelist_ip', compact('data'));
+        $title = "IP Whitelist";
+
+        return view('whitelist_ip', compact('data', 'title'));
     }
 
     /**

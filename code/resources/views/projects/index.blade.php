@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', $title )
 @section('content')
 <style>
     td.details-control {
@@ -44,7 +44,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">TKDN - Verification Process</h1>
+                <h1 class="page-title">TKDN - {{ $title }}</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>

@@ -17,7 +17,9 @@ class DocumentReceiptController extends Controller
     {
         $data = DocumentReceipt::with('project')->orderByDesc('created_at')->get();
 
-        return view('logs-siinas', compact('data'));
+        $title = "Logs";
+
+        return view('logs-siinas', compact('data', 'title'));
     }
 
     /**

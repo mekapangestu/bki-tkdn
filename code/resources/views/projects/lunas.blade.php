@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', $title)
 @section('content')
 <style>
     .leaflet-sidebar{
@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="col-xl-3 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Tanggal Pelunasan</label>
                                             <input class="form-control fc-datepicker" type="text" autocomplete="off" name="tgl_pelunasan" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>

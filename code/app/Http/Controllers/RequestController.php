@@ -45,7 +45,9 @@ class RequestController extends Controller
             ->whereIn('stage', [1, 2])
             ->get();
 
-        return view('requests.index', compact('data'));
+        $title = "List Permohonan";
+
+        return view('requests.index', compact('data', 'title'));
     }
 
     public function verifyAdmin($id)
@@ -53,8 +55,10 @@ class RequestController extends Controller
         $project = Projects::with('files', 'orders')->find($id);
 
         $data = $project->orders->siinas_data;
+        
+        $title = "Verifikasi Data";
 
-        return view('requests.verify-admin', compact('project', 'data'));
+        return view('requests.verify-admin', compact('project', 'data', 'title'));
     }
 
     public function verifyAdminSubmit(Request $request, $id)
@@ -74,7 +78,7 @@ class RequestController extends Controller
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
             $log->notes = $request->alasan_tolak;
-            $log->status = $project->statuses->name;
+            $log->status = $project->stageStatus->name;
             $log->save();
     
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
@@ -146,7 +150,9 @@ class RequestController extends Controller
         $data = Projects::find($id);
         $user = User::all();
 
-        return view('requests.assessor', compact('data', 'user'));
+        $title = "Pilih Assessor & QC";
+
+        return view('requests.assessor', compact('data', 'user', 'title'));
     }
 
     public function selectAssessorSubmit(Request $request, $id)
@@ -224,7 +230,9 @@ class RequestController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('requests.upload-document', compact('data', 'project'));
+        $title = "Lengkapi Dokumen";
+
+        return view('requests.upload-document', compact('data', 'project', 'title'));
     }
 
     public function uploadDocumentsSubmit(Request $request)
@@ -274,7 +282,7 @@ class RequestController extends Controller
             $log->project_id = $request->project_id;
             $log->causer = auth()->user()->name;
             $log->notes = '';
-            $log->status = $projects->statuses->name;
+            $log->status = $projects->stageStatus->name;
             $log->save();
 
             $projects->status = 103;
@@ -307,7 +315,9 @@ class RequestController extends Controller
 
         // dd($data);
 
-        return view('requests.detail', compact('project', 'data'));
+        $title = "Detail";
+
+        return view('requests.detail', compact('project', 'data', 'title'));
 
         // return view('projects.detail', compact('data'));
     }
@@ -321,7 +331,9 @@ class RequestController extends Controller
 
         $kelompok_barang = KelompokBarang::all();
 
-        return view('requests.verify', compact('project', 'data', 'kelompok_barang'));
+        $title = "Verifikasi Kelengkapan Dokumen";
+
+        return view('requests.verify', compact('project', 'data', 'kelompok_barang', 'title'));
     }
 
     public function assessorVerifySubmit(Request $request, $id)
@@ -366,7 +378,7 @@ class RequestController extends Controller
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
             $log->notes = '';
-            $log->status = $project->statuses->name;
+            $log->status = $project->stageStatus->name;
             $log->save();
 
             $admin = User::find(2);
@@ -395,7 +407,9 @@ class RequestController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('requests.verify-admin-final', compact('project', 'data'));
+        $title = "Approval Permohonan Verifikasi";
+
+        return view('requests.verify-admin-final', compact('project', 'data', 'title'));
     }
 
     public function verifyAdminFinalSubmit(Request $request, $id)
@@ -467,7 +481,7 @@ class RequestController extends Controller
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
             $log->notes = $request->note;
-            $log->status = $project->statuses->name;
+            $log->status = $project->stageStatus->name;
             $log->save();
 
             DB::commit();
