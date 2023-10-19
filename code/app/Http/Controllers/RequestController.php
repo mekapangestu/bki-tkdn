@@ -59,7 +59,7 @@ class RequestController extends Controller
     public function verifyAdminSubmit(Request $request, $id)
     {
         DB::beginTransaction();
-        // try {
+        try {
             $project = Projects::with('data')->find($id);
             if ($request->action == 4) {
                 $project->status = 101;
@@ -125,10 +125,10 @@ class RequestController extends Controller
             }
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
-        // } catch (\Throwable $th) {
-        //     DB::rollBack();
-        //     return redirect('requests')->with('success', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('requests')->with('success', $th->getMessage());
+        }
     }
 
     public function selectAssessor($id)
