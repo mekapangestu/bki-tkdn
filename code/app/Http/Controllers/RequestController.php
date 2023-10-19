@@ -117,8 +117,8 @@ class RequestController extends Controller
                     'greeting' => 'Hi ' . $user->name . ',',
                     'body' => 'Permohonan anda telah ditolak dengan alasan:',
                     'thanks' => $request->alasan_tolak,
-                    'actionText' => '',
-                    'actionURL' => ''
+                    'actionText' => null,
+                    'actionURL' => null
                 ];
         
                 $user->notify(new ProjectEmailNotification($details));
