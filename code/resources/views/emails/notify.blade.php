@@ -108,7 +108,7 @@
 
 <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
     <!-- HIDDEN PREHEADER TEXT -->
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. </div>
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> Information </div>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <!-- LOGO -->
         <tr>
@@ -189,7 +189,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;"> <br>
-                            <p style="margin: 0;">If these emails get annoying, please feel free to <a href="#" target="_blank" style="color: #111111; font-weight: 700;">unsubscribe</a>.</p>
+                            <p style="margin: 0;">DISCLAIMER: Perhatian e-Mail ini (termasuk seluruh lampirannya, bila ada) hanya ditunjukan kepada penerima yang tercantum di atas. Jika anda bukan penerima yang dituju, maka Anda tidak diperkenankan untuk menyimpan, menyebarkan, menggandakan, mendistribusikan, atau memanfaatkan e-Mail ini beserta seluruh lampirannya. Jika anda secara tidak sengaja menerima e-Mail ini, mohon kerjasamanya untuk segera memberitahukan ke alamat e-Mail pengirim serta menghapus e-Mail ini beserta seluruh lampirannya. Anda juga harus memeriksa e-Mail ini beserta lampirannya untuk keberadaan virus. Kami tidak bertanggung jawab atas kerugian yang di timbulkan oleh virus yang ditularkan melalui e-Mail ini.</p>
                         </td>
                     </tr>
                 </table>
