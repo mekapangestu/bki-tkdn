@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Qcs;
 use App\Models\User;
 use App\Traits\Util;
@@ -16,8 +17,8 @@ use App\Models\DocumentReceipt;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ProjectNotification;
 use App\Notifications\ProjectEmailNotification;
@@ -68,6 +69,13 @@ class RequestController extends Controller
             }
             $project->status_siinas = $request->action;
             $project->save();
+
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->alasan_tolak;
+            $log->status = $project->statuses->name;
+            $log->save();
     
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
             $payload = [
@@ -261,6 +269,14 @@ class RequestController extends Controller
             // }
 
             $projects = Projects::find($request->project_id);
+
+            $log = new Log();
+            $log->project_id = $request->project_id;
+            $log->causer = auth()->user()->name;
+            $log->notes = '';
+            $log->status = $projects->statuses->name;
+            $log->save();
+
             $projects->status = 103;
             $projects->save();
             foreach ($projects->asesors as $value) {
@@ -346,6 +362,13 @@ class RequestController extends Controller
                 }
             }
 
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = '';
+            $log->status = $project->statuses->name;
+            $log->save();
+
             $admin = User::find(2);
             $user = User::find($project->user_id);
 
@@ -383,9 +406,23 @@ class RequestController extends Controller
     
             $project = Projects::with('data', 'files')->find($id);
             $project->status_siinas = $status;
-            if ($status == 0) {
+            if ($status == 0 || $status == 2) {
                 $project->status = 103;
                 $project->save();
+
+                $user = User::find($project->user_id);
+                $details = [
+                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
+                    'line' => $request->note,
+                    'actionText' => null,
+                    'actionURL' => null
+                ];
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Permohonan TKDN");
+                    $message->to($user->email);
+                });
+
             } else {
                 $project->status = 200;
                 $project->stage = 2;
@@ -425,6 +462,14 @@ class RequestController extends Controller
     
                 $documentReceipt->save();
             }
+
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->note;
+            $log->status = $project->statuses->name;
+            $log->save();
+
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {

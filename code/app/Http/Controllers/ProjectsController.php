@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Qcs;
 use App\Models\Tkdn;
 use App\Models\User;
@@ -288,6 +289,13 @@ class ProjectsController extends Controller
             $project->status = 201;
             $project->save();
 
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->note;
+            $log->status = $project->stageStatus->name;
+            $log->save();
+
             // $project->qc->qc_status = null;
             // $project->qc->save();
 
@@ -449,6 +457,13 @@ class ProjectsController extends Controller
     
                 $asesor->notify(new ProjectNotification($details));
             }
+
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->note;
+            $log->status = $project->stageStatus->name;
+            $log->save();
     
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
@@ -561,6 +576,13 @@ class ProjectsController extends Controller
                     $user->notify(new ProjectNotification($details));
                 }
             }
+
+            $log = new Log();
+            $log->project_id = $id;
+            $log->causer = auth()->user()->name;
+            $log->notes = $request->note;
+            $log->status = $project->stageStatus->name;
+            $log->save();
 
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');

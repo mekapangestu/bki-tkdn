@@ -92,4 +92,9 @@ class Projects extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function processLogs()
+    {
+        return $this->hasMany(Log::class, 'project_id', 'id');
+    }
 }

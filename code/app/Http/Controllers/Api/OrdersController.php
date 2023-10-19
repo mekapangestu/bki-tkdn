@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Log;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Orders;
@@ -47,11 +48,11 @@ class OrdersController extends Controller
     {
         DB::beginTransaction();
         try {
-            $project = Projects::where('nib', $request->get('nib'))->first();
-            // dd($project);
+            $user = User::firstWhere('email', $request->get('email_cp'));
+            $project = Projects::where('user_id', $user->id)->firstWhere('nib', $request->get('nib'));
+
             if ($project) {
-                $user = User::find($project->user_id);
-                $no_berkas = Projects::where('no_berkas', $request->get('no_berkas'))->first();
+                $no_berkas = Projects::firstWhere('no_berkas', $request->get('no_berkas'));
                 if ($no_berkas) {
                     $project->update([
                         "nib" => $request->get('nib'),
@@ -120,6 +121,13 @@ class OrdersController extends Controller
                 //     $message->to($request->get('email_cp'));
                 // });
             }
+
+            $log = new Log();
+            $log->project_id = $project->id;
+            $log->causer = 'Siinas';
+            $log->notes = '';
+            $log->status = 'Permohonan Baru';
+            $log->save();
             
             Orders::create([
                 'siinas_data' => $request->all(),
@@ -566,7 +574,7 @@ class OrdersController extends Controller
                     'actionURL' => $request->get('url_sertifikat_terbit')
                 ];
 
-                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                Mail::send('emails.notify', $project, function ($message) use ($user) {
                     $message->from('no-reply@site.com', "Permohonan TKDN");
                     $message->subject("Sertifikat TKDN");
                     $message->to($user->email);

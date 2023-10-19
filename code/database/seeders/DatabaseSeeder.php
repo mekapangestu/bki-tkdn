@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusesTableSeeder::class);
         $this->call(KelompokBarangTableSeeder::class);
         $this->call(StageStatusTableSeeder::class);
+        $this->call(StatusesUpdateTableSeeder::class);
     }
 }

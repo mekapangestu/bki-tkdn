@@ -75,6 +75,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
+                                        <th class="border-bottom-0 filter"></th>
                                         <th class="border-bottom-0 filter">No Berkas</th>
                                         <th class="border-bottom-0 filter">Nama Perusahaan</th>
                                         <th class="border-bottom-0 filter">Penanggung Jawab</th>
@@ -100,6 +101,48 @@
                                             Tanggal Expire : {{$item->projectMeta?->tgl_expire}}<br>
                                         ">
                                             <td class="details-control"></td>
+                                            <td style="vertical-align: middle;">
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="fa fa-history" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">History</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>No</th>
+                                                                        <th>Status</th>
+                                                                        <th>User</th>
+                                                                        <th>Date</th>
+                                                                        <th>Note</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($item->processLogs as $log)
+                                                                        <tr>
+                                                                            <td>{{$loop->iteration}}</td>
+                                                                            <td>{{$log->status}}</td>
+                                                                            <td>{{$log->causer}}</td>
+                                                                            <td>{{$log->created_at->setTimezone('Asia/Jakarta')->format('d F Y H:i:s')}}</td>
+                                                                            <td>{{$log->notes}}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td>{{ $item->no_berkas }}</td>
                                             <td>{{ $item->nama_perusahaan }}</td>
                                             <td>{{ $item->nama_cp }}</td>

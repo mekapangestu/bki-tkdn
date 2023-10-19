@@ -175,7 +175,7 @@
                             <div class="dropdown  d-flex notifications">
                                     <a class="nav-link icon" data-bs-toggle="dropdown">
                                         <i class="fe fe-bell"></i>
-                                        @if (auth()->user()->unreadNotifications->count())
+                                        @if (auth()->user()->notifications->count())
                                             <span class=" pulse"></span>
                                         @endif
                                     </a>
@@ -187,8 +187,8 @@
                                             </div>
                                         </div>
                                         <div class="notifications-menu" id="notification">
-                                            @forelse (auth()->user()->unreadNotifications->take(4) as $item)
-                                                <a class="dropdown-item d-flex" href="{{ route('notif.markasread', $item->id) }}">
+                                            @forelse (auth()->user()->notifications->sortBy('updated_at')->take(3) as $item)
+                                                <a class="dropdown-item d-flex" href="{{ route('notif.markasread', $item->id) }}" style="{{$item->read_at ? 'opacity: 0.3;':''}}">
                                                     <div class="me-3 notifyimg  bg-primary brround box-shadow-primary">
                                                         <i class="fe fe-mail"></i>
                                                     </div>
