@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', $title)
 @section('content')
     <style>
         .leaflet-sidebar {
@@ -35,7 +35,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">TKDN - Dashboard</h1>
+                <h1 class="page-title">TKDN - {{ $title }}</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -60,7 +60,7 @@
                     <!-- ROW-1 -->
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                            <h5>Rekapitulasi Permohonan Perhitungan TKDN</h5>
+                            <h5>Tahap 1</h5>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                                     <div class="card overflow-hidden">
@@ -68,7 +68,7 @@
                                             <div class="d-flex">
                                                 <div class="mt-2">
                                                     <h6 class="">Total Permohonan</h6>
-                                                    <h2 class="mb-0 number-font">{{ $projects }}</h2>
+                                                    <h2 class="mb-0 number-font">{{ $total }}</h2>
                                                 </div>
                                                 <div class="ms-auto">
                                                     <div class="chart-wrapper mt-1">
@@ -79,24 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                    <div class="card overflow-hidden">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="mt-2">
-                                                    <h6 class="">Total Produk</h6>
-                                                    <h2 class="mb-0 number-font">{{ $orders }}</h2>
-                                                </div>
-                                                <div class="ms-auto">
-                                                    <div class="chart-wrapper mt-1">
-                                                        <canvas id="leadschart" class="h-8 w-9 chart-dropshadow"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi')
+                                {{-- @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi')
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                                     <div class="card overflow-hidden">
                                         <div class="card-body">
@@ -114,10 +97,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endrole
+                                @endrole --}}
                             </div>
                             <br>
-                            <h5>Rekapitulasi Status Permohonan</h5>
+                            <h5>Tahap 2</h5>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                                     <div class="card overflow-hidden">
@@ -188,6 +171,234 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
+                            <h5>Tahap 3</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Verifikasi Lapangan</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage3 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 4</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total QC</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage4 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 5</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Persetujuan Pemohon</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage5 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 6</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Pembuatan Surat Pengantar</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage6 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 7</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Review Kesesuaian Dokumen Oleh Pusat P3DN</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage7 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 8</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Penetapan Jadwal Review</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage8 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 9</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Review Oleh Pusat P3DN dan LVI</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage9 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 10</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Proses Sanggah</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage10 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 11</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Review Setelah Sanggah</h6>
+                                                    <h2 class="mb-0 number-font">{{ $stage11 }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5>Tahap 3</h5>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Terbit Sertifikat</h6>
+                                                    <h2 class="mb-0 number-font">{{ $terbit }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Pelunasan Pemohon</h6>
+                                                    <h2 class="mb-0 number-font">{{ $lunas }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
                         </div>
                     </div>
                     <!-- ROW-1 END -->

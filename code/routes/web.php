@@ -64,6 +64,9 @@ Route::group(['middleware' => ['auth']], function () {
     
     // Proses Verifikasi
     Route::resource('projects', ProjectsController::class);
+    Route::get('/persetujuan-pemohon', [ProjectsController::class, 'persetujuanPemohonList'])->name('projects.persetujuan');
+    Route::get('/tracking-review', [ProjectsController::class, 'TrackingReviewList'])->name('projects.tracking');
+    Route::get('/sertifikat-review', [ProjectsController::class, 'sertifikatTerbitList'])->name('projects.terbit');
     Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
@@ -93,7 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('client', ClientController::class)->middleware('role:superadmin');
 
-    Route::resource('document-receipt', DocumentReceiptController::class)->middleware('role:superadmin');
+    Route::resource('logs', DocumentReceiptController::class)->middleware('role:superadmin');
     Route::resource('whitelist-ip', WhitelistIpController::class)->middleware('role:superadmin');
 });
 

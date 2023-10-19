@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', $title)
 @section('content')
 <style>
     .leaflet-sidebar{
