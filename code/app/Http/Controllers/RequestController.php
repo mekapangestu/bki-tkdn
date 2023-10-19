@@ -113,15 +113,17 @@ class RequestController extends Controller
 
             if ($project->status == 0) {
                 $details = [
-                    'subject' => 'Permohonan TKDN',
-                    'greeting' => 'Hi ' . $user->name . ',',
-                    'body' => 'Permohonan anda telah ditolak dengan alasan:',
-                    'thanks' => $request->alasan_tolak,
+                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ditolak dengan alasan:',
+                    'line' => $request->alasan_tolak,
                     'actionText' => null,
                     'actionURL' => null
                 ];
-        
-                $user->notify(new ProjectEmailNotification($details));
+
+                Mail::send('emails.notify', $details, function ($message) use ($project) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Permohonan TKDN");
+                    $message->to($project->user->email);
+                });
             }
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
@@ -195,7 +197,7 @@ class RequestController extends Controller
             }
 
             Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
-                $message->from('no-reply@site.com', "Site name");
+                $message->from('no-reply@site.com', "Permohonan TKDN");
                 $message->subject("Informasi Akun Aplikasi TKDN BKI");
                 $message->to($project->user->email);
             });

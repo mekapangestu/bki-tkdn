@@ -560,16 +560,20 @@ class OrdersController extends Controller
                 ];
 
                 $project = [
-                    'subject' => 'Sertifikat TKDN',
-                    'greeting' => 'Hi ' . $user->name . ',',
-                    'body' => 'Sertifikat TKDN anda telah terbit',
-                    'thanks' => 'Mohon segera melakukan pembayaran.',
+                    'body' => 'Hi ' . $user->name . ', Sertifikat TKDN anda telah terbit',
+                    'line' => 'Mohon segera melakukan pembayaran.',
                     'actionText' => 'Lihat Sertifikat',
                     'actionURL' => $request->get('url_sertifikat_terbit')
                 ];
 
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Sertifikat TKDN");
+                    $message->to($user->email);
+                });
+
                 $admin->notify(new ProjectNotification($details));
-                $user->notify(new ProjectEmailNotification($project));
+                // $user->notify(new ProjectEmailNotification($project));
 
                 return response()->json([
                     "status" => $request->get('status'),
