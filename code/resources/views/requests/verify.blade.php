@@ -355,7 +355,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($project->files as $file)
-                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                    @if ($item->id_produk == $file->id_produk)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $file->label }}</td>
@@ -386,7 +386,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($project->foto as $file)
-                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                    @if ($item->id_produk == $file->id_produk)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $file->label }}</td>
@@ -402,52 +402,7 @@
                                         </table> --}}
                                     </div>
                                     <div class="row">
-                                        <div class="col-8">
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Standar</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="standar[{{ $item->id_produk }}]" placeholder="Enter Standar" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Produsen</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="produsen[{{ $item->id_produk }}]" placeholder="Enter Produsen" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Sertifikat Produk</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{ $item->id_produk }}]" placeholder="Enter Sertifikat Produk" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
-                                                    {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
-                                                    <select class="form-control select2" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
-                                                        <option></option>
-                                                        @foreach ($kelompok_barang as $option)
-                                                            <option>{{ $option->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Merk</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="merk[{{ $item->id_produk }}]" placeholder="Enter Merk" value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="spk_no" class="form-label">Tipe</label>
-                                                    <input type="text" class="form-control" autocomplete="off" name="tipe[{{ $item->id_produk }}]" placeholder="Enter Tipe" value="">
-                                                </div>
-                                            </div>
-    
-                                        </div>
-                                        <div class="col-4">
+                                        <div class="col-12">
                                             <div class="card custom-card">
                                                 <div class="card-header border-bottom">
                                                     <h3 class="card-title">Foto Produk</h3>
@@ -455,7 +410,7 @@
                                                 <div class="card-body">
                                                     <ul class="lightgallery list-unstyled row">
                                                         @foreach ($project->foto as $file)
-                                                            @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                            @if ($item->id_produk == $file->id_produk)
                                                                 <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
                                                                     <a href="javascript:void(0)">
                                                                         <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">

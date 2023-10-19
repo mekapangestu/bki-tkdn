@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ProjectNotification;
+use App\Notifications\ProjectEmailNotification;
 
 class OrdersController extends Controller
 {
@@ -550,6 +551,7 @@ class OrdersController extends Controller
                 $meta->save();
 
                 $admin = User::find(2);
+                $user = User::find($project->user_id);
 
                 $details = [
                     'from' => 'Siinas',
@@ -557,7 +559,17 @@ class OrdersController extends Controller
                     'actionURL' => route('projects.index', $project->id)
                 ];
 
+                $project = [
+                    'subject' => 'Sertifikat TKDN',
+                    'greeting' => 'Hi ' . $user->name . ',',
+                    'body' => 'Sertifikat TKDN anda telah terbit',
+                    'thanks' => 'Mohon segera melakukan pembayaran.',
+                    'actionText' => 'Lihat Sertifikat',
+                    'actionURL' => $request->get('url_sertifikat_terbit')
+                ];
+
                 $admin->notify(new ProjectNotification($details));
+                $user->notify(new ProjectEmailNotification($project));
 
                 return response()->json([
                     "status" => $request->get('status'),

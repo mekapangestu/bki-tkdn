@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ProjectNotification;
+use App\Notifications\ProjectEmailNotification;
 
 class RequestController extends Controller
 {
@@ -107,8 +108,21 @@ class RequestController extends Controller
                 'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
                 'actionURL' => route('requests.index', $project->id)
             ];
-    
+
             $user->notify(new ProjectNotification($details));
+
+            if ($project->status == 0) {
+                $details = [
+                    'subject' => 'Permohonan TKDN',
+                    'greeting' => 'Hi ' . $user->name . ',',
+                    'body' => 'Permohonan anda telah ditolak dengan alasan:',
+                    'thanks' => $request->alasan_tolak,
+                    'actionText' => '',
+                    'actionURL' => ''
+                ];
+        
+                $user->notify(new ProjectEmailNotification($details));
+            }
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {
@@ -218,10 +232,10 @@ class RequestController extends Controller
 
 
             foreach ($request->file_name as $k => $files) {
-                $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, Str::headline($k) . '-Foto', 'foto');
+                $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
-                        $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, Str::headline($k) . '-' . $value, 'project');
+                        $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, $value, 'project', $k);
 
                         $upload = Upload::find($singleUpload->id);
                         $upload->number = $request->number[$k][$key];
@@ -328,19 +342,6 @@ class RequestController extends Controller
                 if (isset($request->sptjm)) {
                     $this->singleUpload(1, $request->file('sptjm'), $id, 'SPTJM', 'internal');
                 }
-
-                foreach ($request->standar as $key => $value) {
-                    $additional = new ProjectAdditional();
-                    $additional->project_id = $id;
-                    $additional->id_produk = $key;
-                    $additional->standar = $value;
-                    $additional->produsen = $request->produsen[$key];
-                    $additional->sertifikat_produk = $request->sertifikat_produk[$key];
-                    $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$key];
-                    $additional->merk = $request->merk[$key];
-                    $additional->tipe = $request->tipe[$key];
-                    $additional->save();
-                }
             }
 
             $admin = User::find(2);
@@ -397,7 +398,7 @@ class RequestController extends Controller
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                     "status" => $status,
-                    "alasan_tolak" => $status == 3 ? $project->data->asesor_note : '',
+                    "alasan_tolak" => $project->note,
                     "url_sptjm" => $path ? asset('storage/' . $path) : '-',
                     "tgl_bast" => $project->bast_date
                 ];

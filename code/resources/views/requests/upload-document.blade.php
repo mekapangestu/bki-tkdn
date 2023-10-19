@@ -318,7 +318,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($project->files as $file)
-                                                @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                @if ($item->id_produk == $file->id_produk)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
@@ -343,7 +343,7 @@
                                         <div class="card-body">
                                             <ul class="lightgallery list-unstyled row">
                                                 @foreach ($project->foto as $file)
-                                                    @if (Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                    @if ($item->id_produk == $file->id_produk)
                                                         <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
                                                             <a href="javascript:void(0)">
                                                                 <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
@@ -468,7 +468,7 @@
                                                 <div class="form-group">
                                                     <label for="spk_no" class="form-label">Upload Foto Produk</label>
                                                     <div class="row">
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->produk }}]" accept="image/*">
+                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->id_produk }}]" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
@@ -478,7 +478,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nama Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="file_name[{{ $item->produk }}][]">
+                                                                <input type="text" class="form-control" name="file_name[{{ $item->id_produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -486,7 +486,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="number[{{ $item->produk }}][]">
+                                                                <input type="text" class="form-control" name="number[{{ $item->id_produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -494,7 +494,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sejak</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->produk }}][]">
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->id_produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -502,7 +502,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sampai</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->produk }}][]">
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->id_produk }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -510,7 +510,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                             <div class="row">
-                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->produk }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->id_produk }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                             </div>
                                                         </div>
                                                     </div>

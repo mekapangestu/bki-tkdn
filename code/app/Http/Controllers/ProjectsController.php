@@ -73,7 +73,9 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        return view('projects.verify2', compact('project', 'data'));
+        $kelompok_barang = KelompokBarang::all();
+
+        return view('projects.verify2', compact('project', 'data', 'kelompok_barang'));
     }
 
     public function draf($id)
@@ -193,7 +195,7 @@ class ProjectsController extends Controller
 
             // $hasilVerifikasi = PDFMerger::init();
             // $nilaiTkdn = PDFMerger::init();
-            foreach ($request->id_produk as $key => $id_produk) {
+            foreach ($request->id_produk as $id_produk) {
                 Tkdn::updateOrCreate(
                     [
                         'project_id' => $id,
@@ -202,30 +204,44 @@ class ProjectsController extends Controller
                     [
                         'project_id' => $id,
                         'id_produk' => $id_produk,
-                        'nilai_tkdn' => $request->nilai_tkdn[$key],
-                        'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa[$key],
-                        'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan[$key],
+                        'nilai_tkdn' => $request->nilai_tkdn[$id_produk],
+                        'nilai_tkdn_jasa' => $request->nilai_tkdn_jasa[$id_produk],
+                        'nilai_tkdn_gabungan' => $request->nilai_tkdn_gabungan[$id_produk],
                         'status' => $request->status,
                     ]
                 );
+
+                $additional = new ProjectAdditional();
+                $additional->project_id = $id;
+                $additional->id_produk = $id_produk;
+                $additional->standar = $request->standar[$id_produk];
+                $additional->produsen = $request->produsen[$id_produk];
+                $additional->sertifikat_produk = $request->sertifikat_produk[$id_produk];
+                $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$id_produk];
+                $additional->merk = $request->merk[$id_produk];
+                $additional->tipe = $request->tipe[$id_produk];
+                $additional->kd_hs = $request->kd_hs[$id_produk];
+                $additional->spesifikasi = $request->spesifikasi[$id_produk];
+                $additional->kbli = $request->kbli[$id_produk];
+                $additional->save();
 
                 $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
                 if (!File::isDirectory($folderPath)) {
                     File::makeDirectory($folderPath, 0777, true, true);
                 }
 
-                if (isset($request->hasil_verifikasi[$key])) {
-                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$key], $id, Str::headline($key) . '-Draft Laporan Hasil Verifikasi', 'project');
+                if (isset($request->hasil_verifikasi[$id_produk])) {
+                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$id_produk], $id, 'Draft Laporan Hasil Verifikasi', 'project', $id_produk);
                     // $hasilVerifikasi->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
-                if (isset($request->form_nilai_tkdn[$key])) {
-                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$key], $id, Str::headline($key) . '-Draft Form Penghitungan Nilai TKDN', 'project');
+                if (isset($request->form_nilai_tkdn[$id_produk])) {
+                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$id_produk], $id, 'Draft Form Penghitungan Nilai TKDN', 'project', $id_produk);
                     // $nilaiTkdn->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
 
                 if (isset($request->file_name)) {
                     foreach ($request->file_name as $key => $value) {
-                        $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project');
+                        $this->singleUpload(1, $request->file('file')[$key], $request->project_id, $value, 'project', $id_produk);
                     }
                 }
             }
@@ -324,16 +340,16 @@ class ProjectsController extends Controller
                     }
     
                     if (isset($request->hasil_persetujuan[$key])) {
-                        $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, Str::headline($key) . '-Draf Hasil Persetujuan Penamaan Tanda Sah', 'project');
+                        $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project', $id_produk);
                         // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
                     }
                     if (isset($request->laporan_hasil_verifikasi[$key])) {
-                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, Str::headline($key) . '-Laporan Hasil Verifikasi', 'project');
+                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, 'Laporan Hasil Verifikasi','project', $id_produk);
                         // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
                     }
     
                     if (isset($request->form_perhitungan_nilai_tkdn[$key])) {
-                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, Str::headline($key) . '-Form Perhitungan Nilai TKDN', 'project');
+                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, 'Form Perhitungan Nilai TKDN','project', $id_produk);
                     }
     
                     // if (isset($request->file_name)) {
@@ -460,7 +476,7 @@ class ProjectsController extends Controller
                     $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                     $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                     $kbli = $produksi->kbli;
-                    $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('label','ilike', $value->produk.'%')->first()->path ?? '';
+                    $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
                     array_push($produk, [
                         "id_produk" => $value->id_produk,
                         "produk" => $value->produk,
@@ -479,7 +495,7 @@ class ProjectsController extends Controller
                     ]);
                 }
 
-                $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%-Draf Hasil Persetujuan Penamaan Tanda Sah')->first()->path ?? '';
+                $path = Upload::where('request_id', $project->id)->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')->where('id_produk', $value->id_produk)->first()->path ?? '';
 
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
                 $payload = [
@@ -573,8 +589,8 @@ class ProjectsController extends Controller
             $project->save();
     
             // $path = $project->internal_files?->where('label', 'Surat Pengantar Permohonan Jadwal Review')?->first()->path ?? '';
-            $path = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
-            $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Laporan Hasil Verifikasi')->first()->path ?? '';
+            $path = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Surat Pengantar Permohonan Jadwal Review')->first()->path ?? '';
+            $lhv = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Laporan Hasil Verifikasi')->first()->path ?? '';
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap6.php';
             $payload = [
                 "tahap" => "6",
@@ -646,7 +662,7 @@ class ProjectsController extends Controller
                 $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
                 $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
                 $kbli = $produksi->kbli;
-                $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('label', 'ilike', $value->produk . '%')->first()->path ?? '';
+                $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
                 array_push($produk, [
                     "id_produk" => $value->id_produk,
                     "produk" => $value->produk,
@@ -668,9 +684,9 @@ class ProjectsController extends Controller
             // $pathSuratJawaban = $project->internal_files?->where('label', 'Surat Jawaban')?->first()->path ?? '';
             // $pathSuratPenyesuaian = $project->internal_files?->where('label', 'Surat Penyesuaian')?->first()->path ?? '';
             // $pathSuratPendukung = $project->internal_files?->where('label', 'Surat Pendukung')?->first()->path ?? '';
-            $pathSuratJawaban = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Jawaban')->first()->path ?? '';
-            $pathSuratPenyesuaian = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Penyesuaian')->first()->path ?? '';
-            $pathSuratPendukung = Upload::where('request_id', $project->id)->where('label', 'ilike', '%Surat Pendukung%')->pluck('path') ?? [];
+            $pathSuratJawaban = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Surat Jawaban')->first()->path ?? '';
+            $pathSuratPenyesuaian = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Surat Penyesuaian')->first()->path ?? '';
+            $pathSuratPendukung = Upload::where('request_id', $project->id)->where('label', 'ilike', 'Surat Pendukung%')->pluck('path') ?? [];
 
             $url_dok_dukung = [];
             foreach ($pathSuratPendukung as $key => $value) {
