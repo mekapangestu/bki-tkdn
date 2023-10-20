@@ -267,7 +267,7 @@ class OrdersController extends Controller
             $docNumber = (int)$request->get('no_berkas');
             $project = Projects::where('no_berkas', $docNumber)->first();
             if ($project) {
-                $qc = User::find($project->qc->qc);
+                // $qc = User::find($project->qc->qc);
                 $admin = User::find(2);
                 
                 $details = [
@@ -293,7 +293,7 @@ class OrdersController extends Controller
 
                 $log = new Log();
                 $log->project_id = $project->id;
-                $log->causer = auth()->user()->name;
+                $log->causer = 'Siinas';
                 $log->notes = $request->get('alasan_tolak');
                 $log->status = $project->stageStatus->name;
                 $log->save();
