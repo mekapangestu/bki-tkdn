@@ -49,7 +49,7 @@ class OrdersController extends Controller
         DB::beginTransaction();
         try {
             $user = User::firstWhere('email', $request->get('email_cp'));
-            $project = Projects::where('user_id', $user->id)->firstWhere('nib', $request->get('nib'));
+            $project = Projects::where('user_id', $user?->id)->firstWhere('nib', $request->get('nib'));
 
             if ($project) {
                 $no_berkas = Projects::firstWhere('no_berkas', $request->get('no_berkas'));
