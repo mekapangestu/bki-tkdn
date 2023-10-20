@@ -232,7 +232,19 @@ class RequestController extends Controller
 
         $title = "Lengkapi Dokumen";
 
-        return view('requests.upload-document', compact('data', 'project', 'title'));
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+
+        return view('requests.upload-document', compact('data', 'project', 'title', 'assessor', 'qc'));
     }
 
     public function uploadDocumentsSubmit(Request $request)
@@ -313,11 +325,21 @@ class RequestController extends Controller
 
         $data = $project->orders->siinas_data;
 
-        // dd($data);
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
 
         $title = "Detail";
 
-        return view('requests.detail', compact('project', 'data', 'title'));
+        return view('requests.detail', compact('project', 'data', 'title', 'assessor', 'qc'));
 
         // return view('projects.detail', compact('data'));
     }
@@ -333,7 +355,19 @@ class RequestController extends Controller
 
         $title = "Verifikasi Kelengkapan Dokumen";
 
-        return view('requests.verify', compact('project', 'data', 'kelompok_barang', 'title'));
+        $assessor = DB::table('users')
+        ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.contact', 'users.email')
+        ->where('asesors.project_id', $id)
+        ->get();
+
+    $qc = DB::table('users')
+        ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.contact', 'users.email')
+        ->where('qcs.project_id', $id)
+        ->get();
+
+        return view('requests.verify', compact('project', 'data', 'kelompok_barang', 'title', 'assessor', 'qc'));
     }
 
     public function assessorVerifySubmit(Request $request, $id)
@@ -409,7 +443,19 @@ class RequestController extends Controller
 
         $title = "Approval Permohonan Verifikasi";
 
-        return view('requests.verify-admin-final', compact('project', 'data', 'title'));
+        $assessor = DB::table('users')
+        ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.contact', 'users.email')
+        ->where('asesors.project_id', $id)
+        ->get();
+
+    $qc = DB::table('users')
+        ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+        ->select('users.id', 'users.name', 'users.contact', 'users.email')
+        ->where('qcs.project_id', $id)
+        ->get();
+
+        return view('requests.verify-admin-final', compact('project', 'data', 'title', 'assessor', 'qc'));
     }
 
     public function verifyAdminFinalSubmit(Request $request, $id)

@@ -133,9 +133,21 @@ class ProjectsController extends Controller
 
         $kelompok_barang = KelompokBarang::all();
 
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+
         $title = "Upload Draft";
 
-        return view('projects.verify2', compact('project', 'data', 'kelompok_barang', 'title'));
+        return view('projects.verify2', compact('project', 'data', 'kelompok_barang', 'title', 'assessor', 'qc'));
     }
 
     public function draf($id)
@@ -151,9 +163,21 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+
         $title = "QC Perhitungan TKDN";
 
-        return view('projects.tkdn', compact('project', 'data', 'title'));
+        return view('projects.tkdn', compact('project', 'data', 'title', 'qc', 'assessor'));
     }
 
     public function verifyTkdn($id)
@@ -162,9 +186,21 @@ class ProjectsController extends Controller
 
         $data = $project->orders->siinas_data;
 
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+
         $title = "Approval Hasil Perhitungan TKDN";
 
-        return view('projects.verifyTkdn', compact('project', 'data', 'title'));
+        return view('projects.verifyTkdn', compact('project', 'data', 'title', 'qc', 'assessor'));
     }
 
     public function suratPengantar($id)
@@ -193,7 +229,19 @@ class ProjectsController extends Controller
 
         $title = "View Data";
 
-        return view('projects.view', compact('data', 'project', 'title'));
+        $assessor = DB::table('users')
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
+
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
+
+        return view('projects.view', compact('data', 'project', 'title', 'assessor', 'qc'));
     }
 
     public function lunas($id)
@@ -535,7 +583,7 @@ class ProjectsController extends Controller
             $log->notes = $request->note;
             $log->status = $project->stageStatus->name;
             $log->save();
-    
+
             DB::commit();
             return redirect('projects')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {
