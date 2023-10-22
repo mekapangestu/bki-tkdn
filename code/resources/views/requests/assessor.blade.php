@@ -113,7 +113,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                                 <label for="" class="form-label">Asesor</label>
-                                                <select class="form-control select-search" name="asesor[]" multiple required>
+                                                <select class="form-control select-search" name="asesor[]" multiple required data-placeholder="Pilih Asesor">
                                                     @foreach ($user->where('role_id', 3) as $asesor)
                                                         <option value="{{ $asesor->id }}">{{ $asesor->name }}</option>
                                                     @endforeach
@@ -123,7 +123,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                                 <label for="" class="form-label">QC</label>
-                                                <select class="form-control select-search" name="qc[]" multiple required>
+                                                <select class="form-control select-search" name="qc[]" multiple required data-placeholder="Pilih QC">
                                                     @foreach ($user->where('role_id', 6) as $qc)
                                                         <option value="{{ $qc->id }}">{{ $qc->name }}</option>
                                                     @endforeach
