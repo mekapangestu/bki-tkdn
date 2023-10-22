@@ -401,7 +401,7 @@ class RequestController extends Controller
             $asesor->asesor_status = $request->action;
             $asesor->asesor_note = $request->note;
             $asesor->save();
-            if ($request->action == 0 || $request->action == 2) {
+            if ($request->action == 0) {
                 $project->status_siinas = $request->action;
                 $project->status = 102;
                 $project->save();
