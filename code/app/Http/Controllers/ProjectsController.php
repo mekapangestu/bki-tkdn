@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use App\Models\Qcs;
+use App\Models\Kbli;
 use App\Models\Tkdn;
 use App\Models\User;
 use App\Traits\Util;
@@ -132,6 +133,7 @@ class ProjectsController extends Controller
         $data = $project->orders->siinas_data;
 
         $kelompok_barang = KelompokBarang::all();
+        $kbli = Kbli::all();
 
         $assessor = DB::table('users')
             ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
@@ -147,7 +149,7 @@ class ProjectsController extends Controller
 
         $title = "Upload Draft";
 
-        return view('projects.verify2', compact('project', 'data', 'kelompok_barang', 'title', 'assessor', 'qc'));
+        return view('projects.verify2', compact('project', 'data', 'kelompok_barang', 'title', 'assessor', 'qc', 'kbli'));
     }
 
     public function draf($id)

@@ -228,7 +228,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
                                                         {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
-                                                        <select class="form-control select2" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                        <select class="form-control select-search" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
                                                             <option>Pilih Kode Kelompok Barang</option>
                                                             @foreach ($kelompok_barang as $option)
                                                                 <option>{{ $option->name }}</option>
@@ -251,13 +251,13 @@
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode HS</label>
-                                                        {{-- <input type="text" class="form-control" autocomplete="off" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode HS" value=""> --}}
-                                                        <select class="form-control select2" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                        <input type="text" class="form-control" autocomplete="off" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode HS" value="">
+                                                        {{-- <select class="form-control select-search" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
                                                             <option>Pilih Kode HS</option>
                                                             @foreach ($kelompok_barang as $option)
                                                                 <option>{{ $option->name }}</option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
@@ -270,10 +270,10 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">KBLI</label>
                                                         {{-- <input type="text" class="form-control" autocomplete="off" name="kbli[{{ $item->id_produk }}]" placeholder="Enter KBLI" value=""> --}}
-                                                        <select class="form-control select2" name="kbli[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
-                                                            <option>Pilih Kode KBLI</option>
-                                                            @foreach ($kelompok_barang as $option)
-                                                                <option>{{ $option->name }}</option>
+                                                        <select class="form-control select-search" name="kbli[{{ $item->id_produk }}]" data-placeholder="Pilih KBLI">
+                                                            <option></option>
+                                                            @foreach ($kbli as $option)
+                                                                <option value="{{ $option->kode }}">{{ $option->kode }} {{ $option->uraian }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
