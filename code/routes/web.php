@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     // List Permohonan
     Route::resource('requests', RequestController::class);
+    Route::get('/requests/index/tolak', [RequestController::class, 'indexTolak'])->name('requests.index-tolak');
     Route::get('/requests/verify/{id}', [RequestController::class, 'verifyAdmin'])->name('requests.verify-admin');
     Route::post('/requests/verify/{id}', [RequestController::class, 'verifyAdminSubmit'])->name('requests.verify-admin-submit');
     Route::get('/requests/select-assessor/{id}', [RequestController::class, 'selectAssessor'])->name('requests.select-assessor');

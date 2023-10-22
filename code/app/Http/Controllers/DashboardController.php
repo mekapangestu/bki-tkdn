@@ -200,59 +200,95 @@ class DashboardController extends Controller
         } else if (auth()->user()->hasRole('qc')) {
             $total = Projects::with('orders')
                 ->when(auth()->user()->hasRole('qc'), function ($q) {
-                    return $q->where('user_id', '=', auth()->user()->id);
+                    return $q->whereHas('qc', function ($q) {
+                        return $q->where('qc', '=', auth()->user()->id);
+                    });
                 })->count();
 
             $acceptstatus = Projects::where('status_siinas', null)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $accept = Projects::where('status_siinas', 1)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $denied = Projects::where('status_siinas', 0)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $freeze = Projects::where('status_siinas', 3)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $return = Projects::where('status_siinas', 3)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $incomplete = Projects::where('status_siinas', 4)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage3 = Projects::where('stage', 3)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage4 = Projects::where('stage', 4)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage5 = Projects::where('stage', 5)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage6 = Projects::where('stage', 6)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage7 = Projects::where('stage', 7)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage8 = Projects::where('stage', 8)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage9 = Projects::where('stage', 9)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage10 = Projects::where('stage', 10)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $stage11 = Projects::where('stage', 11)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $terbit = Projects::where('stage', 12)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
             $lunas = Projects::where('status', 1210)->when(auth()->user()->hasRole('qc'), function ($q) {
-                return $q->where('user_id', '=', auth()->user()->id);
+                return $q->whereHas('qc', function ($q) {
+                    return $q->where('qc', '=', auth()->user()->id);
+                });
             })->count();
         } else {
             $total = Projects::all()->count();

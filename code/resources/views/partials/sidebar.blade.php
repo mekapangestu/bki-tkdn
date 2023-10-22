@@ -26,7 +26,19 @@
                         <h3>Main</h3>
                     </li>
                     <li class="slide">
-                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index') }}"><i class="side-menu__icon fe fe-layers"></i><span class="side-menu__label">List Permohonan</span></a>
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-layers"></i><span class="side-menu__label">List Permohonan</span><i class="angle fe fe-chevron-right"></i></a>
+                        <ul class="slide-menu">
+                            <li class="slide">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index') }}">
+                                    <span class="side-menu__label">Permohonan Diterima</span>
+                                </a>
+                            </li>
+                            <li class="slide">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('requests.index-tolak') }}">
+                                    <span class="side-menu__label">Permohonan Ditolak</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="slide">
                         <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('projects.index') }}"><i class="side-menu__icon fe fe-clipboard"></i><span class="side-menu__label">Proses Verifikasi</span></a>

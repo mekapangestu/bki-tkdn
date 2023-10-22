@@ -43,9 +43,30 @@ class RequestController extends Controller
                 return $q->where('user_id', '=', auth()->user()->id);
             })
             ->whereIn('stage', [1, 2])
+            ->where('status','!=', 0)
             ->get();
 
-        $title = "List Permohonan";
+        $title = "List Permohonan Diterima";
+
+        return view('requests.index', compact('data', 'title'));
+    }
+
+    public function indexTolak()
+    {
+        $data = Projects::with('statuses', 'logs')
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->whereIn('stage', [1, 2])
+            ->where('status', 0)
+            ->get();
+
+        $title = "List Permohonan Ditolak";
 
         return view('requests.index', compact('data', 'title'));
     }
