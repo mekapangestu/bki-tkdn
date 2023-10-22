@@ -75,6 +75,7 @@
                                                 <th class="border-bottom-0">Nomor Dokumen</th>
                                                 <th class="border-bottom-0">Berlaku Sejak</th>
                                                 <th class="border-bottom-0">Berlaku Sampai</th>
+                                                <th class="border-bottom-0">Version</th>
                                                 <th class="border-bottom-0">Created At</th>
                                                 <th class="border-bottom-0">Updated At</th>
                                                 <th class="border-bottom-0" style="width: 50px">Action</th>
@@ -89,6 +90,7 @@
                                                         <td>{{ $file->number }}</td>
                                                         <td>{{ $file->valid_since }}</td>
                                                         <td>{{ $file->valid_until }}</td>
+                                                        <td>{{ $file->version }}</td>
                                                         <td>{{ $file->created_at }}</td>
                                                         <td>{{ $file->updated_at }}</td>
                                                         <td>

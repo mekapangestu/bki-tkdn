@@ -173,19 +173,19 @@
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_jasa[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_gabungan[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                 </div>
