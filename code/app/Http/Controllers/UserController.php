@@ -87,6 +87,19 @@ class UserController extends Controller
         }
     }
 
+    public function updatePassword(Request $request, $id){
+        try {
+            $model = User::find($id);
+            $model->password = Hash::make($request->password);
+            $model->update();
+            
+            // dd($userDetail);
+            return redirect('profile')->with('success', 'Profile has been updated');
+        } catch (\Exception $e) {
+            return redirect('profile')->with('error', $e->getMessage());
+        }
+    }
+
     public function index()
     {
         $list = User::all();

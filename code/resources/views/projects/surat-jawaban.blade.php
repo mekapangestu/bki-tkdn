@@ -149,16 +149,16 @@
                                     </div>
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
-                                            <label for="" class="form-label">Surat Penyesuaian</label>
-                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_penyesuaian" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                            <label for="" class="form-label">Revisi Laporan Hasil Verifikasi</label>
+                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="surat_penyesuaian" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                         </div>
                                     </div>
                                     <div class="form-upload">
                                         <div class="surat-pendukung">
                                             <div class="form-group">
-                                                <label for="" class="form-label">Surat Pendukung</label>
+                                                <label for="" class="form-label">Dokumen Pendukung Lainnya</label>
                                                 <div class="d-flex justify-content-between">
-                                                    <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                    <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                     <a href="#" class="btn btn-danger remove_field col-1" style="width:100px">Remove</a>
                                                 </div>
                                             </div>
