@@ -487,23 +487,9 @@ class RequestController extends Controller
     
             $project = Projects::with('data', 'files')->find($id);
             $project->status_siinas = $status;
-            if ($status == 0 || $status == 2) {
+            if ($status == 0) {
                 $project->status = 103;
                 $project->save();
-
-                $user = User::find($project->user_id);
-                $details = [
-                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
-                    'line' => $request->note,
-                    'actionText' => null,
-                    'actionURL' => null
-                ];
-                Mail::send('emails.notify', $details, function ($message) use ($user) {
-                    $message->from('no-reply@site.com', "Permohonan TKDN");
-                    $message->subject("Permohonan TKDN");
-                    $message->to($user->email);
-                });
-
             } else {
                 $project->status = 200;
                 $project->stage = 2;
@@ -542,6 +528,20 @@ class RequestController extends Controller
                 }
     
                 $documentReceipt->save();
+            }
+            if (in_array($status, [0,2])) {
+                $user = User::find($project->user_id);
+                $details = [
+                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
+                    'line' => $request->note,
+                    'actionText' => null,
+                    'actionURL' => null
+                ];
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Permohonan TKDN");
+                    $message->to($user->email);
+                });
             }
 
             $log = new Log();
