@@ -235,6 +235,17 @@
                     }
                 });
         }
+        $(function(){
+            var current = location.pathname;
+            $('.side-menu li a').each(function(){
+                var $this = $(this);
+                // if the current path is like this link, make it active
+                if($this.attr('href').indexOf(current) !== -1){
+                    $this.addClass('active');
+                    $this.parents('.slide').addClass('active').addClass('is-expanded');
+                }
+            })
+        })
         $(function() {
             $('.select-search').select2();
 
