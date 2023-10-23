@@ -131,6 +131,40 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card-header">
+                                    <h3 class="card-title">Tipe Produk</h3>
+                                </div>
+                                <div class="card-body">
+                                <div class="form-upload">
+                                <div class="row product_type">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Kode HS</label>
+                                            <input class="form-control" name="kode_hs[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Tipe Produk</label>
+                                            <input class="form-control" name="tipe_produk[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Spesifikasi</label>
+                                            <input class="form-control" name="spesifikasi[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="form-group">
+                                            <label for="spk_no" class="form-label">&nbsp;</label>
+                                            <a href="#" class="btn btn-danger remove_field" style="width:100px">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <a class="add_field_button btn btn-info">Add More</a><br>
+                                </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
@@ -150,4 +184,49 @@
     </div>
 @endsection
 @section('js')
+@endsection
+@section('custom-js')
+    <script>
+        $(document).ready(function() {
+            var max_fields = 10; //maximum input boxes allowed
+            var wrapper = $(".form-upload"); //Fields wrapper
+            var add_button = $(".add_field_button"); //Add button ID
+
+            var x = 1; //initlal text box count
+            $(add_button).on("click", function(e) { //on add input button click
+                // $(this).prev().find('div').first().clone().appendTo($(this).prev())
+                let clone = $(this).prev().find('div.row').first().clone()
+                clone.find('input').val('')
+                clone.appendTo($(this).prev())
+                // e.preventDefault();
+                // if (x < max_fields) { //max input box allowed
+                //     x++; //text box increment
+                //     $(this).prev().append(`
+            //         <div class="col-xl-12 col-md-12 col-sm-12">
+            //             <div class="form-group">
+            //                 <label for="spk_no" class="form-label">File Name</label>
+            //                 <div class="row">
+            //                     <input type="text" class="form-control col-2" name="file_name[]">
+            //                     <br>
+            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     `); //add input box
+                // }
+            });
+
+            $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+                e.preventDefault();
+                $(this).parents('div.product_type').remove();
+                x--;
+            })
+        });
+
+        // $(function(e) {
+        //     $('.fc-datepicker').datepicker({
+        //         dateFormat: 'yy-mm-dd'
+        //     });
+        // });
+    </script>
 @endsection

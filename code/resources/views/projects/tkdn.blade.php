@@ -101,10 +101,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @forelse ($project->orders->siinas_data->produk ?? [] as $item)
+                                    @forelse ($project->productType ?? [] as $item)
                                         <div class="card custom-card">
                                             <div class="card-header border-bottom">
-                                                <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
+                                                <h3 class="card-title">{{ Str::headline($item->tipe_produk) }} Document</h3>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -121,7 +121,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($project->files as $file)
-                                                                    @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                                    @if ($item->id == $file->id_produk)
                                                                         <tr>
                                                                             <td>{{ $loop->iteration }}</td>
                                                                             <td>{{ $file->label }}</td>
@@ -141,8 +141,8 @@
                                                 <div class="row">
                                                     <div class="col-8">
                                                         @forelse ($project->tkdn as $tkdn)
-                                                            @if ($tkdn->id_produk == $item->id_produk)
-                                                                <input type="hidden" name="id_produk[{{ $item->produk }}]" value="{{ $item->id_produk }}">
+                                                            @if ($tkdn->id_produk == $item->id)
+                                                                <input type="hidden" name="id_produk[]" value="{{ $item->id }}">
                                                                 <div class="row">
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
@@ -167,19 +167,19 @@
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Draf Hasil Persetujuan Penamaan Tanda Sah</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_persetujuan[{{ $item->id }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Laporan Hasil Verifikasi</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="laporan_hasil_verifikasi[{{ $item->id }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-4 col-md-4 col-sm-4">
                                                                         <div class="form-group">
                                                                             <label for="" class="form-label">Form Perhitungan Nilai TKDN</label>
-                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_perhitungan_nilai_tkdn[{{ $item->produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_perhitungan_nilai_tkdn[{{ $item->id }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -195,7 +195,7 @@
                                                             <div class="card-body">
                                                                 <ul class="lightgallery list-unstyled row">
                                                                     @foreach ($project->foto as $file)
-                                                                        @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                                        @if ($item->id == $file->id_produk)
                                                                             <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{ Str::headline($item->produk) }}</h4>">
                                                                                 <a href="javascript:void(0)">
                                                                                     <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">

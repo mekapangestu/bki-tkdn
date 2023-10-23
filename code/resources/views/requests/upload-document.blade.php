@@ -57,76 +57,9 @@
             @endif
             
             @include('partials.detail')
+
+            @include('partials.files')
             
-            <div class="row">
-                <div class="col-12">
-                    @forelse ($project->orders->siinas_data->produk ?? [] as $item)
-                        <div class="card custom-card">
-                            <div class="card-header border-bottom">
-                                <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="">
-                                    <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom-0" style="width: 25px">No</th>
-                                                <th class="border-bottom-0">Nama Dokumen</th>
-                                                <th class="border-bottom-0">Nomor Dokumen</th>
-                                                <th class="border-bottom-0">Berlaku Sejak</th>
-                                                <th class="border-bottom-0">Berlaku Sampai</th>
-                                                <th class="border-bottom-0">Version</th>
-                                                <th class="border-bottom-0">Created At</th>
-                                                <th class="border-bottom-0">Updated At</th>
-                                                <th class="border-bottom-0" style="width: 50px">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($project->files as $file)
-                                                @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $file->label }}</td>
-                                                        <td>{{ $file->number }}</td>
-                                                        <td>{{ $file->valid_since }}</td>
-                                                        <td>{{ $file->valid_until }}</td>
-                                                        <td>{{ $file->version }}</td>
-                                                        <td>{{ $file->created_at }}</td>
-                                                        <td>{{ $file->updated_at }}</td>
-                                                        <td>
-                                                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                            {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div class="card custom-card">
-                                        <div class="card-header border-bottom">
-                                            <h3 class="card-title">Foto Produk</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <ul class="lightgallery list-unstyled row">
-                                                @foreach ($project->foto as $file)
-                                                    @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                        <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
-                                                            <a href="javascript:void(0)">
-                                                                <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
-                                                            </a>
-                                                        </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                    @endforelse
-                </div>
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -227,24 +160,76 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @forelse ($project->orders->siinas_data->produk ?? [] as $item)
+                                        @foreach (['NIB', 'Izin Usaha Industri', 'Akta Perusahaan', 'NPWP', 'Katalog Produk', 'Laporan Penjualan', 'Jalur Pemasaran'] as $req_doc)
+                                            <div class="d-flex justify-content-between">
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Nama Dokumen</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control" name="req_name[]" value="{{$req_doc}}" readonly required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Nomor Dokumen</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control" name="req_number[]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Berlaku Sejak</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_since[]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Berlaku Sampai</label>
+                                                        <div class="row">
+                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_until[]">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">Upload Dokumen</label>
+                                                        <div class="row">
+                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="req_file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-1">
+                                                    <div class="form-group">
+                                                        <label for="spk_no" class="form-label">&nbsp;</label>
+                                                        <div class="row">
+                                                            <a href="#" class="btn btn-danger disabled" style="width:100px">Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @forelse ($project->productType ?? [] as $item)
                                             <br>
-                                            <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->produk) }}</strong></p>
+                                            <p><strong>{{ $loop->iteration }}. {{ Str::upper($item->tipe_produk) }}</strong></p>
                                             <div class="col-3">
                                                 <div class="form-group">
                                                     <label for="spk_no" class="form-label">Upload Foto Produk</label>
                                                     <div class="row">
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->id_produk }}]" accept="image/*">
+                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->id }}]" accept="image/*">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-upload-{{ $item->id_produk }}">
+                                            <div class="form-upload-{{ $item->id }}">
                                                 <div class="d-flex justify-content-between">
                                                     <div class="col-2">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nama Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="file_name[{{ $item->id_produk }}][]">
+                                                                <input type="text" class="form-control" name="file_name[{{ $item->id }}][]" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -252,7 +237,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="number[{{ $item->id_produk }}][]">
+                                                                <input type="text" class="form-control" name="number[{{ $item->id }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -260,7 +245,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sejak</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->id_produk }}][]">
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_since[{{ $item->id }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -268,7 +253,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Berlaku Sampai</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->id_produk }}][]">
+                                                                <input type="text" class="form-control fc-datepicker" name="valid_until[{{ $item->id }}][]">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -276,7 +261,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                             <div class="row">
-                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->id_produk }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->id }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -290,7 +275,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a class="add_field_button-{{ $item->id_produk }} btn btn-info">Add File Baru</a><br>
+                                            <a class="add_field_button-{{ $item->id }} btn btn-info">Add File Baru</a><br>
                                         @empty
                                             <h4>Tidak ada produk</h4>
                                         @endforelse

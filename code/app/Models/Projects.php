@@ -15,7 +15,7 @@ class Projects extends Model
 
     public function files()
     {
-        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'project');
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'product');
     }
 
     public function foto()
@@ -28,9 +28,9 @@ class Projects extends Model
         return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'internal');
     }
 
-    public function template_files()
+    public function project_files()
     {
-        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'template');
+        return $this->hasMany(Upload::class, 'request_id', 'id')->where('tag', 'project');
     }
 
     public function orders()
@@ -96,5 +96,10 @@ class Projects extends Model
     public function processLogs()
     {
         return $this->hasMany(Log::class, 'project_id', 'id');
+    }
+
+    public function productType()
+    {
+        return $this->hasMany(ProductType::class, 'project_id', 'id');
     }
 }
