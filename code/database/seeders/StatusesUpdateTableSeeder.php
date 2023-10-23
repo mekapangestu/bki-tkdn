@@ -19,7 +19,7 @@ class StatusesUpdateTableSeeder extends Seeder
             0 =>
             array(
                 'id' => 2,
-                'name' => 'Pengembalian Dokumen',
+                'name' => 'Pengembalian Laporan',
                 'created_at' => '2022-11-22 01:38:50',
                 'updated_at' => '2022-11-22 01:38:50',
             )
