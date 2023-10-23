@@ -292,7 +292,6 @@ class DashboardController extends Controller
             })->count();
         } else {
             $total = Projects::all()->count();
-            $acceptstatus = Projects::where('status_siinas', null)->count();
             $accept = Projects::where('status_siinas', 1)->count();
             $denied = Projects::where('status_siinas', 0)->count();
             $freeze = Projects::where('status_siinas', 3)->count();
@@ -314,7 +313,7 @@ class DashboardController extends Controller
         $users = User::where('role_id', 5)->count();
 
         $title = "Dashboard";
-        return view('dashboard', compact('total', 'users', 'freeze', 'accept', 'denied', 'acceptstatus', 'incomplete', 'return', 'title', 'stage3', 'stage4', 'stage5', 'stage6', 'stage7', 'stage8', 'stage9', 'stage10', 'stage11', 'terbit', 'lunas'));
+        return view('dashboard', compact('total', 'users', 'freeze', 'accept', 'denied', 'incomplete', 'return', 'title', 'stage3', 'stage4', 'stage5', 'stage6', 'stage7', 'stage8', 'stage9', 'stage10', 'stage11', 'terbit', 'lunas'));
     }
 
     public function detailProject(Request $request)

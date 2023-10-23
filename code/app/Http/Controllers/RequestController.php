@@ -46,7 +46,7 @@ class RequestController extends Controller
             ->where('status','!=', 0)
             ->get();
 
-        $title = "List Permohonan Diterima";
+        $title = "List Permohonan Masuk/Diterima";
 
         return view('requests.index', compact('data', 'title'));
     }
