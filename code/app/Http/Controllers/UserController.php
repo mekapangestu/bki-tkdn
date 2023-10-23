@@ -113,7 +113,8 @@ class UserController extends Controller
     public function create()
     {
         $list = Role::all();
-        return view('admin.users.create', compact('list'));
+        $title = "Create New User";
+        return view('admin.users.create', compact('list', 'title'));
     }
 
     public function store(Request $request)
