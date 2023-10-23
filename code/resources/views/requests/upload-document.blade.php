@@ -174,7 +174,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                         <div class="row">
-                                                            <input type="text" class="form-control" name="req_number[]">
+                                                            <input type="text" class="form-control" name="req_number[]" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -237,7 +237,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                             <div class="row">
-                                                                <input type="text" class="form-control" name="number[{{ $item->id }}][]">
+                                                                <input type="text" class="form-control" name="number[{{ $item->id }}][]" required>
                                                             </div>
                                                         </div>
                                                     </div>
