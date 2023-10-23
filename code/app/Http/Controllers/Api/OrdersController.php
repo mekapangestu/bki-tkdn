@@ -52,7 +52,7 @@ class OrdersController extends Controller
             $project = Projects::where('user_id', $user?->id)->firstWhere('nib', $request->get('nib'));
 
             if ($project) {
-                $no_berkas = Projects::firstWhere('no_berkas', $request->get('no_berkas'));
+                $no_berkas = Projects::where('nib', $request->get('nib'))->firstWhere('no_berkas', $request->get('no_berkas'));
                 if ($no_berkas) {
                     $project->update([
                         "nib" => $request->get('nib'),
@@ -65,6 +65,11 @@ class OrdersController extends Controller
                         "alamat_pabrik" => $request->get('alamat_pabrik'),
                         "nama_perusahaan" => $request->get('nama_perusahaan'),
                     ]);
+                    if($no_berkas->status_siinas == 2){
+                        $project->update([
+                            "status" => '103'
+                        ]);
+                    }
                 } else {
                     $project = Projects::create([
                         "user_id" => $project->user_id,
@@ -126,7 +131,7 @@ class OrdersController extends Controller
             $log->project_id = $project->id;
             $log->causer = 'Siinas';
             $log->notes = '';
-            $log->status = 'Permohonan Baru';
+            $log->status = 'Permohonan Siinas';
             $log->save();
             
             Orders::create([

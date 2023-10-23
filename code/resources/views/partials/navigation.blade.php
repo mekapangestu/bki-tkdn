@@ -323,9 +323,9 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-divider m-0"></div>
-                                    {{-- <a class="dropdown-item" href="{{ route('profile') }}">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
                                         <i class="dropdown-icon fe fe-user"></i> Profile
-                                    </a> --}}
+                                    </a>
                                     {{-- <a class="dropdown-item" href="email-inbox.html">
                                         <i class="dropdown-icon fe fe-mail"></i> Inbox
                                         <span class="badge bg-danger rounded-pill float-end">5</span>

@@ -28,6 +28,11 @@ class AddColumnLogs extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('logs', function (Blueprint $table) {
+            $table->dropColumn('project_id');
+            $table->dropColumn('status');
+            $table->dropColumn('causer');
+            $table->dropColumn('notes');
+        });
     }
 }

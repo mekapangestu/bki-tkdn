@@ -75,6 +75,7 @@
                                                 <th class="border-bottom-0">Nomor Dokumen</th>
                                                 <th class="border-bottom-0">Berlaku Sejak</th>
                                                 <th class="border-bottom-0">Berlaku Sampai</th>
+                                                <th class="border-bottom-0">Version</th>
                                                 <th class="border-bottom-0">Created At</th>
                                                 <th class="border-bottom-0">Updated At</th>
                                                 <th class="border-bottom-0" style="width: 50px">Action</th>
@@ -82,13 +83,14 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($project->files as $file)
-                                                @if ($item->id_produk == $file->id_produk)
+                                                @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
                                                         <td>{{ $file->number }}</td>
                                                         <td>{{ $file->valid_since }}</td>
                                                         <td>{{ $file->valid_until }}</td>
+                                                        <td>{{ $file->version }}</td>
                                                         <td>{{ $file->created_at }}</td>
                                                         <td>{{ $file->updated_at }}</td>
                                                         <td>
@@ -107,7 +109,7 @@
                                         <div class="card-body">
                                             <ul class="lightgallery list-unstyled row">
                                                 @foreach ($project->foto as $file)
-                                                    @if ($item->id_produk == $file->id_produk)
+                                                    @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
                                                         <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
                                                             <a href="javascript:void(0)">
                                                                 <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">

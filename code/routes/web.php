@@ -46,9 +46,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('open/{id}', [NotificationController::class, 'markAsRead'])->name('notif.markasread');
     // Route::get('/dashboard/detail-project', [DashboardController::class, 'detailProject'])->name('dashboard.detail-project');
     // Route::get('/dashboard/detail-progress/{id}', [DashboardController::class, 'detailProgress'])->name('dashboard.detail-progress');
+
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile/{id}/update', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/{id}/update-password', [UserController::class, 'updatePassword'])->name('profile.update-password');
     
     // List Permohonan
     Route::resource('requests', RequestController::class);
+    Route::get('/requests/index/tolak', [RequestController::class, 'indexTolak'])->name('requests.index-tolak');
     Route::get('/requests/verify/{id}', [RequestController::class, 'verifyAdmin'])->name('requests.verify-admin');
     Route::post('/requests/verify/{id}', [RequestController::class, 'verifyAdminSubmit'])->name('requests.verify-admin-submit');
     Route::get('/requests/select-assessor/{id}', [RequestController::class, 'selectAssessor'])->name('requests.select-assessor');

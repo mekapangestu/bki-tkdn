@@ -45,6 +45,11 @@ trait Util
         $name = $order . '_' . now()->format('YmdHis') . '_' . auth()->user()->email . '-' . $label . '.' .
             $file->getClientOriginalExtension();
 
+        $version = Upload::where('request_id', $id)
+                        ->where('label', $label)
+                        ->where('id_produk', $id_produk)
+                        ->count();
+
         $upload = Upload::create(
             [
                 'request_id' => $id,
@@ -55,7 +60,8 @@ trait Util
                 'order' => $order,
                 'tag' => $folderName,
                 'upload_date' => now(),
-                'id_produk' => $id_produk
+                'id_produk' => $id_produk,
+                'version' => $version+1
             ]
         );
 

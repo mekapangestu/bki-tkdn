@@ -113,7 +113,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($project->files as $file)
-                                                @if ($item->id_produk == $file->id_produk)
+                                                @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $file->label }}</td>
@@ -137,7 +137,7 @@
                                 <div class="card-body">
                                     <ul class="lightgallery list-unstyled row">
                                         @foreach ($project->foto as $file)
-                                            @if ($item->id_produk == $file->id_produk)
+                                            @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
                                                 <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{ Str::headline($item->produk) }}</h4>">
                                                     <a href="javascript:void(0)">
                                                         <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
@@ -173,19 +173,19 @@
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_jasa[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_jasa[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="nilai_tkdn_gabungan[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_gabungan[{{ $item->id_produk }}]" value="" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -228,7 +228,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
                                                         {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
-                                                        <select class="form-control select2" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                        <select class="form-control select-search" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
                                                             <option>Pilih Kode Kelompok Barang</option>
                                                             @foreach ($kelompok_barang as $option)
                                                                 <option>{{ $option->name }}</option>
@@ -252,6 +252,12 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode HS</label>
                                                         <input type="text" class="form-control" autocomplete="off" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode HS" value="">
+                                                        {{-- <select class="form-control select-search" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                            <option>Pilih Kode HS</option>
+                                                            @foreach ($kelompok_barang as $option)
+                                                                <option>{{ $option->name }}</option>
+                                                            @endforeach
+                                                        </select> --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
@@ -263,7 +269,13 @@
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">KBLI</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="kbli[{{ $item->id_produk }}]" placeholder="Enter KBLI" value="">
+                                                        {{-- <input type="text" class="form-control" autocomplete="off" name="kbli[{{ $item->id_produk }}]" placeholder="Enter KBLI" value=""> --}}
+                                                        <select class="form-control select-search" name="kbli[{{ $item->id_produk }}]" data-placeholder="Pilih KBLI">
+                                                            <option></option>
+                                                            @foreach ($kbli as $option)
+                                                                <option value="{{ $option->kode }}">{{ $option->kode }} {{ $option->uraian }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
