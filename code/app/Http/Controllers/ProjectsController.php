@@ -603,7 +603,6 @@ class ProjectsController extends Controller
                 $project->status = 400;
                 $project->stage = 4;
                 $project->save();
-
                 $produk = [];
                 $kbli = '';
                 foreach ($project->productType as $value) {
@@ -614,8 +613,8 @@ class ProjectsController extends Controller
                     $kbli = $additional->kbli;
                     $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id)->first()->path ?? '';
                     array_push($produk, [
-                        "id_produk" => $value->id,
-                        "produk" => $value->tipe_produk,
+                        "id_produk" => $project->orders->siinas_data->produk[0]->id_produk,
+                        "produk" => $project->orders->siinas_data->produk[0]->produk,
                         "spesifikasi" => $value->spesifikasi,
                         "kd_hs" => $value->kode_hs,
                         "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
@@ -815,8 +814,8 @@ class ProjectsController extends Controller
                 $kbli = $additional->kbli;
                 $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id)->first()->path ?? '';
                 array_push($produk, [
-                    "id_produk" => $value->id,
-                    "produk" => $value->tipe_produk,
+                    "id_produk" => $project->orders->siinas_data->produk[0]->id_produk,
+                    "produk" => $project->orders->siinas_data->produk[0]->produk,
                     "spesifikasi" => $value->spesifikasi,
                     "kd_hs" => $value->kode_hs,
                     "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
