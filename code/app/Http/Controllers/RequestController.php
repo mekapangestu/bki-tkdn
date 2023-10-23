@@ -43,9 +43,30 @@ class RequestController extends Controller
                 return $q->where('user_id', '=', auth()->user()->id);
             })
             ->whereIn('stage', [1, 2])
+            ->where('status','!=', 0)
             ->get();
 
-        $title = "List Permohonan";
+        $title = "List Permohonan Masuk/Diterima";
+
+        return view('requests.index', compact('data', 'title'));
+    }
+
+    public function indexTolak()
+    {
+        $data = Projects::with('statuses', 'logs')
+            ->when(auth()->user()->hasRole('assessor'), function ($q) {
+                return $q->whereHas('asesors', function ($q) {
+                    return $q->where('asesor', '=', auth()->user()->id);
+                });
+            })
+            ->when(auth()->user()->hasRole('guest'), function ($q) {
+                return $q->where('user_id', '=', auth()->user()->id);
+            })
+            ->whereIn('stage', [1, 2])
+            ->where('status', 0)
+            ->get();
+
+        $title = "List Permohonan Ditolak";
 
         return view('requests.index', compact('data', 'title'));
     }
@@ -380,7 +401,7 @@ class RequestController extends Controller
             $asesor->asesor_status = $request->action;
             $asesor->asesor_note = $request->note;
             $asesor->save();
-            if ($request->action == 0 || $request->action == 2) {
+            if ($request->action == 0) {
                 $project->status_siinas = $request->action;
                 $project->status = 102;
                 $project->save();
@@ -466,23 +487,9 @@ class RequestController extends Controller
     
             $project = Projects::with('data', 'files')->find($id);
             $project->status_siinas = $status;
-            if ($status == 0 || $status == 2) {
+            if ($status == 0) {
                 $project->status = 103;
                 $project->save();
-
-                $user = User::find($project->user_id);
-                $details = [
-                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
-                    'line' => $request->note,
-                    'actionText' => null,
-                    'actionURL' => null
-                ];
-                Mail::send('emails.notify', $details, function ($message) use ($user) {
-                    $message->from('no-reply@site.com', "Permohonan TKDN");
-                    $message->subject("Permohonan TKDN");
-                    $message->to($user->email);
-                });
-
             } else {
                 $project->status = 200;
                 $project->stage = 2;
@@ -521,6 +528,20 @@ class RequestController extends Controller
                 }
     
                 $documentReceipt->save();
+            }
+            if (in_array($status, [0,2])) {
+                $user = User::find($project->user_id);
+                $details = [
+                    'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
+                    'line' => $request->note,
+                    'actionText' => null,
+                    'actionURL' => null
+                ];
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Permohonan TKDN");
+                    $message->to($user->email);
+                });
             }
 
             $log = new Log();
