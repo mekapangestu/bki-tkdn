@@ -432,7 +432,7 @@ class RequestController extends Controller
             $log = new Log();
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
-            $log->notes = '';
+            $log->notes = $request->note;
             $log->status = $project->stageStatus->name;
             $log->save();
 
