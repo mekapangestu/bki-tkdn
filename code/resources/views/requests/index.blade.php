@@ -205,11 +205,11 @@
                                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
-                                                        @if ($item->status == 200 && ($item->status_siinas == 1 || $item->status_siinas == 3))
+                                                        @if ($item->status == 200 && ($item->status_siinas == 1))
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('projects.verify2', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Upload Draf</a></li>
                                                             </ul>
-                                                        @elseif($item->status == 103)
+                                                        @elseif($item->status == 103 || $item->status_siinas == 3)
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                                                 <li><a href="{{ route('requests.assessor-verify', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Verifikasi Data</a></li>
                                                             </ul>
