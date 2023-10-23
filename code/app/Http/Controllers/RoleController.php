@@ -29,7 +29,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+        $title = "Create Role";
+        return view('admin.roles.create', compact('title'));
     }
 
     /**
@@ -41,7 +42,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         try {
+            $total = Role::latest('id')->first();
             $model = new Role();
+            $model->id = $total->id + 1;
             $model->name = $request->name;
             $model->guard_name = "web";
             $model->save();
@@ -74,7 +77,8 @@ class RoleController extends Controller
     {
         $user = User::find(auth()->id());
         $role = Role::find($id);
-        return view('admin.roles.edit', compact('role', 'user'));
+        $title = "Edit Role";
+        return view('admin.roles.edit', compact('role', 'user', 'title'));
     }
 
     /**
