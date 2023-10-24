@@ -148,7 +148,7 @@
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="mt-2">
-                                                        <h6 class="">Total Permohonan Diterima Tidak Lengkap</h6>
+                                                        <h6 class="">Total Permohonan Diterima Menunggu Verifikasi Dokumen</h6>
                                                         <h2 class="mb-0 number-font">{{ $incomplete }}</h2>
                                                     </div>
                                                     <div class="ms-auto">

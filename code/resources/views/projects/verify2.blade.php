@@ -94,64 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    @forelse ($project->orders->siinas_data->produk ?? [] as $item)
-                        <div class="card custom-card">
-                            <div class="card-header border-bottom">
-                                <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="">
-                                    <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-bottom-0" style="width: 25px">No</th>
-                                                <th class="border-bottom-0">File Name</th>
-                                                <th class="border-bottom-0">Created At</th>
-                                                <th class="border-bottom-0">Updated At</th>
-                                                <th class="border-bottom-0" style="width: 50px">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($project->files as $file)
-                                                @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $file->label }}</td>
-                                                        <td>{{ $file->created_at }}</td>
-                                                        <td>{{ $file->updated_at }}</td>
-                                                        <td>
-                                                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                            {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card custom-card col-4">
-                                <div class="card-header border-bottom">
-                                    <h3 class="card-title">Foto Produk</h3>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="lightgallery list-unstyled row">
-                                        @foreach ($project->foto as $file)
-                                            @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
-                                                <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{ Str::headline($item->produk) }}</h4>">
-                                                    <a href="javascript:void(0)">
-                                                        <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <h4>Tidak ada produk</h4>
-                    @endforelse
+                    @include('partials.files')
                     <div class="card custom-card">
                         <div class="card-header border-bottom">
                             <h3 class="card-title">Upload Hasil Verifikasi</h3>
@@ -160,32 +103,32 @@
                             <form method="POST" action="{{ route('projects.verify2-submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
-                                @forelse ($project->orders->siinas_data->produk ?? [] as $item)
+                                @forelse ($project->productType ?? [] as $item)
                                     <div class="card">
                                         <div class="card-header" style="text-align: left; vertical-align: middle; background-color: #e25b31; color: #fff">
-                                            <h4><strong>{{ Str::upper($item->produk) }}</strong></h4>
+                                            <h4><strong>{{ Str::upper($item->tipe_produk) }}</strong></h4>
                                         </div>
                                         <h4 style="padding-top: 30px"><strong>INPUT NILAI TKDN</strong></h4>
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="hidden" name="id_produk[]" value="{{ $item->id_produk }}">
+                                                <input type="hidden" name="id_produk[]" value="{{ $item->id }}">
                                                 <div class="row">
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn[{{ $item->id }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Jasa</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_jasa[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_jasa[{{ $item->id }}]" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN Gabungan</label>
-                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_gabungan[{{ $item->id_produk }}]" value="" required>
+                                                            <input type="text" class="form-control" id="spk_no" autocomplete="off" pattern="^\d*(\.\d{0,2})?$" name="nilai_tkdn_gabungan[{{ $item->id }}]" value="" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -193,13 +136,13 @@
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="" class="form-label">Draft Laporan Hasil Verifikasi</label>
-                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->id_produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="hasil_verifikasi[{{ $item->id }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="" class="form-label">Draft Form Penghitungan Nilai TKDN</label>
-                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->id_produk }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="form_nilai_tkdn[{{ $item->id }}]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -209,26 +152,26 @@
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Standar</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="standar[{{ $item->id_produk }}]" placeholder="Enter Standar" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="standar[{{ $item->id }}]" placeholder="Enter Standar" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Produsen</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="produsen[{{ $item->id_produk }}]" placeholder="Enter Produsen" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="produsen[{{ $item->id }}]" placeholder="Enter Produsen" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Sertifikat Produk</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{ $item->id_produk }}]" placeholder="Enter Sertifikat Produk" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="sertifikat_produk[{{ $item->id }}]" placeholder="Enter Sertifikat Produk" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode Kelompok Barang</label>
                                                         {{-- <input type="text" class="form-control" autocomplete="off" name="kd_kelompok_barang[{{$item->id_produk}}]" placeholder="Enter Kode Kelompok Barang" value="" > --}}
-                                                        <select class="form-control select-search" name="kd_kelompok_barang[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
+                                                        <select class="form-control select-search" name="kd_kelompok_barang[{{ $item->id }}]" placeholder="Enter Kode Kelompok Barang">
                                                             <option>Pilih Kode Kelompok Barang</option>
                                                             @foreach ($kelompok_barang as $option)
                                                                 <option>{{ $option->name }}</option>
@@ -239,38 +182,38 @@
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Merk</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="merk[{{ $item->id_produk }}]" placeholder="Enter Merk" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="merk[{{ $item->id }}]" placeholder="Enter Merk" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Tipe</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="tipe[{{ $item->id_produk }}]" placeholder="Enter Tipe" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="tipe[{{ $item->id }}]" placeholder="Enter Tipe" value="">
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-12 col-sm-12">
+                                                {{-- <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Kode HS</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode HS" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="kd_hs[{{ $item->id }}]" placeholder="Enter Kode HS" value=""> --}}
                                                         {{-- <select class="form-control select-search" name="kd_hs[{{ $item->id_produk }}]" placeholder="Enter Kode Kelompok Barang">
                                                             <option>Pilih Kode HS</option>
                                                             @foreach ($kelompok_barang as $option)
                                                                 <option>{{ $option->name }}</option>
                                                             @endforeach
                                                         </select> --}}
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-12 col-sm-12">
+                                                    {{-- </div>
+                                                </div> --}}
+                                                {{-- <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Spesifikasi</label>
-                                                        <input type="text" class="form-control" autocomplete="off" name="spesifikasi[{{ $item->id_produk }}]" placeholder="Enter Spesifikasi" value="">
+                                                        <input type="text" class="form-control" autocomplete="off" name="spesifikasi[{{ $item->id }}]" placeholder="Enter Spesifikasi" value="">
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-xl-3 col-md-12 col-sm-12">
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">KBLI</label>
                                                         {{-- <input type="text" class="form-control" autocomplete="off" name="kbli[{{ $item->id_produk }}]" placeholder="Enter KBLI" value=""> --}}
-                                                        <select class="form-control select-search" name="kbli[{{ $item->id_produk }}]" data-placeholder="Pilih KBLI">
+                                                        <select class="form-control select-search" name="kbli[{{ $item->id }}]" data-placeholder="Pilih KBLI">
                                                             <option></option>
                                                             @foreach ($kbli as $option)
                                                                 <option value="{{ $option->kode }}">{{ $option->kode }} {{ $option->uraian }}</option>

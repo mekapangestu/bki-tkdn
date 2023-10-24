@@ -6,81 +6,80 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">NIB</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nib }}" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">NPWP</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->npwp }}" disabled>
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Nama Perusahaan</label>
-                                <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_perusahaan }}" disabled>
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Kode Produk</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->kd_produk }}" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Nomer Berkas</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_berkas }}" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Alamat Kantor</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_kantor }}" disabled>
-                            </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">NIB</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->nib !!}" disabled>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Nama CP</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nama_cp }}" disabled>
-                            </div>
-                        </div>
 
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">No HP CP</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_hp_cp }}" disabled>
-                            </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">NPWP</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->npwp !!}" disabled>
                         </div>
-
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Email CP</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->email_cp }}" disabled>
-                            </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Nama Perusahaan</label>
+                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{!! $data->nama_perusahaan !!}" disabled>
                         </div>
-
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Jabatan CP</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->jabatan_cp }}" disabled>
-                            </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Kode Produk</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->kd_produk !!}" disabled>
                         </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Nomer Berkas</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->no_berkas !!}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Nama CP</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->nama_cp !!}" disabled>
+                        </div>
+                    </div>
 
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="spk_no" class="form-label">Alamat Pabrik</label>
-                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_pabrik }}" disabled>
-                            </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">No HP CP</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->no_hp_cp !!}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Email CP</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->email_cp !!}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Jabatan CP</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->jabatan_cp !!}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Alamat Kantor</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->alamat_kantor !!}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Alamat Pabrik</label>
+                            <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{!! $data->alamat_pabrik !!}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="spk_no" class="form-label">Dokumen</label>
+                            <a class="btn btn-primary" href="{{ $data->dokumen }}" target="_blank"><i class="fe fe-eye"></i>&nbsp;Preview Dokumen</a>
                         </div>
                     </div>
                 </div>
@@ -101,7 +100,7 @@
                         <table class="table table-hover" id="collapseProduk">
                             @forelse ($data->produk as $item)
                                 <tr>
-                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk }}</th>
+                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {!! $item->produk !!}</th>
                                 </tr>
                                 <tr>
                                     <td width="30%">ID Produk</td>
@@ -111,7 +110,7 @@
                                 <tr>
                                     <td width="30%">Nama Produk</td>
                                     <td width="1%">:</td>
-                                    <td>{{ $item->produk }}</td>
+                                    <td>{!! $item->produk !!}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -124,13 +123,13 @@
                         <table class="table table-hover" id="collapseMesin">
                             @forelse ($data->mesin as $item)
                                 <tr>
-                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Mesin {{ $loop->iteration }} - {{ $item->merk_tipe ?? 'Tidak Ada Merk' }}</th>
+                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Mesin {{ $loop->iteration }} - {!! $item->merk_tipe ?? 'Tidak Ada Merk' !!}</th>
                                 </tr>
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty
@@ -145,9 +144,9 @@
                             @forelse ($data->naker as $item)
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty
@@ -161,13 +160,13 @@
                         <table class="table table-hover" id="collapseProduksi">
                             @forelse ($data->produksi as $item)
                                 <tr>
-                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {!! $item->produk ?? 'Tidak Ada Merk' !!}</th>
                                 </tr>
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty
@@ -181,13 +180,13 @@
                         <table class="table table-hover" id="collapseKapasitas">
                             @forelse ($data->kapasitas as $item)
                                 <tr>
-                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk ?? 'Tidak Ada Merk' }}</th>
+                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {!! $item->produk ?? 'Tidak Ada Merk' !!}</th>
                                 </tr>
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty
@@ -202,9 +201,9 @@
                             @forelse ($data->bahan_baku as $item)
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty
@@ -219,9 +218,9 @@
                             @forelse ($data->bahan_penolong as $item)
                                 @foreach ($item as $key => $item)
                                     <tr>
-                                        <td width="30%">{{ Str::headline($key) }}</td>
+                                        <td width="30%">{!! Str::headline($key) !!}</td>
                                         <td width="1">:</td>
-                                        <td>{{ $item }}</td>
+                                        <td>{!! $item !!}</td>
                                     </tr>
                                 @endforeach
                             @empty

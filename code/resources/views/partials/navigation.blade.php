@@ -5,7 +5,7 @@
             <!-- sidebar-toggle-->
             <a class="logo-horizontal " href="/">
                 <img src="{{ asset('assets/images/tkdn-bki.png') }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ asset('assets/images/tkdn-bki.png') }}" class="header-brand-img light-logo1" alt="logo">
+                <img src="{{ asset('assets/images/tkdn-bki.png') }}" class="header-brand-img light-logo" alt="logo">
             </a>
             <!-- LOGO -->
             {{-- <div class="main-header-center ms-3 d-none d-lg-block">

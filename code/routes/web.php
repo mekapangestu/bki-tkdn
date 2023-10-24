@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     // List Permohonan
     Route::resource('requests', RequestController::class);
+    Route::get('/requests/index/terima', [RequestController::class, 'index'])->name('requests.index');
     Route::get('/requests/index/tolak', [RequestController::class, 'indexTolak'])->name('requests.index-tolak');
     Route::get('/requests/verify/{id}', [RequestController::class, 'verifyAdmin'])->name('requests.verify-admin');
     Route::post('/requests/verify/{id}', [RequestController::class, 'verifyAdminSubmit'])->name('requests.verify-admin-submit');
@@ -75,7 +76,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
-    
     
     Route::get('/projects/draf/{id}', [ProjectsController::class, 'draf'])->name('projects.draf');
     Route::get('/projects/tkdn/{id}', [ProjectsController::class, 'tkdn'])->name('projects.tkdn');

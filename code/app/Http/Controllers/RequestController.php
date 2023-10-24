@@ -10,14 +10,15 @@ use App\Models\Kepala;
 use App\Models\Upload;
 use App\Models\Asesors;
 use App\Models\Projects;
+use App\Models\ProductType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KelompokBarang;
 use App\Models\DocumentReceipt;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\ProjectNotification;
@@ -230,6 +231,15 @@ class RequestController extends Controller
             if (isset($request->surat_tugas)) {
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
+            
+            foreach ($request->kode_hs as $key => $value) {
+                $productType = new ProductType();
+                $productType->project_id = $request->project_id;
+                $productType->kode_hs = $value;
+                $productType->tipe_produk = $request->tipe_produk[$key];
+                $productType->spesifikasi = $request->spesifikasi[$key];
+                $productType->save();
+            }
 
             Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
                 $message->from('no-reply@site.com', "Permohonan TKDN");
@@ -278,15 +288,26 @@ class RequestController extends Controller
             }
 
             if (isset($request->sptjm)) {
-                $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'internal');
+                $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'project');
             }
 
+            foreach ($request->req_name as $k => $files) {
+                if (isset($request->file('req_file')[$k])) {
+                    $singleUpload = $this->singleUpload(1, $request->file('req_file')[$k], $request->project_id, $files, 'project');
+
+                    $upload = Upload::find($singleUpload->id);
+                    $upload->number = $request->req_number[$k];
+                    $upload->valid_since = $request->req_valid_since[$k];
+                    $upload->valid_until = $request->req_valid_until[$k];
+                    $upload->save();
+                }
+            }
 
             foreach ($request->file_name as $k => $files) {
                 $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
-                        $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, $value, 'project', $k);
+                        $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, $value, 'product', $k);
 
                         $upload = Upload::find($singleUpload->id);
                         $upload->number = $request->number[$k][$key];

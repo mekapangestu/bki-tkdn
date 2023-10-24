@@ -342,8 +342,8 @@ class ProjectsController extends Controller
                 $additional->kd_kelompok_barang = $request->kd_kelompok_barang[$id_produk];
                 $additional->merk = $request->merk[$id_produk];
                 $additional->tipe = $request->tipe[$id_produk];
-                $additional->kd_hs = $request->kd_hs[$id_produk];
-                $additional->spesifikasi = $request->spesifikasi[$id_produk];
+                // $additional->kd_hs = $request->kd_hs[$id_produk];
+                // $additional->spesifikasi = $request->spesifikasi[$id_produk];
                 $additional->kbli = $request->kbli[$id_produk];
                 $additional->save();
 
@@ -353,11 +353,11 @@ class ProjectsController extends Controller
                 }
 
                 if (isset($request->hasil_verifikasi[$id_produk])) {
-                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$id_produk], $id, 'Draft Laporan Hasil Verifikasi', 'project', $id_produk);
+                    $this->singleUpload(1, $request->file('hasil_verifikasi')[$id_produk], $id, 'Draft Laporan Hasil Verifikasi', 'product', $id_produk);
                     // $hasilVerifikasi->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
                 if (isset($request->form_nilai_tkdn[$id_produk])) {
-                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$id_produk], $id, 'Draft Form Penghitungan Nilai TKDN', 'project', $id_produk);
+                    $this->singleUpload(1, $request->file('form_nilai_tkdn')[$id_produk], $id, 'Draft Form Penghitungan Nilai TKDN', 'product', $id_produk);
                     // $nilaiTkdn->addPDF($request->file('hasil_verifikasi')[$key]->getPathName(), 'all');
                 }
 
@@ -468,17 +468,17 @@ class ProjectsController extends Controller
                         File::makeDirectory($folderPath, 0777, true, true);
                     }
 
-                    if (isset($request->hasil_persetujuan[$key])) {
-                        $this->singleUpload(1, $request->file('hasil_persetujuan')[$key], $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'project', $id_produk);
+                    if (isset($request->hasil_persetujuan[$id_produk])) {
+                        $this->singleUpload(1, $request->file('hasil_persetujuan')[$id_produk], $id, 'Draf Hasil Persetujuan Penamaan Tanda Sah', 'product', $id_produk);
                         // $hasilPersetujuan->addPDF($request->file('hasil_persetujuan')[$key]->getPathName(), 'all');
                     }
-                    if (isset($request->laporan_hasil_verifikasi[$key])) {
-                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$key], $id, 'Laporan Hasil Verifikasi', 'project', $id_produk);
+                    if (isset($request->laporan_hasil_verifikasi[$id_produk])) {
+                        $this->singleUpload(1, $request->file('laporan_hasil_verifikasi')[$id_produk], $id, 'Laporan Hasil Verifikasi', 'product', $id_produk);
                         // $hasilVerifikasi->addPDF($request->file('laporan_hasil_verifikasi')[$key]->getPathName(), 'all');
                     }
 
-                    if (isset($request->form_perhitungan_nilai_tkdn[$key])) {
-                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$key], $id, 'Form Perhitungan Nilai TKDN', 'project', $id_produk);
+                    if (isset($request->form_perhitungan_nilai_tkdn[$id_produk])) {
+                        $this->singleUpload(1, $request->file('form_perhitungan_nilai_tkdn')[$id_produk], $id, 'Form Perhitungan Nilai TKDN', 'product', $id_produk);
                     }
 
                     // if (isset($request->file_name)) {
@@ -603,21 +603,20 @@ class ProjectsController extends Controller
                 $project->status = 400;
                 $project->stage = 4;
                 $project->save();
-
                 $produk = [];
                 $kbli = '';
-                foreach ($project->orders->siinas_data->produk as $value) {
-                    $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
+                foreach ($project->productType as $value) {
+                    // $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
 
-                    $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
-                    $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
+                    $additional = $project->additional->firstWhere('id_produk', $value->id);
+                    $tkdn = $project->tkdn->where('id_produk', $value->id)->firstWhere('project_id', $project->id);
                     $kbli = $additional->kbli;
-                    $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
+                    $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id)->first()->path ?? '';
                     array_push($produk, [
-                        "id_produk" => $value->id_produk,
-                        "produk" => $value->produk,
-                        "spesifikasi" => $additional->spesifikasi,
-                        "kd_hs" => $additional->kd_hs,
+                        "id_produk" => $project->orders->siinas_data->produk[0]->id_produk,
+                        "produk" => $project->orders->siinas_data->produk[0]->produk,
+                        "spesifikasi" => $value->spesifikasi,
+                        "kd_hs" => $value->kode_hs,
                         "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                         "nilai_tkdn" => $tkdn->nilai_tkdn,
                         "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,
@@ -631,7 +630,7 @@ class ProjectsController extends Controller
                     ]);
                 }
 
-                $path = Upload::where('request_id', $project->id)->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')->where('id_produk', $value->id_produk)->first()->path ?? '';
+                $path = Upload::where('request_id', $project->id)->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')->where('id_produk', $value->id)->first()->path ?? '';
 
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap4.php';
                 $payload = [
@@ -807,18 +806,18 @@ class ProjectsController extends Controller
 
             $produk = [];
             $kbli = '';
-            foreach ($project->orders->siinas_data->produk as $value) {
-                $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
+            foreach ($project->productType as $value) {
+                // $produksi = collect($project->orders->siinas_data->produksi)->firstWhere('produk', $project->tkdn->firstWhere('id_produk', $value->id_produk)->status ?? $value->produk);
 
-                $additional = $project->additional->firstWhere('id_produk', $value->id_produk);
-                $tkdn = $project->tkdn->where('id_produk', $value->id_produk)->firstWhere('project_id', $project->id);
+                $additional = $project->additional->firstWhere('id_produk', $value->id);
+                $tkdn = $project->tkdn->where('id_produk', $value->id)->firstWhere('project_id', $project->id);
                 $kbli = $additional->kbli;
-                $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id_produk)->first()->path ?? '';
+                $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id)->first()->path ?? '';
                 array_push($produk, [
-                    "id_produk" => $value->id_produk,
-                    "produk" => $value->produk,
-                    "spesifikasi" => $additional->spesifikasi,
-                    "kd_hs" => $additional->kd_hs,
+                    "id_produk" => $project->orders->siinas_data->produk[0]->id_produk,
+                    "produk" => $project->orders->siinas_data->produk[0]->produk,
+                    "spesifikasi" => $value->spesifikasi,
+                    "kd_hs" => $value->kode_hs,
                     "kd_kelompok_barang" => $additional->kd_kelompok_barang ?? '-',
                     "nilai_tkdn" => $tkdn->nilai_tkdn,
                     "nilai_tkdn_jasa" => $tkdn->nilai_tkdn_jasa,

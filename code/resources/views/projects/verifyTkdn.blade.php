@@ -70,10 +70,10 @@
                             <form method="POST" action="{{ route('projects.verify-tkdn-submit', $project->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
-                                @forelse ($project->orders->siinas_data->produk ?? [] as $item)
+                                @forelse ($project->productType ?? [] as $item)
                                     <div class="card custom-card">
                                         <div class="card-header border-bottom">
-                                            <h3 class="card-title">{{ Str::headline($item->produk) }} Document</h3>
+                                            <h3 class="card-title">{{ Str::headline($item->tipe_produk) }} Document</h3>
                                         </div>
                                         <div class="card-body">
                                             <div class="">
@@ -89,15 +89,10 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($project->files as $file)
-                                                            @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
+                                                            @if ($item->id == $file->id_produk)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ Str::swap(
-                                                                        [
-                                                                            Str::title($item->produk) . '-' => '',
-                                                                        ],
-                                                                        $file->label,
-                                                                    ) }}</td>
+                                                                    <td>{{ $file->label }}</td>
                                                                     <td>{{ $file->created_at }}</td>
                                                                     <td>{{ $file->updated_at }}</td>
                                                                     <td>
