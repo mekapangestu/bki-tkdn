@@ -23,7 +23,7 @@ return [
     | The flag that prevents showing commands if the environment is in production
     |--------------------------------------------------------------------------
     */
-    'local' => true,
+    'local' => false,
 
     /*
     |--------------------------------------------------------------------------
