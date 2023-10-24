@@ -52,7 +52,7 @@
                                     <a href="{{ route('profile') }}">
                                         <h5 class="mb-1 text-dark fw-semibold">{{ $user->name }}</h5>
                                     </a>
-                                    <p class="text-muted mt-0 mb-0 pt-0 fs-13">Superadmin</p>
+                                    <p class="text-muted mt-0 mb-0 pt-0 fs-13">{{ Str::ucfirst($role->name) }}</p>
                                 </div>
                             </div>
                             {{-- <div class="form-group">

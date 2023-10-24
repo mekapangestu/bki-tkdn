@@ -159,12 +159,12 @@
                                                 <label for="" class="form-label">Dokumen Pendukung Lainnya</label>
                                                 <div class="d-flex justify-content-between">
                                                     <input class="form-control col-11" type="file" id="formFileMultiple" autocomplete="off" name="surat_pendukung[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
-                                                    <a href="#" class="btn btn-danger remove_field col-1" style="width:100px">Remove</a>
+                                                    <a href="#" class="btn btn-danger remove_field col-1" style="width:100px">Hapus</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="add_field_button btn btn-info col-2" style="margin-left: 12px;">Add Surat Pendukung</a><br>
+                                    <a class="add_field_button btn btn-info col-2" style="margin-left: 12px;">Tambah Dokumen Pendukung</a><br>
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label for="" class="form-label">Alasan</label>

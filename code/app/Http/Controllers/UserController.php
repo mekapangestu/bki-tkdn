@@ -24,62 +24,65 @@ use App\Traits\Util;
 class UserController extends Controller
 {
     use Util;
-    
+
     public function profile()
     {
         $user = auth()->user();
         // dd($user);
         $detail = DB::table('user_details')->where('user_id', $user->id)->first();
+        $role = Role::where('id', $user->role_id)->first();
+        // dd($role);
         // dd($detail);
-        if(is_null($detail)){
+        if (is_null($detail)) {
             $detail = new UserDetail();
         }
 
         $title = "Profile";
         // dd($detail);
-        return view('admin.profile', compact('user', 'detail', 'title'));
+        return view('admin.profile', compact('user', 'detail', 'title', 'role'));
     }
 
-    public function updateProfile(Request $request, $id){
+    public function updateProfile(Request $request, $id)
+    {
         try {
+            // dd($id);
             $model = User::find($id);
             $model->name = $request->name;
             $model->contact = $request->contact;
             $model->email = $request->email;
             $model->update();
 
-            
             // dd($model);
-            $userPath = public_path('storage/files/users/' . now()->format('dmy') . '_' . $model->id);
-            // dd($folderPath);
-            if (!File::isDirectory($userPath)) {
-                File::makeDirectory($userPath, 0777, true, true);
-            }
-            
-            $userDetail = UserDetail::where('user_id', auth()->user()->id)->first();
-            // dd($userDetail);
-            if ($userDetail) {
-                $userDetail->user_id = $id;
-                // $userDetail->category = $request->category;
-                $userDetail->expired_date = $request->expired_date; 
-                $userDetail->jabatan = $request->jabatan;                   
-                    // dd($userDetail);
-                    $userDetail->update();
-            }else{
-                // dd('Empty');
-                $userDetail = new UserDetail();
-                $userDetail->user_id = $id;
-                // $userDetail->category = $request->category;
-                $userDetail->expired_date = $request->expired_date;
-                $userDetail->jabatan = $request->jabatan;
-                
-                $userDetail->save();
-            }
+            // $userPath = public_path('storage/files/users/' . now()->format('dmy') . '_' . $model->id);
+            // // dd($folderPath);
+            // if (!File::isDirectory($userPath)) {
+            //     File::makeDirectory($userPath, 0777, true, true);
+            // }
 
-            if (isset($request->cert_skill)) {
-                $this->singleUpload(1, $request->file('cert_skill'), $model->id, 'certificate_skill', 'users');
-            }
-            
+            // $userDetail = UserDetail::where('user_id', auth()->user()->id)->first();
+            // // dd($userDetail);
+            // if ($userDetail) {
+            //     $userDetail->user_id = $id;
+            //     // $userDetail->category = $request->category;
+            //     $userDetail->expired_date = $request->expired_date; 
+            //     $userDetail->jabatan = $request->jabatan;                   
+            //         // dd($userDetail);
+            //         $userDetail->update();
+            // }else{
+            //     // dd('Empty');
+            //     $userDetail = new UserDetail();
+            //     $userDetail->user_id = $id;
+            //     // $userDetail->category = $request->category;
+            //     $userDetail->expired_date = $request->expired_date;
+            //     $userDetail->jabatan = $request->jabatan;
+
+            //     $userDetail->save();
+            // }
+
+            // if (isset($request->cert_skill)) {
+            //     $this->singleUpload(1, $request->file('cert_skill'), $model->id, 'certificate_skill', 'users');
+            // }
+
             // dd($userDetail);
             return redirect('profile')->with('success', 'Profile has been updated');
         } catch (\Exception $e) {
@@ -87,14 +90,16 @@ class UserController extends Controller
         }
     }
 
-    public function updatePassword(Request $request, $id){
+    public function updatePassword(Request $request, $id)
+    {
         try {
             $model = User::find($id);
+            // dd($model);
             $model->password = Hash::make($request->password);
             $model->update();
-            
+
             // dd($userDetail);
-            return redirect('profile')->with('success', 'Profile has been updated');
+            return redirect('profile')->with('success', 'Password has been updated');
         } catch (\Exception $e) {
             return redirect('profile')->with('error', $e->getMessage());
         }
