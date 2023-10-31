@@ -135,9 +135,18 @@
                                             @foreach ($project->foto as $file)
                                                 @if ($item->id_produk == $file->id_produk || Str::is(Str::headline($item->produk) . '*', $file->label))
                                                     <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{ Str::headline($item->produk) }}</h4>">
-                                                        <a href="javascript:void(0)">
-                                                            <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
-                                                        </a>
+                                                        @php
+                                                            $allowedMimeTypes = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief','jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
+                                                            $explodeImage = explode('.', asset('storage/' . $file->path));
+                                                            $extension = end($explodeImage);
+                                                        @endphp
+                                                        @if (in_array($extension, $allowedMimeTypes))
+                                                            <a href="javascript:void(0)">
+                                                                <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
+                                                            </a>
+                                                            @else
+                                                            <a onclick="window.open('{{asset('storage/' . $file->path)}}', '_blank');" href="{{asset('storage/' . $file->path)}}">View File</a>
+                                                        @endif
                                                     </li>
                                                 @endif
                                             @endforeach
