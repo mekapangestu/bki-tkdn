@@ -39,7 +39,7 @@
         @forelse ($project->productType ?? [] as $item)
             <div class="card custom-card">
                 <div class="card-header border-bottom">
-                    <h3 class="card-title">{{ Str::headline($item->tipe_produk) }} Document</h3>
+                    <h3 class="card-title">{{ Str::headline($item->tipe_produk) }} {{ Str::headline($item->spesifikasi) }} Document</h3>
                 </div>
                 <div class="card-body">
                     <div class="">
