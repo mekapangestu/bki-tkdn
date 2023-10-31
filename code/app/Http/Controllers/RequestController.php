@@ -290,7 +290,6 @@ class RequestController extends Controller
             if (isset($request->sptjm)) {
                 $this->singleUpload(1, $request->file('sptjm'), $request->project_id, 'SPTJM', 'project');
             }
-
             foreach ($request->req_name as $k => $files) {
                 if (isset($request->file('req_file')[$k])) {
                     $singleUpload = $this->singleUpload(1, $request->file('req_file')[$k], $request->project_id, $files, 'project');
@@ -302,9 +301,11 @@ class RequestController extends Controller
                     $upload->save();
                 }
             }
-
+            
             foreach ($request->file_name as $k => $files) {
-                $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
+                if (isset($request->file('foto')[$k])) {
+                    $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
+                }
                 foreach ($files as $key => $value) {
                     if (isset($request->file('file')[$k][$key])) {
                         $singleUpload = $this->singleUpload(1, $request->file('file')[$k][$key], $request->project_id, $value, 'product', $k);

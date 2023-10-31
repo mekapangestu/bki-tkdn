@@ -186,8 +186,8 @@
                                                 </h6>
                                             </div>
                                         </div>
-                                        <div class="notifications-menu" id="notification">
-                                            @forelse (auth()->user()->notifications->sortBy('updated_at')->take(3) as $item)
+                                        <div class="notifications-menu" id="notification" style="overflow: scroll;">
+                                            @forelse (auth()->user()->notifications->sortByDesc('created_at') as $item)
                                                 <a class="dropdown-item d-flex" href="{{ route('notif.markasread', $item->id) }}" style="{{$item->read_at ? 'opacity: 0.3;':''}}">
                                                     <div class="me-3 notifyimg  bg-primary brround box-shadow-primary">
                                                         <i class="fe fe-mail"></i>
