@@ -335,12 +335,26 @@
                 $(this).parents('div.d-flex').remove();
                 x--;
             })
-        });
 
+        });
+        
         // $(function(e) {
-        //     $('.fc-datepicker').datepicker({
-        //         dateFormat: 'yy-mm-dd'
+            //     $('.fc-datepicker').datepicker({
+            //         dateFormat: 'yy-mm-dd'
         //     });
         // });
-    </script>
+        </script>
+        @if ($project->status == "102")
+            <script>
+                $(document).ready(function() {
+                    $("input").not(':input[type=search]').attr("required", true);
+                })
+                </script>
+        @else
+            <script>
+                $(document).ready(function() {
+                    $("input").not(':input[type=search]').removeAttr("required", true);
+                })
+            </script>
+        @endif
 @endsection

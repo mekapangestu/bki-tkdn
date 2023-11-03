@@ -102,10 +102,10 @@
                                         ">
                                             <td class="details-control"></td>
                                             <td style="vertical-align: middle;">
-                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{$item->id}}">
                                                     <i class="fa fa-history" aria-hidden="true"></i>
                                                 </button>
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg modal-dialog-scrollable">
                                                         <div class="modal-content">
                                                         <div class="modal-header">
