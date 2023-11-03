@@ -193,7 +193,7 @@
                                                     </ul>
                                                 @endif --}}
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if ($item->status == 102 || $item->status == 103)
+                                                            @if ($item->status == 102 || $item->status == 103 || $item->status_siinas == 3)
                                                                 <li><a href="{{ route('requests.upload-document', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
                                                             <li><a href="{{ route('requests.detail', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Detail</a></li>

@@ -259,6 +259,8 @@ class RequestController extends Controller
     {
         $project = Projects::with('files')->find($id);
 
+        abort_unless(auth()->user()->hasRole('guest') && in_array($project->status_siinas, [2,3,4]), 404);
+
         $data = $project->orders->siinas_data;
 
         $title = "Lengkapi Dokumen";
