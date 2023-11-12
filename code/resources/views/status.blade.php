@@ -29,7 +29,7 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">IP Whitelist</h1>
+                <h1 class="page-title">Status</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="basic-datatable" class="table table-bordered text-wrap key-buttons border-bottom text-center datatable" style="width:100%">
+                            <table class="table table-bordered text-wrap key-buttons border-bottom text-center" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0 filter">No</th>
@@ -124,7 +124,4 @@
     </div>
 @endsection
 @section('js')
-<script src="{{asset('assets/plugins/leaflet/leaflet.js')}}"></script>
-<script src='https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/js/leaflet-sidebar.min.js'></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.1.1/css/leaflet-sidebar.min.css">
 @endsection

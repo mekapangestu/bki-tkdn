@@ -69,6 +69,9 @@
                     <li>
                         <a class="side-menu__item has-link" href="{{ route('whitelist-ip.index') }}"><i class="side-menu__icon fe fe-globe"></i><span class="side-menu__label">Whitelist IP</span></a>
                     </li>
+                    <li>
+                        <a class="side-menu__item has-link" href="{{ route('status.index') }}"><i class="side-menu__icon  fe fe-list"></i><span class="side-menu__label">Status</span></a>
+                    </li>
                 @endrole
             </ul>
             <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
