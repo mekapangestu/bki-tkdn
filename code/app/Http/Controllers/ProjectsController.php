@@ -13,6 +13,7 @@ use App\Models\Orders;
 use App\Models\Upload;
 use App\Models\Asesors;
 use App\Models\Projects;
+use App\Models\ProductType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KelompokBarang;
@@ -431,6 +432,15 @@ class ProjectsController extends Controller
 
             $user->notify(new ProjectNotification($details));
             $admin->notify(new ProjectNotification($details));
+
+            foreach ($request->kode_hs as $key => $value) {
+                $productType = ProductType::where('project_id', $id)->find($key);
+                $productType->kode_hs = $request->kode_hs[$key];
+                $productType->tipe_produk = $request->tipe_produk[$key];
+                $productType->spesifikasi = $request->spesifikasi[$key];
+                $productType->save();
+            }
+            
             DB::commit();
 
             return redirect('projects')->with('success', 'Data Saved Successfully');

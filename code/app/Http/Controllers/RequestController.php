@@ -74,6 +74,8 @@ class RequestController extends Controller
 
     public function verifyAdmin($id)
     {
+        abort_unless(auth()->user()->hasRole(['superadmin','administrator']), 404);
+
         $project = Projects::with('files', 'orders')->find($id);
 
         $data = $project->orders->siinas_data;
@@ -169,7 +171,9 @@ class RequestController extends Controller
 
     public function selectAssessor($id)
     {
-        $data = Projects::find($id);
+        abort_unless(auth()->user()->hasRole(['superadmin', 'administrator']), 404);
+        
+        $data = Projects::with('asesors:project_id,asesor', 'qc:project_id,qc')->find($id);
         $user = User::all();
 
         $title = "Pilih Assessor & QC";
@@ -182,8 +186,9 @@ class RequestController extends Controller
         DB::beginTransaction();
         try {
             $project = Projects::find($request->project_id);
-            $project->status = 102;
-            $project->save();
+            
+            Asesors::where('project_id', $request->project_id)->delete();
+            Qcs::where('project_id', $request->project_id)->delete();
 
             foreach ($request->asesor as $value) {
                 $asesor = new Asesors();
@@ -219,10 +224,8 @@ class RequestController extends Controller
                 $user->notify(new ProjectNotification($details));
             }
 
-            $kepala = new Kepala();
-            $kepala->project_id = $request->project_id;
-            $kepala->save();
-
+            
+            
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
@@ -232,20 +235,29 @@ class RequestController extends Controller
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
             
-            foreach ($request->kode_hs as $key => $value) {
-                $productType = new ProductType();
-                $productType->project_id = $request->project_id;
-                $productType->kode_hs = $value;
-                $productType->tipe_produk = $request->tipe_produk[$key];
-                $productType->spesifikasi = $request->spesifikasi[$key];
-                $productType->save();
-            }
+            if ($project->status == 101) {
+                $project->status = 102;
+                $project->save();
 
-            Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
-                $message->from('no-reply@site.com', "Permohonan TKDN");
-                $message->subject("Informasi Akun Aplikasi TKDN BKI");
-                $message->to($project->user->email);
-            });
+                $kepala = new Kepala();
+                $kepala->project_id = $request->project_id;
+                $kepala->save();
+
+                foreach ($request->kode_hs as $key => $value) {
+                    $productType = new ProductType();
+                    $productType->project_id = $request->project_id;
+                    $productType->kode_hs = $value;
+                    $productType->tipe_produk = $request->tipe_produk[$key];
+                    $productType->spesifikasi = $request->spesifikasi[$key];
+                    $productType->save();
+                }
+                
+                Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Informasi Akun Aplikasi TKDN BKI");
+                    $message->to($project->user->email);
+                });
+            }
 
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
@@ -319,6 +331,14 @@ class RequestController extends Controller
                         $upload->save();
                     }
                 }
+            }
+
+            foreach ($request->kode_hs as $key => $value) {
+                $productType = ProductType::where('project_id', $request->project_id)->find($key);
+                $productType->kode_hs = $request->kode_hs[$key];
+                $productType->tipe_produk = $request->tipe_produk[$key];
+                $productType->spesifikasi = $request->spesifikasi[$key];
+                $productType->save();
             }
 
             // if (isset($request->aspek_pemasaran)) {
@@ -472,6 +492,14 @@ class RequestController extends Controller
             $admin->notify(new ProjectNotification($details));
             $user->notify(new ProjectNotification($details));
 
+            foreach ($request->kode_hs as $key => $value) {
+                $productType = ProductType::where('project_id', $id)->find($key);
+                $productType->kode_hs = $request->kode_hs[$key];
+                $productType->tipe_produk = $request->tipe_produk[$key];
+                $productType->spesifikasi = $request->spesifikasi[$key];
+                $productType->save();
+            }
+
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');
         } catch (\Throwable $th) {
@@ -574,6 +602,14 @@ class RequestController extends Controller
             $log->notes = $request->note;
             $log->status = $project->stageStatus->name;
             $log->save();
+
+            foreach ($request->kode_hs as $key => $value) {
+                $productType = ProductType::where('project_id', $id)->find($key);
+                $productType->kode_hs = $request->kode_hs[$key];
+                $productType->tipe_produk = $request->tipe_produk[$key];
+                $productType->spesifikasi = $request->spesifikasi[$key];
+                $productType->save();
+            }
 
             DB::commit();
             return redirect('requests')->with('success', 'Data Saved Successfully');

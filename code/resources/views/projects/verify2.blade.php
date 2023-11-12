@@ -113,6 +113,26 @@
                                             <div class="col-12">
                                                 <input type="hidden" name="id_produk[]" value="{{ $item->id }}">
                                                 <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Kode HS</label>
+                                        <input class="form-control" name="kode_hs[{{$item->id}}]" required value="{{$item->kode_hs}}">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Tipe Produk</label>
+                                        <input class="form-control" name="tipe_produk[{{$item->id}}]" required value="{{$item->tipe_produk}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Spesifikasi</label>
+                                        <textarea class="form-control" name="spesifikasi[{{$item->id}}]" required>{{$item->spesifikasi}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                                                <div class="row">
                                                     <div class="col-xl-3 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Nilai TKDN</label>

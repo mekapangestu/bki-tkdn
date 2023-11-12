@@ -115,7 +115,7 @@
                                                 <label for="" class="form-label">Asesor</label>
                                                 <select class="form-control select-search" name="asesor[]" multiple required data-placeholder="Pilih Asesor">
                                                     @foreach ($user->where('role_id', 3) as $asesor)
-                                                        <option value="{{ $asesor->id }}">{{ $asesor->name }}</option>
+                                                        <option value="{{ $asesor->id }}" {{in_array($asesor->id, $data->asesors->pluck('asesor')->all()) ? 'selected':''}}>{{ $asesor->name }}</option>
                                                     @endforeach
                                                 </select>
                                         </div>
@@ -125,12 +125,14 @@
                                                 <label for="" class="form-label">QC</label>
                                                 <select class="form-control select-search" name="qc[]" multiple required data-placeholder="Pilih QC">
                                                     @foreach ($user->where('role_id', 6) as $qc)
-                                                        <option value="{{ $qc->id }}">{{ $qc->name }}</option>
+                                                        <option value="{{ $qc->id }}" {{in_array($qc->id, $data->qc->pluck('qc')->all()) ? 'selected':''}}>{{ $qc->name }}</option>
                                                     @endforeach
                                                 </select>
                                         </div>
                                     </div>
                                 </div>
+                                @if ($data->status == 101)
+                                
                                 <div class="card-header">
                                     <h3 class="card-title">Tipe Produk</h3>
                                 </div>
@@ -152,7 +154,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="" class="form-label">Spesifikasi</label>
-                                            <input class="form-control" name="spesifikasi[]" required>
+                                            <textarea class="form-control" name="spesifikasi[]" required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-1">
@@ -165,6 +167,7 @@
                                 </div>
                                 <a class="add_field_button btn btn-info">Add More</a><br>
                                 </div>
+                                @endif
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">

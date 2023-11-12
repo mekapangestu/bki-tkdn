@@ -105,14 +105,45 @@
                 </div>
             </div>
             <div class="row">
+                <form method="POST" action="{{ route('requests.verify-admin-final-submit', $project->id) }}" enctype="multipart/form-data">
+                    @csrf
                 <div class="col-12">
+                    <div class="card custom-card">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title">Produk</h3>
+                        </div>
+                        <div class="card-body">
+                        @forelse ($project->productType ?? [] as $item)
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Kode HS</label>
+                                        <input class="form-control" name="kode_hs[{{$item->id}}]" required value="{{$item->kode_hs}}">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Tipe Produk</label>
+                                        <input class="form-control" name="tipe_produk[{{$item->id}}]" required value="{{$item->tipe_produk}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="" class="form-label">Spesifikasi</label>
+                                        <textarea class="form-control" name="spesifikasi[{{$item->id}}]" required>{{$item->spesifikasi}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            @empty
+                            <h4>Tidak ada produk</h4>
+                        @endforelse
+                        </div>
+                    </div>
                     <div class="card custom-card">
                         <div class="card-header border-bottom">
                             <h3 class="card-title">Hasil Verifikasi</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('requests.verify-admin-final-submit', $project->id) }}" enctype="multipart/form-data">
-                                @csrf
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
@@ -157,11 +188,12 @@
                                     <button type="submit" onclick="siinasSubmit()" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>
                                 </div>
-                            </form>
+                           
                         </div>
                     </div>
                 </div>
                 <!-- CONTAINER END -->
+                </form>
             </div>
         </div>
     @endsection
