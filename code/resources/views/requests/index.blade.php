@@ -157,7 +157,7 @@
                                                             <span class="fe fe-more-horizontal fs-14"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                            @if($item->status < 500 )
+                                                            @if($item->status != 100 && $item->status < 400 )
                                                                 <li><a href="{{ route('requests.select-assessor', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Pilih Asesor & QC</a></li>
                                                             @endif
                                                             @if ($item->status == 1000 && $item->status_siinas == 0)

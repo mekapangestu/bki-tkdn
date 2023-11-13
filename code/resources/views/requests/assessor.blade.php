@@ -108,14 +108,49 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @if ($data->status > 101)
+                                <div class="card custom-card">
+                                    <div class="card-header border-bottom">
+                                        <h3 class="card-title">Internal Document</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="">
+                                            <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-bottom-0" style="width: 25px">No</th>
+                                                        <th class="border-bottom-0">File Name</th>
+                                                        <th class="border-bottom-0">Created At</th>
+                                                        <th class="border-bottom-0">Updated At</th>
+                                                        <th class="border-bottom-0" style="width: 50px">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($data->internal_files as $file)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $file->label }}</td>
+                                                            <td>{{ $file->created_at }}</td>
+                                                            <td>{{ $file->updated_at }}</td>
+                                                            <td>
+                                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                                 <label for="" class="form-label">Asesor</label>
                                                 <select class="form-control select-search" name="asesor[]" multiple required data-placeholder="Pilih Asesor">
                                                     @foreach ($user->where('role_id', 3) as $asesor)
-                                                        <option value="{{ $asesor->id }}" {{in_array($asesor->id, $data->asesors->pluck('asesor')->all()) ? 'selected':''}}>{{ $asesor->name }}</option>
+                                                        <option value="{{ $asesor->id }}" {{in_array($asesor->id, $data->asesors?->pluck('asesor')->all() ?? []) ? 'selected':''}}>{{ $asesor->name }}</option>
                                                     @endforeach
                                                 </select>
                                         </div>
@@ -125,7 +160,7 @@
                                                 <label for="" class="form-label">QC</label>
                                                 <select class="form-control select-search" name="qc[]" multiple required data-placeholder="Pilih QC">
                                                     @foreach ($user->where('role_id', 6) as $qc)
-                                                        <option value="{{ $qc->id }}" {{in_array($qc->id, $data->qc->pluck('qc')->all()) ? 'selected':''}}>{{ $qc->name }}</option>
+                                                        <option value="{{ $qc->id }}" {{in_array($qc->id, $data->qc?->pluck('qc')->all() ?? []) ? 'selected':''}}>{{ $qc->name }}</option>
                                                     @endforeach
                                                 </select>
                                         </div>
