@@ -477,7 +477,7 @@ class RequestController extends Controller
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
             $log->notes = $request->note;
-            $log->status = $project->stageStatus->name;
+            $log->status = $project->stageStatus->name . ' - ' . $project->statuses->name;
             $log->save();
 
             $admin = User::find(2);
@@ -600,7 +600,7 @@ class RequestController extends Controller
             $log->project_id = $id;
             $log->causer = auth()->user()->name;
             $log->notes = $request->note;
-            $log->status = $project->stageStatus->name;
+            $log->status = $project->stageStatus->name . ' - ' . $project->statuses->name;
             $log->save();
 
             foreach ($request->kode_hs as $key => $value) {
