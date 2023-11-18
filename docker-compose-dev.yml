@@ -22,9 +22,9 @@ services:
     ports:
       - "5415:5432"
     environment:
-      POSTGRES_PASSWORD: P@ssw0rd
-      POSTGRES_USER: root
-      POSTGRES_DB: tkdn_db
+      POSTGRES_PASSWORD: b49Hn6t9YM4Z
+      POSTGRES_USER: tkdn_usr
+      POSTGRES_DB: db_tkdn
     volumes:
       - db:/data/postgres
       - ./database:/database
