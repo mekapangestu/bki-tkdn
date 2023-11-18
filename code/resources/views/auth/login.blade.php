@@ -48,6 +48,7 @@
                                 <div class="text-end pt-4">
                                     <p class="mb-0"><a href="/forgot-password" class="text-primary ms-1">Forgot Password?</a></p>
                                 </div>
+                                {!!ReCaptcha::htmlFormSnippet()!!}
                                 <div class="container-login100-form-btn">
                                     <button type="submit" class="login100-form-btn btn-primary">
                                         Login

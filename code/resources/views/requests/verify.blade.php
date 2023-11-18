@@ -172,7 +172,7 @@
                                 <div class="col-xl-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label for="" class="form-label">BAST</label>
-                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="bast" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="bast" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -229,7 +229,7 @@
                                 <div class="row">
                                     <input type="text" class="form-control col-2" name="file_name[]">
                                     <br>
-                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar">
                                 </div>
                             </div>
                         </div>

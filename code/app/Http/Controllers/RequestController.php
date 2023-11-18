@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUser;
 use App\Mail\VerifyFinalSubmit;
 use App\Models\Log;
 use App\Models\Qcs;
@@ -258,11 +259,13 @@ class RequestController extends Controller
                     $productType->save();
                 }
 
-                Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
-                    $message->from('no-reply@site.com', "Permohonan TKDN");
-                    $message->subject("Informasi Akun Aplikasi TKDN BKI");
-                    $message->to($project->user->email);
-                });
+                // Mail::send('emails.welcome', , function ($message) use ($project) {
+                //     $message->from('no-reply@site.com', "Permohonan TKDN");
+                //     $message->subject("Informasi Akun Aplikasi TKDN BKI");
+                //     $message->to($project->user->email);
+                // });
+
+                Mail::to($project->user->email)->send(new NewUser(['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password']));
             }
 
             DB::commit();
@@ -324,7 +327,7 @@ class RequestController extends Controller
                 }
             }
 
-            foreach ($request->file_name as $k => $files) {
+            foreach ($request->file_name ?? [] as $k => $files) {
                 if (isset($request->file('foto')[$k])) {
                     $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
                 }
@@ -341,7 +344,7 @@ class RequestController extends Controller
                 }
             }
 
-            foreach ($request->kode_hs as $key => $value) {
+            foreach ($request->kode_hs ?? [] as $key => $value) {
                 $productType = ProductType::where('project_id', $request->project_id)->find($key);
                 $productType->kode_hs = $request->kode_hs[$key];
                 $productType->tipe_produk = $request->tipe_produk[$key];
@@ -600,12 +603,12 @@ class RequestController extends Controller
                     'actionText' => null,
                     'actionURL' => null
                 ];
-                // Mail::send('emails.notify', $details, function ($message) use ($user) {
-                //     $message->from('no-reply@site.com', "Permohonan TKDN");
-                //     $message->subject("Permohonan TKDN");
-                //     $message->to($user->email);
-                // });
-                Mail::to('muliaabdim@gmail.com')->send(new VerifyFinalSubmit($details));
+                Mail::send('emails.notify', $details, function ($message) use ($user) {
+                    $message->from('no-reply@site.com', "Permohonan TKDN");
+                    $message->subject("Permohonan TKDN");
+                    $message->to($user->email);
+                });
+                // Mail::to('muliaabdim@gmail.com')->send(new VerifyFinalSubmit($details));
             }
 
             $log = new Log();

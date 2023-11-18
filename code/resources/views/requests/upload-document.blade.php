@@ -153,12 +153,20 @@
                                         @csrf
                                         <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                                         <div class="row">
-                                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="col-xl-11 col-md-11 col-sm-11">
                                                 <div class="form-group">
                                                     <label for="" class="form-label">SPTJM</label>
-                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                                    <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="sptjm" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar">
                                                 </div>
                                             </div>
+                                            @if ($project->project_files->firstWhere('label', 'SPTJM')?->path)
+                                            <div class="col-xl-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <label for="spk_no" class="form-label">&nbsp;</label>
+                                                    <a href="{{asset('storage/' . $project->project_files->reverse()->firstWhere('label', 'SPTJM')?->path)}}" class="btn btn-success" style="width:100px" target="_blank">View</a>
+                                                </div>
+                                            </div>
+                                            @endif
                                         </div>
                                         @foreach (['NIB', 'Izin Usaha Industri', 'Akta Perusahaan', 'NPWP', 'Katalog Produk', 'Laporan Penjualan', 'Jalur Pemasaran'] as $req_doc)
                                             <div class="d-flex justify-content-between">
@@ -174,7 +182,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Nomor Dokumen</label>
                                                         <div class="row">
-                                                            <input type="text" class="form-control" name="req_number[]" required>
+                                                            <input type="text" class="form-control" name="req_number[]" required value="{{$project->project_files->reverse()->firstWhere('label', $req_doc)?->number }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,7 +190,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Berlaku Sejak</label>
                                                         <div class="row">
-                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_since[]">
+                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_since[]" value="{{$project->project_files->reverse()->firstWhere('label', $req_doc)?->valid_since }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -190,7 +198,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Berlaku Sampai</label>
                                                         <div class="row">
-                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_until[]">
+                                                            <input type="text" class="form-control fc-datepicker" name="req_valid_until[]" value="{{$project->project_files->reverse()->firstWhere('label', $req_doc)?->valid_until }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +206,7 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                         <div class="row">
-                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="req_file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                            <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="req_file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar" required value="asd">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +214,11 @@
                                                     <div class="form-group">
                                                         <label for="spk_no" class="form-label">&nbsp;</label>
                                                         <div class="row">
+                                                            @if ($project->project_files->firstWhere('label', $req_doc)?->path)
+                                                            <a href="{{asset('storage/' . $project->project_files->reverse()->firstWhere('label', $req_doc)?->path)}}" class="btn btn-success" style="width:100px" target="_blank">View</a>
+                                                            @else   
                                                             <a href="#" class="btn btn-danger disabled" style="width:100px">Remove</a>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,10 +231,68 @@
                                                 <div class="form-group">
                                                     <label for="spk_no" class="form-label">Upload Foto Produk</label>
                                                     <div class="row">
-                                                        <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->id }}]" accept="image/*">
+                                                        <input class="form-control col-8" type="file" id="formFileMultiple" autocomplete="off" name="foto[{{ $item->id }}]" accept="image/*">
+                                                        {{-- @if ($project->foto->firstWhere('id_produk', $item->id)?->path) --}}
+                                                            {{-- <a href="{{asset('storage/' . $project->foto->firstWhere('id_produk', $item->id)?->path)}}" class="btn btn-success col-4" style="width:100px" target="_blank">View</a> --}}
+                                                        {{-- @endif --}}
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if (count($project->files))
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                    <table class="table table-bordered text-nowrap border-bottom text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                {{-- <th class="border-bottom-0" style="width: 25px">No</th> --}}
+                                                                <th class="border-bottom-0">Nama Dokumen</th>
+                                                                <th class="border-bottom-0">Nomor Dokumen</th>
+                                                                <th class="border-bottom-0">Berlaku Sejak</th>
+                                                                <th class="border-bottom-0">Berlaku Sampai</th>
+                                                                <th class="border-bottom-0">Version</th>
+                                                                <th class="border-bottom-0">Uploaded At</th>
+                                                                {{-- <th class="border-bottom-0">Updated At</th> --}}
+                                                                <th class="border-bottom-0" style="width: 50px">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($project->files as $file)
+                                                                @if ($item->id == $file->id_produk)
+                                                                    <tr>
+                                                                        {{-- <td>{{ $loop->iteration }}</td> --}}
+                                                                        <td>{{ $file->label }}</td>
+                                                                        <td>{{ $file->number }}</td>
+                                                                        <td>{{ $file->valid_since }}</td>
+                                                                        <td>{{ $file->valid_until }}</td>
+                                                                        <td>{{ $file->version }}</td>
+                                                                        <td>{{ $file->created_at }}</td>
+                                                                        {{-- <td>{{ $file->updated_at }}</td> --}}
+                                                                        <td>
+                                                                            <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                                            <a href="{{ route('delete.file', $file->id) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        @php
+                                                        $allowedMimeTypes = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief','jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
+                                                        $explodeImage = explode('.', asset('storage/' . $project->foto->firstWhere('id_produk', $item->id)?->path));
+                                                        $extension = end($explodeImage);
+                                                        @endphp
+                                                        @if (in_array($extension, $allowedMimeTypes))
+                                                            <a href="javascript:void(0)">
+                                                                <img class="img-responsive br-5" src="{{ asset('storage/' . $project->foto->firstWhere('id_produk', $item->id)?->path) }}">
+                                                            </a>
+                                                            @else
+                                                            <a onclick="window.open('{{asset('storage/' . $project->foto->firstWhere('id_produk', $item->id)?->path)}}', '_blank');" href="{{asset('storage/' . $project->foto->firstWhere('id_produk', $item->id)?->path)}}">View Foto Produk</a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="row">
                                                <div class="col-3">
                                                     <div class="form-group">
@@ -281,7 +351,7 @@
                                                         <div class="form-group">
                                                             <label for="spk_no" class="form-label">Upload Dokumen</label>
                                                             <div class="row">
-                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->id }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf" required>
+                                                                <input class="form-control" type="file" id="formFileMultiple" autocomplete="off" name="file[{{ $item->id }}][]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -342,7 +412,7 @@
             //                 <div class="row">
             //                     <input type="text" class="form-control col-2" name="file_name[]">
             //                     <br>
-            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+            //                     <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar">
             //                 </div>
             //             </div>
             //         </div>

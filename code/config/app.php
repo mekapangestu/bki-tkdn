@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -238,7 +239,8 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'Slug' => App\Helpers\Slug::class,
-        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class
+        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class,
+        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class
     ],
 
 ];
