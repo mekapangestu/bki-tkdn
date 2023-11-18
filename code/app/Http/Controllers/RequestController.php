@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyFinalSubmit;
 use App\Models\Log;
 use App\Models\Qcs;
 use App\Models\User;
@@ -44,7 +45,7 @@ class RequestController extends Controller
                 return $q->where('user_id', '=', auth()->user()->id);
             })
             ->whereIn('stage', [1, 2])
-            ->where('status','!=', 0)
+            ->where('status', '!=', 0)
             ->get();
 
         $title = "List Permohonan Masuk/Diterima";
@@ -74,12 +75,12 @@ class RequestController extends Controller
 
     public function verifyAdmin($id)
     {
-        abort_unless(auth()->user()->hasRole(['superadmin','administrator']), 404);
+        abort_unless(auth()->user()->hasRole(['superadmin', 'administrator']), 404);
 
         $project = Projects::with('files', 'orders')->find($id);
 
         $data = $project->orders->siinas_data;
-        
+
         $title = "Verifikasi Data";
 
         return view('requests.verify-admin', compact('project', 'data', 'title'));
@@ -104,7 +105,7 @@ class RequestController extends Controller
             $log->notes = $request->alasan_tolak;
             $log->status = $project->stageStatus->name;
             $log->save();
-    
+
             $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
             $payload = [
                 "tahap" => 2,
@@ -116,9 +117,9 @@ class RequestController extends Controller
                 // "tgl_bast" => now()->format('Y-m-d'),
                 "tgl_bast" => '',
             ];
-    
+
             $response = Http::post($endPoint, $payload);
-    
+
             $documentReceipt = new DocumentReceipt();
             $documentReceipt->project_id = $project->id;
             $documentReceipt->stage = 2;
@@ -128,20 +129,20 @@ class RequestController extends Controller
                 $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
                 $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
             } else if ($response) {
-                $documentReceipt->siinas_response = (string)$response;
+                $documentReceipt->siinas_response = (string) $response;
             }
-    
+
             if ($response) {
                 $documentReceipt->siinas_post_at = now();
             }
-    
+
             $documentReceipt->save();
-    
+
             $user = User::find($project->user_id);
-    
+
             $details = [
                 'from' => auth()->id(),
-                'message' => ($request->action == 0 ? 'Menolak' : 'Menerima')  . ' Nomor Berkas ' . $project->no_berkas,
+                'message' => ($request->action == 0 ? 'Menolak' : 'Menerima') . ' Nomor Berkas ' . $project->no_berkas,
                 'actionURL' => route('requests.index', $project->id)
             ];
 
@@ -172,7 +173,7 @@ class RequestController extends Controller
     public function selectAssessor($id)
     {
         abort_unless(auth()->user()->hasRole(['superadmin', 'administrator']), 404);
-        
+
         $data = Projects::with('asesors:project_id,asesor', 'qc:project_id,qc')->find($id);
         $user = User::all();
 
@@ -186,7 +187,7 @@ class RequestController extends Controller
         DB::beginTransaction();
         try {
             $project = Projects::find($request->project_id);
-            
+
             Asesors::where('project_id', $request->project_id)->delete();
             Qcs::where('project_id', $request->project_id)->delete();
 
@@ -224,8 +225,8 @@ class RequestController extends Controller
                 $user->notify(new ProjectNotification($details));
             }
 
-            
-            
+
+
             $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $request->project_id);
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
@@ -234,7 +235,7 @@ class RequestController extends Controller
             if (isset($request->surat_tugas)) {
                 $this->singleUpload(1, $request->file('surat_tugas'), $request->project_id, 'Surat Tugas', 'internal');
             }
-            
+
             if ($project->status == 101) {
                 $project->status = 102;
                 $project->save();
@@ -251,7 +252,7 @@ class RequestController extends Controller
                     $productType->spesifikasi = $request->spesifikasi[$key];
                     $productType->save();
                 }
-                
+
                 Mail::send('emails.welcome', ['name' => $project->user->name, 'email' => $project->user->email, 'password' => 'password'], function ($message) use ($project) {
                     $message->from('no-reply@site.com', "Permohonan TKDN");
                     $message->subject("Informasi Akun Aplikasi TKDN BKI");
@@ -271,7 +272,7 @@ class RequestController extends Controller
     {
         $project = Projects::with('files')->find($id);
 
-        abort_unless(auth()->user()->hasRole('guest') && in_array($project->status_siinas, [2,3,4]), 404);
+        abort_unless(auth()->user()->hasRole('guest') && in_array($project->status_siinas, [2, 3, 4]), 404);
 
         $data = $project->orders->siinas_data;
 
@@ -315,7 +316,7 @@ class RequestController extends Controller
                     $upload->save();
                 }
             }
-            
+
             foreach ($request->file_name as $k => $files) {
                 if (isset($request->file('foto')[$k])) {
                     $this->singleUpload(1, $request->file('foto')[$k], $request->project_id, 'Foto', 'foto', $k);
@@ -421,16 +422,16 @@ class RequestController extends Controller
         $title = "Verifikasi Kelengkapan Dokumen";
 
         $assessor = DB::table('users')
-        ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.contact', 'users.email')
-        ->where('asesors.project_id', $id)
-        ->get();
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
 
-    $qc = DB::table('users')
-        ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.contact', 'users.email')
-        ->where('qcs.project_id', $id)
-        ->get();
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
 
         return view('requests.verify', compact('project', 'data', 'kelompok_barang', 'title', 'assessor', 'qc'));
     }
@@ -485,7 +486,7 @@ class RequestController extends Controller
 
             $details = [
                 'from' => auth()->id(),
-                'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending'))  . ' Nomor Berkas ' . $project->no_berkas,
+                'message' => ($request->action == 0 ? 'Menolak' : ($request->action == 1 ? 'Menerima' : 'Freeze/Pending')) . ' Nomor Berkas ' . $project->no_berkas,
                 'actionURL' => route('requests.assessor-verify', $project->id)
             ];
 
@@ -517,16 +518,16 @@ class RequestController extends Controller
         $title = "Approval Permohonan Verifikasi";
 
         $assessor = DB::table('users')
-        ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.contact', 'users.email')
-        ->where('asesors.project_id', $id)
-        ->get();
+            ->leftJoin('asesors', 'asesors.asesor', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('asesors.project_id', $id)
+            ->get();
 
-    $qc = DB::table('users')
-        ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
-        ->select('users.id', 'users.name', 'users.contact', 'users.email')
-        ->where('qcs.project_id', $id)
-        ->get();
+        $qc = DB::table('users')
+            ->leftJoin('qcs', 'qcs.qc', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.contact', 'users.email')
+            ->where('qcs.project_id', $id)
+            ->get();
 
         return view('requests.verify-admin-final', compact('project', 'data', 'title', 'assessor', 'qc'));
     }
@@ -536,7 +537,7 @@ class RequestController extends Controller
         DB::beginTransaction();
         try {
             $status = $request->action;
-    
+
             $project = Projects::with('data', 'files')->find($id);
             $project->status_siinas = $status;
             if ($status == 0) {
@@ -545,9 +546,9 @@ class RequestController extends Controller
             } else {
                 $project->status = 200;
                 $project->stage = 2;
-    
+
                 $project->save();
-    
+
                 $path = $project->internal_files?->where('label', 'SPTJM')?->first()->path ?? '';
 
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
@@ -560,9 +561,9 @@ class RequestController extends Controller
                     "url_sptjm" => $path ? asset('storage/' . $path) : '-',
                     "tgl_bast" => $project->bast_date
                 ];
-    
+
                 $response = Http::post($endPoint, $payload);
-    
+
                 $documentReceipt = new DocumentReceipt();
                 $documentReceipt->project_id = $project->id;
                 $documentReceipt->stage = 2;
@@ -572,16 +573,16 @@ class RequestController extends Controller
                     $documentReceipt->siinas_response = json_encode($response, JSON_PRETTY_PRINT);
                     $documentReceipt->siinas_message = isset($response['message']) ? $response['message'] : null;
                 } else if ($response) {
-                    $documentReceipt->siinas_response = (string)$response;
+                    $documentReceipt->siinas_response = (string) $response;
                 }
-    
+
                 if ($response) {
                     $documentReceipt->siinas_post_at = now();
                 }
-    
+
                 $documentReceipt->save();
             }
-            if (in_array($status, [0,2])) {
+            if (in_array($status, [0, 2])) {
                 $user = User::find($project->user_id);
                 $details = [
                     'body' => 'Hi ' . $user->name . ', Permohonan anda telah ' . $request->action == 0 ? 'ditolak' : 'dikembalikan' . ' dengan alasan:',
@@ -589,11 +590,12 @@ class RequestController extends Controller
                     'actionText' => null,
                     'actionURL' => null
                 ];
-                Mail::send('emails.notify', $details, function ($message) use ($user) {
-                    $message->from('no-reply@site.com', "Permohonan TKDN");
-                    $message->subject("Permohonan TKDN");
-                    $message->to($user->email);
-                });
+                // Mail::send('emails.notify', $details, function ($message) use ($user) {
+                //     $message->from('no-reply@site.com', "Permohonan TKDN");
+                //     $message->subject("Permohonan TKDN");
+                //     $message->to($user->email);
+                // });
+                Mail::to('muliaabdim@gmail.com')->send(new VerifyFinalSubmit($details));
             }
 
             $log = new Log();

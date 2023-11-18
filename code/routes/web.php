@@ -10,6 +10,7 @@ use App\Http\Controllers\DeliveryOrderController;
 use App\Http\Controllers\JobExecutorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SosController;
+use App\Http\Controllers\TestMailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilController;
 use App\Http\Controllers\CoiController;
@@ -51,7 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{id}/update', [UserController::class, 'updateProfile'])->name('profile.update');
     Route::put('/profile/{id}/update-password', [UserController::class, 'updatePassword'])->name('profile.update-password');
-    
+
     // List Permohonan
     Route::resource('requests', RequestController::class);
     Route::get('/requests/index/terima', [RequestController::class, 'index'])->name('requests.index');
@@ -68,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/requests/verify-admin-final/{id}', [RequestController::class, 'verifyAdminFinal'])->name('requests.verify-admin-final');
     Route::post('/requests/verify-admin-final/{id}', [RequestController::class, 'verifyAdminFinalSubmit'])->name('requests.verify-admin-final-submit');
-    
+
     // Proses Verifikasi
     Route::resource('projects', ProjectsController::class);
     Route::get('/persetujuan-pemohon', [ProjectsController::class, 'persetujuanPemohonList'])->name('projects.persetujuan');
@@ -77,7 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/verify2/{id}', [ProjectsController::class, 'verify2'])->name('projects.verify2');
     Route::post('/projects/verify2/{id}', [ProjectsController::class, 'verify2Submit'])->name('projects.verify2-submit');
     Route::post('/projects/draf/{id}', [ProjectsController::class, 'drafSubmit'])->name('projects.draf-submit');
-    
+
     Route::get('/projects/draf/{id}', [ProjectsController::class, 'draf'])->name('projects.draf');
     Route::get('/projects/tkdn/{id}', [ProjectsController::class, 'tkdn'])->name('projects.tkdn');
     Route::get('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantar'])->name('projects.surat-pengantar');
@@ -85,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdn'])->name('projects.verify-tkdn');
     Route::get('/projects/detail/{id}', [ProjectsController::class, 'detail'])->name('projects.detail');
     Route::get('/projects/view/{id}', [ProjectsController::class, 'view'])->name('projects.view');
-    
+
     Route::post('/projects/verify-tkdn/{id}', [ProjectsController::class, 'verifyTkdnSubmit'])->name('projects.verify-tkdn-submit');
     Route::post('/projects/tkdn/{id}', [ProjectsController::class, 'tkdnSubmit'])->name('projects.tkdn-submit');
     Route::post('/projects/surat-pengantar/{id}', [ProjectsController::class, 'suratPengantarSubmit'])->name('projects.surat-pengantar-submit');
@@ -100,11 +101,19 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('role', RoleController::class)->middleware('role:superadmin');
 
-    Route::resource('client', ClientController::class)->middleware('role:superadmin');
+    // Route::resource('client', ClientController::class)->middleware('role:superadmin');
 
     Route::resource('logs', DocumentReceiptController::class)->middleware('role:superadmin');
     Route::resource('whitelist-ip', WhitelistIpController::class)->middleware('role:superadmin');
     Route::resource('status', StatusController::class)->middleware('role:superadmin');
+});
+
+Route::controller(TestMailController::class)->group(function () {
+    Route::get('/send-email', 'send_email');
+});
+
+Route::get('/phpinfo', function () {
+    phpinfo();
 });
 
 require __DIR__ . '/auth.php';
