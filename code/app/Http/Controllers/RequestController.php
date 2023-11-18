@@ -541,14 +541,14 @@ class RequestController extends Controller
             $project = Projects::with('data', 'files')->find($id);
             $project->status_siinas = $status;
             if ($status == 0) {
-                $project->status = 103;
+                // $project->status = 103;
                 $project->save();
             } else {
                 $project->status = 200;
                 $project->stage = 2;
 
                 $project->save();
-
+            }
                 $path = $project->internal_files?->where('label', 'SPTJM')?->first()->path ?? '';
 
                 $endPoint = 'http://api.kemenperin.go.id/tkdn/LVIRecieveTahap2.php';
@@ -581,7 +581,7 @@ class RequestController extends Controller
                 }
 
                 $documentReceipt->save();
-            }
+            // }
             if (in_array($status, [0, 2])) {
                 $user = User::find($project->user_id);
                 $details = [
