@@ -128,7 +128,7 @@ elif  [ "stagingcontainer" = $CI_JOB_STAGE ]; then
     docker exec tkdn-bki-php php artisan cache:clear
     docker exec tkdn-bki-php php artisan config:clear
     docker exec tkdn-bki-php php artisan storage:link
-    docker exec tkdn-bki-php php artisan migrate
+    # docker exec tkdn-bki-php php artisan migrate
     # docker exec tkdn-bki-php php artisan db:seed
 
     # cd db
