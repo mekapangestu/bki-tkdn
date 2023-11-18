@@ -557,7 +557,7 @@ class RequestController extends Controller
                     "verifikator" => "BKI",
                     "no_berkas" => $project->no_berkas,
                     "status" => $status,
-                    "alasan_tolak" => $project->note,
+                    "alasan_tolak" => $request->note,
                     "url_sptjm" => $path ? asset('storage/' . $path) : '-',
                     "tgl_bast" => $project->bast_date
                 ];
