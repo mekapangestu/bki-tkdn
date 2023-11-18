@@ -66,14 +66,63 @@
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $project->id }}" readonly>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Kode Produk</label>
+                                                @foreach ($categories as $item)
+                                                    @if ($item->id == $data->kd_produk)
+                                                        <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $item->id . ' - ' . $item->nama_kategori }}" disabled>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Nama Perusahaan</label>
+                                                <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_perusahaan }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">No HP CP</label>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_hp_cp }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Alamat Kantor</label>
+                                                <textarea class="form-control mb-4" id="spk_no" autocomplete="off" name="spk_no" rows="4" disabled>{!! $data->alamat_kantor !!}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">NIB</label>
                                                 <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nib }}" disabled>
                                             </div>
                                         </div>
-
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Nomor Berkas</label>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_berkas }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Email CP</label>
+                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->email_cp }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="spk_no" class="form-label">Alamat Pabrik</label>
+                                                <textarea class="form-control mb-4" id="spk_no" autocomplete="off" name="spk_no" rows="4" disabled>{!! $data->alamat_pabrik !!}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">NPWP</label>
@@ -81,69 +130,25 @@
                                             </div>
                                         </div>
                                         <div class="col-xl-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <label for="spk_no" class="form-label">Nama Perusahaan</label>
-                                            <input type="text" class="form-control" autocomplete="off" name="spk_no" value="{{ $data->nama_perusahaan }}" disabled>
-                                        </div>
-                                    </div>
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="spk_no" class="form-label">Kode Produk</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->kd_produk }}" disabled>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="spk_no" class="form-label">Nomer Berkas</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_berkas }}" disabled>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="spk_no" class="form-label">Alamat Kantor</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_kantor }}" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Nama CP</label>
                                                 <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->nama_cp }}" disabled>
                                             </div>
                                         </div>
-
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="spk_no" class="form-label">No HP CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->no_hp_cp }}" disabled>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="spk_no" class="form-label">Email CP</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->email_cp }}" disabled>
-                                            </div>
-                                        </div>
-
                                         <div class="col-xl-12 col-md-12 col-sm-12">
                                             <div class="form-group">
                                                 <label for="spk_no" class="form-label">Jabatan CP</label>
                                                 <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->jabatan_cp }}" disabled>
                                             </div>
                                         </div>
-
-                                        <div class="col-xl-12 col-md-12 col-sm-12">
+                                        {{-- <div class="col-xl-4 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="spk_no" class="form-label">Alamat Pabrik</label>
-                                                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $data->alamat_pabrik }}" disabled>
+                                                <label for="spk_no" class="form-label">Dokumen</label>
+                                                <a class="btn btn-primary" href="{{ $data->dokumen }}" target="_blank"><i class="fe fe-eye"></i>&nbsp;Preview Dokumen</a>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
-                                </div>
+                                </div>                                
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist" style="padding: 25px;">
                                         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#collapseProduk" type="button" role="tab" aria-controls="collapseProduk" aria-selected="true">Produk</button>
@@ -160,7 +165,7 @@
                                         <table class="table" id="collapseProduk">
                                             @forelse (collect($data->produk) as $item)
                                                 <tr>
-                                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {{ $item->produk }}</th>
+                                                    <th colspan="3" style="text-align: left; vertical-align: middle; font-size: 20px; background-color: #e25b31; color: #fff">Produk {{ $loop->iteration }} - {!! $item->produk !!}</th>
                                                 </tr>
                                                 <tr>
                                                     <td width="20%">ID Produk</td>
@@ -170,7 +175,7 @@
                                                 <tr>
                                                     <td width="30%">Nama Produk</td>
                                                     <td width="1%">:</td>
-                                                    <td>{{ $item->produk }}</td>
+                                                    <td>{!! $item->produk !!}</td>
                                                 </tr>
                                             @empty
                                                 <tr>

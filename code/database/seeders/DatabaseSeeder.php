@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StageStatusTableSeeder::class);
         $this->call(StatusesUpdateTableSeeder::class);
         $this->call(KblisTableSeeder::class);
+        $this->call(ProductCategoriesTableSeeder::class);
     }
 }

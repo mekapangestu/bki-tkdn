@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KelompokBarang;
 use App\Models\DocumentReceipt;
+use App\Models\ProductCategory;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
 
@@ -84,7 +85,9 @@ class RequestController extends Controller
 
         $title = "Verifikasi Data";
 
-        return view('requests.verify-admin', compact('project', 'data', 'title'));
+        $categories = ProductCategory::all();
+
+        return view('requests.verify-admin', compact('project', 'data', 'title', 'categories'));
     }
 
     public function verifyAdminSubmit(Request $request, $id)
@@ -180,7 +183,9 @@ class RequestController extends Controller
 
         $title = "Pilih Assessor & QC";
 
-        return view('requests.assessor', compact('data', 'user', 'title'));
+        $categories = ProductCategory:: all();
+
+        return view('requests.assessor', compact('data', 'user', 'title', 'categories'));
     }
 
     public function selectAssessorSubmit(Request $request, $id)
@@ -293,7 +298,9 @@ class RequestController extends Controller
             ->where('qcs.project_id', $id)
             ->get();
 
-        return view('requests.upload-document', compact('data', 'project', 'title', 'assessor', 'qc'));
+        $categories = ProductCategory::all();
+
+        return view('requests.upload-document', compact('data', 'project', 'title', 'assessor', 'qc', 'categories'));
     }
 
     public function uploadDocumentsSubmit(Request $request)
@@ -408,7 +415,9 @@ class RequestController extends Controller
 
         $title = "Detail";
 
-        return view('requests.detail', compact('project', 'data', 'title', 'assessor', 'qc'));
+        $categories = ProductCategory::all();
+
+        return view('requests.detail', compact('project', 'data', 'title', 'assessor', 'qc', 'categories'));
 
         // return view('projects.detail', compact('data'));
     }
