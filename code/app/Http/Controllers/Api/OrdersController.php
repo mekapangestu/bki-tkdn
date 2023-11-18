@@ -284,6 +284,7 @@ class OrdersController extends Controller
                 if ($request->get('status') == "0") {
                     // $project->status = 201;
                     // $qc->notify(new ProjectNotification($details));
+                    $project->status = 501;
                 } else {
                     $project->status = 500;
                 }

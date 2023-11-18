@@ -105,7 +105,7 @@
                             <h5>Tahap 2</h5>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                    <a href="{{ route('requests.index') }}" style="all: unset;">
+                                    <a href="{{ route('projects.index') }}" style="all: unset;">
                                         <div class="card overflow-hidden">
                                             <div class="card-body">
                                                 <div class="d-flex">

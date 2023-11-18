@@ -213,6 +213,9 @@
                                                             @if ($item->status == 102)
                                                                 <li><a href="{{ route('projects.edit', $item->id) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span> Lengkapi Data</a></li>
                                                             @endif
+                                                            @if ($item->status == 501)
+                                                                <li class=""><a href="{{ asset('storage/'.$item->internal_files->firstWhere('label', 'Surat Tugas')->path) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Selesai"><span class="fe fe-edit fs-14"></span> View Draf Laporan Hasil Verifikasi</a></li>
+                                                            @endif
                                                             @if ($item->status == 1210)
                                                                 <li><a href="{{ url($item->projectMeta?->url_sertifikat_terbit) }}" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View" target="_blank"><span class="fe fe-eye fs-14"></span> View Sertifikat</a></li>
                                                             @endif
