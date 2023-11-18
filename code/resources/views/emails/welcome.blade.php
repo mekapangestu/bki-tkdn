@@ -1,4 +1,15 @@
-<p>Selamat Datang&nbsp;<strong>{{ $name }}</strong> di aplikasi <strong>TKDN PT. Biro Klasifikasi Indonesia.&nbsp;</strong>Permohonan anda sudah kami terima.<br />Anda sudah kami buatkan akun untuk dapat melanjutkan proses verifikasi perhitungan nilai TKDN anda pada aplikasi&nbsp;kami.</p>
+<p>
+    Terima kasih telah mempercayakan kami sebagai Lembaga Verifikasi Independen Penghitungan Tingkat Komponen Dalam Negeri dan BMP untuk perusahaan anda.
+</p>
+<br />
+<p>
+    Permohonan anda sudah kami terima di aplikasi TKDN PT. Biro Klasifikasi Indonesia (Persero).
+</p>
+<p>
+    Selanjutnya, Anda telah kami persiapkan akun untuk dapat melanjutkan proses di aplikasi TKDN BKI.
+</p>
+<br/>
+<br/>
 <p>Berikut detail akun anda :&nbsp;</p>
 <table style="width: 382px;" border="0" cellspacing="1" cellpadding="1" align="left">
     <tbody>
@@ -21,7 +32,7 @@
 </table>
 <p><br /><br /></p>
 <p>&nbsp;</p>
-<p>Klik&nbsp;<a href="http://127.0.0.1:8000">disini</a>&nbsp;untuk melanjutkan login.</p>
+<p>Klik&nbsp;<a href="https://tkdn.bki.co.id">disini</a>&nbsp;untuk melanjutkan login.</p>
 <p>&nbsp;</p>
 <p><strong>*Mohon&nbsp;untuk melengkapi dokumen-dokumen yang dibutuhkan untuk perhitungan nilai TKDN produk anda.</strong></p>
 <p><strong>Berikut daftar dokumen yang harus di upload </strong>:</p>

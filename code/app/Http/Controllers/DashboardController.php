@@ -132,7 +132,7 @@ class DashboardController extends Controller
                     return $q->where('asesor', '=', auth()->user()->id);
                 });
             })->count();
-            $return = Projects::where('status_siinas', 3)->when(auth()->user()->hasRole('assessor'), function ($q) {
+            $return = Projects::where('status_siinas', 2)->when(auth()->user()->hasRole('assessor'), function ($q) {
                 return $q->whereHas('asesors', function ($q) {
                     return $q->where('asesor', '=', auth()->user()->id);
                 });
@@ -225,7 +225,7 @@ class DashboardController extends Controller
                     return $q->where('qc', '=', auth()->user()->id);
                 });
             })->count();
-            $return = Projects::where('status_siinas', 3)->when(auth()->user()->hasRole('qc'), function ($q) {
+            $return = Projects::where('status_siinas', 2)->when(auth()->user()->hasRole('qc'), function ($q) {
                 return $q->whereHas('qc', function ($q) {
                     return $q->where('qc', '=', auth()->user()->id);
                 });

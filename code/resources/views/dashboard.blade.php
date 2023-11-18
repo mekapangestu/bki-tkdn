@@ -63,23 +63,21 @@
                             <h5>Tahap 1</h5>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                    <a href="{{ route('projects.index') }}" style="all: unset;">
-                                        <div class="card overflow-hidden">
-                                            <div class="card-body">
-                                                <div class="d-flex">
-                                                    <div class="mt-2">
-                                                        <h6 class="">Total Permohonan</h6>
-                                                        <h2 class="mb-0 number-font">{{ $total }}</h2>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <div class="chart-wrapper mt-1">
-                                                            <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
-                                                        </div>
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="mt-2">
+                                                    <h6 class="">Total Permohonan</h6>
+                                                    <h2 class="mb-0 number-font">{{ $total }}</h2>
+                                                </div>
+                                                <div class="ms-auto">
+                                                    <div class="chart-wrapper mt-1">
+                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                                 {{-- @role('superadmin|administrator|assessor|qc-officer|kepala-verifikasi')
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
@@ -105,7 +103,7 @@
                             <h5>Tahap 2</h5>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
-                                    <a href="{{ route('projects.index') }}" style="all: unset;">
+                                    <a href="{{ route('requests.index') }}" style="all: unset;">
                                         <div class="card overflow-hidden">
                                             <div class="card-body">
                                                 <div class="d-flex">
@@ -412,40 +410,40 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                                     <a href="{{ route('projects.terbit') }}" style="all: unset;">
-                                    <div class="card overflow-hidden">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="mt-2">
-                                                    <h6 class="">Total Terbit Sertifikat</h6>
-                                                    <h2 class="mb-0 number-font">{{ $terbit }}</h2>
-                                                </div>
-                                                <div class="ms-auto">
-                                                    <div class="chart-wrapper mt-1">
-                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                        <div class="card overflow-hidden">
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="mt-2">
+                                                        <h6 class="">Total Terbit Sertifikat</h6>
+                                                        <h2 class="mb-0 number-font">{{ $terbit }}</h2>
+                                                    </div>
+                                                    <div class="ms-auto">
+                                                        <div class="chart-wrapper mt-1">
+                                                            <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </a>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                                     <a href="{{ route('projects.terbit') }}" style="all: unset;">
-                                    <div class="card overflow-hidden">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="mt-2">
-                                                    <h6 class="">Total Pelunasan Pemohon</h6>
-                                                    <h2 class="mb-0 number-font">{{ $lunas }}</h2>
-                                                </div>
-                                                <div class="ms-auto">
-                                                    <div class="chart-wrapper mt-1">
-                                                        <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                        <div class="card overflow-hidden">
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="mt-2">
+                                                        <h6 class="">Total Pelunasan Pemohon</h6>
+                                                        <h2 class="mb-0 number-font">{{ $lunas }}</h2>
+                                                    </div>
+                                                    <div class="ms-auto">
+                                                        <div class="chart-wrapper mt-1">
+                                                            <canvas id="saleschart" class="h-8 w-9 chart-dropshadow"></canvas>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </a>
                                 </div>
                             </div>
