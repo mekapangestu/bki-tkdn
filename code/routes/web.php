@@ -108,12 +108,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('status', StatusController::class)->middleware('role:superadmin');
 });
 
-Route::controller(TestMailController::class)->group(function () {
-    Route::get('/send-email', 'send_email');
-});
-
-Route::get('/phpinfo', function () {
-    phpinfo();
-});
-
 require __DIR__ . '/auth.php';
