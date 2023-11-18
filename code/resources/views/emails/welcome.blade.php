@@ -21,7 +21,7 @@
 </table>
 <p><br /><br /></p>
 <p>&nbsp;</p>
-<p>Klik&nbsp;<a href="http://127.0.0.1:8000">disini</a>&nbsp;untuk melanjutkan login.</p>
+<p>Klik&nbsp;<a href="{{route('login')}}">disini</a>&nbsp;untuk melanjutkan login.</p>
 <p>&nbsp;</p>
 <p><strong>*Mohon&nbsp;untuk melengkapi dokumen-dokumen yang dibutuhkan untuk perhitungan nilai TKDN produk anda.</strong></p>
 <p><strong>Berikut daftar dokumen yang harus di upload </strong>:</p>

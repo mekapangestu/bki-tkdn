@@ -106,6 +106,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('logs', DocumentReceiptController::class)->middleware('role:superadmin');
     Route::resource('whitelist-ip', WhitelistIpController::class)->middleware('role:superadmin');
     Route::resource('status', StatusController::class)->middleware('role:superadmin');
+
+
+    Route::get('/delete-file/{id}', [UtilController::class, 'deleteSelectedFile'])->name('delete.file');
+
+});
+
+Route::controller(TestMailController::class)->group(function () {
+    Route::get('/send-email', 'send_email');
 });
 
 require __DIR__ . '/auth.php';

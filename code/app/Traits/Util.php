@@ -88,21 +88,21 @@ trait Util
         }
     }
 
-    public function deleteSelectedFile($id, $label, $idFile)
+    public function deleteSelectedFile($idFile)
     {
-        if (DB::table('uploads')->where('request_id', '=', $id)->exists()) {
+        // if (DB::table('uploads')->where('request_id', '=', $id)->exists()) {
             // dd('work');
-            $file = DB::table('uploads')->where('request_id', '=', $id)->where('label', '=', $label)->where('id', '=', $idFile)->first();
+            $file = DB::table('uploads')->where('id', '=', $idFile)->first();
             // dd($file);
             if (file_exists('storage/' . $file->path)) {
                 // dd("work");
                 unlink('storage/' . $file->path);
-                $upload = DB::table('uploads')->where('request_id', '=', $id)->where('label', '=', $label)->where('id', '=', $idFile)->delete();
+                DB::table('uploads')->where('id', '=', $idFile)->delete();
                 return back()->with('success', 'Selected file deleted successfully.');
             } else {
                 return back()->with('error', 'Selected file not found. Failed to delete.');
             }
-        }
+        // }
     }
 
     public function deleteUploadedFolder($id, $folderName)

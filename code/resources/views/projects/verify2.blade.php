@@ -249,6 +249,30 @@
                                 @endforelse
                                 <div class="form-upload"></div>
                                 {{-- <a class="add_field_button btn btn-info" style="width:100px;margin: 12px 0;">Add File</a> --}}
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" required>
+                                            <span class="custom-control-label">Evaluasi Penilaian Sendiri Perusahaan (Self Assessment)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" required>
+                                            <span class="custom-control-label">Verifikasi Dokumen sesuai Peraturan yang berlaku</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" required>
+                                            <span class="custom-control-label">Verifikasi lapangan</span>
+                                        </label>
+                                    </div>
+                                </div>
                                 <div>
                                     <button type="submit" class="btn btn-primary mt-4 mb-0">Submit</button>
                                     <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4 mb-0">Back</a>

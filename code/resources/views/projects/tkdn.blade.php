@@ -229,6 +229,56 @@
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                         <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" required>
+                                                <span class="custom-control-label">Klasifikasi produk dengan Form yang digunakan sesuai peraturan yang berlaku</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" required>
+                                                <span class="custom-control-label">Kesesuaian penamaan produk dengan data yang verifikasi</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" required>
+                                                <span class="custom-control-label">Kesesuaian data dalam perhitungan dengan dokumen pendukung</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <span class="custom-control-label">Kesesuaian perhitungan produk tingkat 2 jika ada</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input">
+                                                <span class="custom-control-label">Kesesuaian Dokumen Pengambangan jika ada</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" required>
+                                                <span class="custom-control-label">Assesor mengerti tentang produk dan proses produksi produk yang dihitung</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
                                             <label for="" class="form-label">Alasan</label>
                                             <textarea class="form-control notes" name="note">{{ $project->data->qc_note }}</textarea>
                                         </div>

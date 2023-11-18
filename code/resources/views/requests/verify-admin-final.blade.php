@@ -218,7 +218,7 @@
                                 <div class="row">
                                     <input type="text" class="form-control col-2" name="file_name[]">
                                     <br>
-                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf">
+                                    <input class="form-control col-9 offset-md-1" type="file" id="formFileMultiple" autocomplete="off" name="file[]" accept="application/msword, application/vnd.ms-excel, text/plain, application/pdf, .zip, .rar">
                                 </div>
                             </div>
                         </div>

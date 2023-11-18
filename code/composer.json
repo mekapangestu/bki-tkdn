@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "barryvdh/laravel-dompdf": "^2.0",
+        "biscolab/laravel-recaptcha": "^6.0",
         "datajoe/postgresql-distinct-on": "^1.3",
         "doctrine/dbal": "^3.5",
         "fideloper/proxy": "^4.2",

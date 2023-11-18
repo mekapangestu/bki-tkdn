@@ -145,14 +145,15 @@
                                             </td>
                                             <td>{{ $item->no_berkas }}</td>
                                             <td>{{ $item->nama_perusahaan }}</td>
-                                            <td>
+                                            <td>{{ $item->asesors?->last()->user->name }} : {{$item->asesors?->last()->statusAsesor->name ?? '-'}}</td>
+                                            {{-- <td>
                                                 @forelse ($item->asesors as $asesor)
                                                     {{ $asesor->user->name . ' : ' . $asesor->statusAsesor?->name ?? '-' }}
                                                     <br>
                                                 @empty
                                                     -
                                                 @endforelse
-                                            </td>
+                                            </td> --}}
                                             {{-- <td>{{ $item->data?->asesor_note ?? '-' }}</td> --}}
                                             <td>{{ $item->qc?->statusQc->name ?? '-' }}</td>
                                             <td>{{ $item->statuses?->name ?? '-' }}</td>
