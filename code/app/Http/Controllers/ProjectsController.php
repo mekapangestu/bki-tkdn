@@ -346,6 +346,19 @@ class ProjectsController extends Controller
                 // $additional->kd_hs = $request->kd_hs[$id_produk];
                 // $additional->spesifikasi = $request->spesifikasi[$id_produk];
                 $additional->kbli = $request->kbli[$id_produk];
+                $additional->nama_proyek_pbj = $request->nama_proyek_pbj[$id_produk];
+                $additional->pengguna_proyek_pbj = $request->pengguna_proyek_pbj[$id_produk];
+                $additional->nib_pengguna_proyek_pbj = $request->nib_pengguna_proyek_pbj[$id_produk];
+                $additional->no_kontrak = $request->no_kontrak[$id_produk];
+                $additional->kd_provinsi_lokasi = $request->kd_provinsi_lokasi[$id_produk];
+                $additional->nama_obat = $request->nama_obat[$id_produk];
+                $additional->bentuk_sediaan = $request->bentuk_sediaan[$id_produk];
+                $additional->kemasan = $request->kemasan[$id_produk];
+                $additional->nie = $request->nie[$id_produk];
+                $additional->nm_perusahaan_produksi = $request->nm_perusahaan_produksi[$id_produk];
+                $additional->nib_perusahaan_produksi = $request->nib_perusahaan_produksi[$id_produk];
+                $additional->nm_perusahaan_desain = $request->nm_perusahaan_desain[$id_produk];
+                $additional->nib_perusahaan_desain = $request->nib_perusahaan_desain[$id_produk];
                 $additional->save();
 
                 $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
