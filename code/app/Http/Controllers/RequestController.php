@@ -542,6 +542,7 @@ class RequestController extends Controller
             $project->status_siinas = $status;
             if ($status == 0) {
                 // $project->status = 103;
+                $project->status = 200;
                 $project->save();
             } else {
                 $project->status = 200;
