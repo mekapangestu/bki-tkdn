@@ -36,79 +36,108 @@
                 </div>
             </div>
         @endif
-        @forelse ($project->productType ?? [] as $item)
-            <div class="card custom-card">
-                <div class="card-header border-bottom">
-                    <h3 class="card-title">{{ Str::headline($item->tipe_produk) }} {{ Str::headline($item->spesifikasi) }} Document</h3>
-                </div>
-                <div class="card-body">
-                    <div class="">
-                        <table id="example2" class="table table-bordered text-nowrap border-bottom text-center">
-                            <thead>
-                                <tr>
-                                    <th class="border-bottom-0" style="width: 25px">No</th>
-                                    <th class="border-bottom-0">Nama Dokumen</th>
-                                    <th class="border-bottom-0">Nomor Dokumen</th>
-                                    <th class="border-bottom-0">Berlaku Sejak</th>
-                                    <th class="border-bottom-0">Berlaku Sampai</th>
-                                    <th class="border-bottom-0">Version</th>
-                                    <th class="border-bottom-0">Created At</th>
-                                    <th class="border-bottom-0">Updated At</th>
-                                    <th class="border-bottom-0" style="width: 50px">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($project->files as $file)
-                                    @if ($item->id == $file->id_produk)
+        <div class="card">
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist" style="padding: 25px;">
+                        @forelse ($project->productType ?? [] as $item)
+                            @if ($item->id == 1)
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#collapse-{{ $item->id }}" type="button" role="tab" aria-controls="collapse-{{ $item->id }}" aria-selected="true">{{ $item->tipe_produk }}</button>
+                            @else
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#collapse-{{ $item->id }}" type="button" role="tab" aria-controls="collapse-{{ $item->id }}" aria-selected="true">{{ $item->tipe_produk }}</button>
+                            @endif
+                        @empty
+                        @endforelse
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    @forelse ($project->productType ?? [] as $item)
+                        <div class="tab-pane fade show active" id="collapse-{{ $item->id }}" role="tabpanel" aria-labelledby="collapse-{{ $item->id }}-tab">
+                            <div class="">
+                                <table id="example-{{ $item->id }}" class="table table-bordered text-nowrap border-bottom text-center">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $file->label }}</td>
-                                            <td>{{ $file->number }}</td>
-                                            <td>{{ $file->valid_since }}</td>
-                                            <td>{{ $file->valid_until }}</td>
-                                            <td>{{ $file->version }}</td>
-                                            <td>{{ $file->created_at }}</td>
-                                            <td>{{ $file->updated_at }}</td>
-                                            <td>
-                                                <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
-                                                {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
-                                            </td>
+                                            <th class="border-bottom-0" style="width: 25px">No</th>
+                                            <th class="border-bottom-0">Nama Dokumen</th>
+                                            <th class="border-bottom-0">Nomor Dokumen</th>
+                                            <th class="border-bottom-0">Berlaku Sejak</th>
+                                            <th class="border-bottom-0">Berlaku Sampai</th>
+                                            <th class="border-bottom-0">Version</th>
+                                            <th class="border-bottom-0">Created At</th>
+                                            <th class="border-bottom-0">Updated At</th>
+                                            <th class="border-bottom-0" style="width: 50px">Action</th>
                                         </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="card custom-card">
-                            <div class="card-header border-bottom">
-                                <h3 class="card-title">Foto Produk</h3>
-                            </div>
-                            <div class="card-body">
-                                <ul class="lightgallery list-unstyled row">
-                                    @foreach ($project->foto as $file)
-                                        @if ($item->id == $file->id_produk)
-                                            <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{Str::headline($item->produk)}}</h4>">
-                                                @php
-                                                    $allowedMimeTypes = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief','jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
-                                                    $explodeImage = explode('.', asset('storage/' . $file->path));
-                                                    $extension = end($explodeImage);
-                                                @endphp
-                                                @if (in_array($extension, $allowedMimeTypes))
-                                                    <a href="javascript:void(0)">
-                                                        <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
-                                                    </a>
-                                                    @else
-                                                    <a onclick="window.open('{{asset('storage/' . $file->path)}}', '_blank');" href="{{asset('storage/' . $file->path)}}">View File</a>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($project->files as $file)
+                                            @if ($item->id == $file->id_produk)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $file->label }}</td>
+                                                    <td>{{ $file->number }}</td>
+                                                    <td>{{ $file->valid_since }}</td>
+                                                    <td>{{ $file->valid_until }}</td>
+                                                    <td>{{ $file->version }}</td>
+                                                    <td>{{ $file->created_at }}</td>
+                                                    <td>{{ $file->updated_at }}</td>
+                                                    <td>
+                                                        <a href="{{ asset('storage/' . $file->path) }}" target="_blank" class="btn text-primary btn-sm" data-bs-toggle="tooltip" data-bs-original-title="View"><span class="fe fe-eye fs-14"></span></a>
+                                                        {{-- <a href="{{ route('delete.file', [$data->id, $file->label, $file->id]) }}" class="btn text-danger btn-sm" data-bs-toggle="tooltip" data-bs-original-title="Delete"><span class="fe fe-trash fs-14"></span></a> --}}
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div class="card custom-card">
+                                    <div class="card-header border-bottom">
+                                        <h3 class="card-title">Foto Produk</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="lightgallery list-unstyled row">
+                                            @foreach ($project->foto as $file)
+                                                @if ($item->id == $file->id_produk)
+                                                    <li class="col-xs-6 col-sm-4 col-md-4 col-xl-3 mb-5 border-bottom-0" data-responsive="{{ asset('storage/' . $file->path) }}" data-src="{{ asset('storage/' . $file->path) }}" data-sub-html="<h4>{{ Str::headline($item->produk) }}</h4>">
+                                                        @php
+                                                            $allowedMimeTypes = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'svg', 'svgz', 'cgm', 'djv', 'djvu', 'ico', 'ief', 'jpe', 'pbm', 'pgm', 'pnm', 'ppm', 'ras', 'rgb', 'tif', 'tiff', 'wbmp', 'xbm', 'xpm', 'xwd'];
+                                                            $explodeImage = explode('.', asset('storage/' . $file->path));
+                                                            $extension = end($explodeImage);
+                                                        @endphp
+                                                        @if (in_array($extension, $allowedMimeTypes))
+                                                            <a href="javascript:void(0)">
+                                                                <img class="img-responsive br-5" src="{{ asset('storage/' . $file->path) }}">
+                                                            </a>
+                                                        @else
+                                                            <a onclick="window.open('{{ asset('storage/' . $file->path) }}', '_blank');" href="{{ asset('storage/' . $file->path) }}">View File</a>
+                                                        @endif
+                                                    </li>
                                                 @endif
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
-        @empty
-        @endforelse
+        </div>
     </div>
 </div>
+
+@section('custom-js')
+    @forelse($project->productType ?? [] as $item)
+        <script>
+            $('#datatable-"{{ $item->id }}"').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+        </script>
+    @empty
+    @endforelse
+@endsection

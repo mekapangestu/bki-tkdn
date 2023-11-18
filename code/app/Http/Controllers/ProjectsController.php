@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KelompokBarang;
 use App\Models\DocumentReceipt;
+use App\Models\ProductCategory;
 use App\Models\ProjectAdditional;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -977,7 +978,9 @@ class ProjectsController extends Controller
 
         $title = "Detail";
 
-        return view('projects.detail', compact('project', 'data', 'title', 'assessor', 'qc'));
+        $categories = ProductCategory::all();
+
+        return view('projects.detail', compact('project', 'data', 'title', 'assessor', 'qc', 'categories'));
 
         // return view('projects.detail', compact('data'));
     }
