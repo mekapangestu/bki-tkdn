@@ -347,19 +347,19 @@ class ProjectsController extends Controller
                 // $additional->kd_hs = $request->kd_hs[$id_produk];
                 // $additional->spesifikasi = $request->spesifikasi[$id_produk];
                 $additional->kbli = $request->kbli[$id_produk];
-                $additional->nama_proyek_pbj = $request->nama_proyek_pbj[$id_produk];
-                $additional->pengguna_proyek_pbj = $request->pengguna_proyek_pbj[$id_produk];
-                $additional->nib_pengguna_proyek_pbj = $request->nib_pengguna_proyek_pbj[$id_produk];
-                $additional->no_kontrak = $request->no_kontrak[$id_produk];
-                $additional->kd_provinsi_lokasi = $request->kd_provinsi_lokasi[$id_produk];
-                $additional->nama_obat = $request->nama_obat[$id_produk];
-                $additional->bentuk_sediaan = $request->bentuk_sediaan[$id_produk];
-                $additional->kemasan = $request->kemasan[$id_produk];
-                $additional->nie = $request->nie[$id_produk];
-                $additional->nm_perusahaan_produksi = $request->nm_perusahaan_produksi[$id_produk];
-                $additional->nib_perusahaan_produksi = $request->nib_perusahaan_produksi[$id_produk];
-                $additional->nm_perusahaan_desain = $request->nm_perusahaan_desain[$id_produk];
-                $additional->nib_perusahaan_desain = $request->nib_perusahaan_desain[$id_produk];
+                $additional->nama_proyek_pbj = $request->nama_proyek_pbj[$id_produk] ?? null;
+                $additional->pengguna_proyek_pbj = $request->pengguna_proyek_pbj[$id_produk] ?? null;
+                $additional->nib_pengguna_proyek_pbj = $request->nib_pengguna_proyek_pbj[$id_produk] ?? null;
+                $additional->no_kontrak = $request->no_kontrak[$id_produk] ?? null;
+                $additional->kd_provinsi_lokasi = $request->kd_provinsi_lokasi[$id_produk] ?? null;
+                $additional->nama_obat = $request->nama_obat[$id_produk] ?? null;
+                $additional->bentuk_sediaan = $request->bentuk_sediaan[$id_produk] ?? null;
+                $additional->kemasan = $request->kemasan[$id_produk] ?? null;
+                $additional->nie = $request->nie[$id_produk] ?? null;
+                $additional->nm_perusahaan_produksi = $request->nm_perusahaan_produksi[$id_produk] ?? null;
+                $additional->nib_perusahaan_produksi = $request->nib_perusahaan_produksi[$id_produk] ?? null;
+                $additional->nm_perusahaan_desain = $request->nm_perusahaan_desain[$id_produk] ?? null;
+                $additional->nib_perusahaan_desain = $request->nib_perusahaan_desain[$id_produk] ?? null;
                 $additional->save();
 
                 $folderPath = public_path('storage/files/project/' . now()->format('dmy') . '_' . $id);
@@ -636,7 +636,7 @@ class ProjectsController extends Controller
                     $tkdn = $project->tkdn->where('id_produk', $value->id)->firstWhere('project_id', $project->id);
                     $kbli = $additional->kbli;
                     $path = Upload::where('request_id', $project->id)->where('tag', 'foto')->where('id_produk', $value->id)->first()->path ?? '';
-                    array_push($produk, [
+                    $arrayProduct = [
                         "id_produk" => $project->orders->siinas_data->produk[0]->id_produk,
                         "produk" => $project->orders->siinas_data->produk[0]->produk,
                         "spesifikasi" => $value->spesifikasi,
@@ -651,7 +651,29 @@ class ProjectsController extends Controller
                         "sertifikat_produk" =>  $additional->sertifikat_produk ?? '-',
                         "produsen" =>  $additional->produsen ?? '-',
                         "foto_produk" => $path ? asset('storage/' . $path) : '-'
-                    ]);
+                    ];
+                    
+                    if ($project->kd_produk == 3) {
+                        $arrayProduct["nama_proyek_pbj"] = $additional->nama_proyek_pbj ?? '-';
+                        $arrayProduct["pengguna_proyek_pbj"] = $additional->pengguna_proyek_pbj ?? '-';
+                        $arrayProduct["nib_pengguna_proyek_pbj"] = $additional->nib_pengguna_proyek_pbj ?? '-';
+                        $arrayProduct["no_kontrak"] = $additional->no_kontrak ?? '-';
+                        $arrayProduct["kd_provinsi_lokasi"] = $additional->kd_provinsi_lokasi ?? '-';
+                    }
+                    if ($project->kd_produk == 4) {
+                        $arrayProduct["nama_obat"] = $additional->nama_obat ?? '-';
+                        $arrayProduct["bentuk_sediaan"] = $additional->bentuk_sediaan ?? '-';
+                        $arrayProduct["kemasan"] = $additional->kemasan ?? '-';
+                        $arrayProduct["nie"] = $additional->nie ?? '-';
+                    }
+                    if ($project->kd_produk == 5) {
+                        $arrayProduct["nm_perusahaan_produksi"] = $additional->nm_perusahaan_produksi ?? '-';
+                        $arrayProduct["nib_perusahaan_produksi"] = $additional->nib_perusahaan_produksi ?? '-';
+                        $arrayProduct["nm_perusahaan_desain"] = $additional->nm_perusahaan_desain ?? '-';
+                        $arrayProduct["nib_perusahaan_desain"] = $additional->nib_perusahaan_desain ?? '-';
+                    }
+
+                    array_push($produk, $arrayProduct);
                 }
 
                 $path = Upload::where('request_id', $project->id)->where('label', 'Draf Hasil Persetujuan Penamaan Tanda Sah')->where('id_produk', $value->id)->first()->path ?? '';
