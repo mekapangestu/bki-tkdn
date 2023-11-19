@@ -78,6 +78,11 @@ class Projects extends Model
         return $this->hasOne(ProjectMeta::class, 'project_id', 'id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'kd_produk', 'id');
+    }
+
     public function statuses()
     {
         return $this->belongsTo(Statuses::class, 'status_siinas', 'id');

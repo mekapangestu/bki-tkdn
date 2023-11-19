@@ -241,6 +241,88 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                @if ($project->kd_produk == 3)
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Nama Proyek Pbj</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nama_proyek_pbj[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Pengguna Proyek Pbj</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="pengguna_proyek_pbj[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">NIB Pengguna Proyek Pbj</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nib_pengguna_proyek_pbj[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">No Kontrak</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="no_kontrak[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Kode Provinsi Lokasi</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="kd_provinsi_lokasi[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    @elseif($project->kd_produk == 4)
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Nama Obat</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nama_obat[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Bentuk Sediaan</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="bentuk_sediaan[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Kemasan</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="kemasan[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">NIE</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nie[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    @elseif($project->kd_produk == 5)
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Nama Perusahaan Produksi</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nm_perusahaan_produksi[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">NIB Perusahaan Produksi</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nib_perusahaan_produksi[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">Nama Perusahaan Desain</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nm_perusahaan_desain[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="spk_no" class="form-label">NIB Perusahaan Desain</label>
+                                                            <input type="text" class="form-control" autocomplete="off" name="nib_perusahaan_desain[{{ $item->id }}]" placeholder="Enter Tipe" value="">
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

@@ -3,11 +3,12 @@
         <div class="col-xl-12 col-md-12 col-sm-12">
             <div class="form-group">
                 <label for="spk_no" class="form-label">Kode Produk</label>
-                @foreach ($categories as $item)
+                <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{$project->kd_produk}} - {{$project->category?->nama_kategori}}" disabled>
+                {{-- @foreach ($categories as $item)
                     @if ($item->id == $data->kd_produk)
                         <input type="text" class="form-control" id="spk_no" autocomplete="off" name="spk_no" value="{{ $item->id . ' - ' . $item->nama_kategori }}" disabled>
                     @endif
-                @endforeach
+                @endforeach --}}
             </div>
         </div>
         <div class="col-xl-12 col-md-12 col-sm-12">
